@@ -1,4 +1,7 @@
 .idea/*
 gen/*
+com/*
+out/*
+*.apk
 *.log
 Thumbs.db
