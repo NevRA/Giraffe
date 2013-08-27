@@ -1,7 +1,11 @@
 .idea/*
-gen/*
-com/*
-out/*
+classes/*
+app/.idea/*
+app/gen/*
+app/com/*
+app/out/*
+app/target/*
+app/gen-external-apklibs/*
 *.apk
 *.log
 Thumbs.db
