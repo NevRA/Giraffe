@@ -2,11 +2,13 @@ package com.home.giraffe;
 
 import android.os.Bundle;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;
+import com.google.inject.Inject;
+import com.home.giraffe.settings.SettingsManager;
 
 public class Main extends RoboSherlockActivity {
-    /**
-     * Called when the activity is first created.
-     */
+    @Inject
+    SettingsManager mSettingsManager;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
