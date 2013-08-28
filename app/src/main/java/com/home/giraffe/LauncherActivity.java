@@ -1,11 +1,12 @@
 package com.home.giraffe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;
 import com.google.inject.Inject;
 import com.home.giraffe.settings.SettingsManager;
 
-public class Main extends RoboSherlockActivity {
+public class LauncherActivity extends RoboSherlockActivity {
     @Inject
     SettingsManager mSettingsManager;
 
@@ -13,6 +14,9 @@ public class Main extends RoboSherlockActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSettingsManager.isLoggedOn();
+        if(!mSettingsManager.isLoggedOn()){
+            Intent i = new Intent(this, SignInActivity.class);
+            startActivity(i);
+        }
     }
 }
