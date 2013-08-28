@@ -22,6 +22,16 @@ public class SettingsManager implements ISettingsManager {
     }
 
     @Override
+    public void setServerAddress(String serverAddress) {
+        mSharedPreferences.edit().putString(Constants.ServerAddressPref, serverAddress);
+    }
+
+    @Override
+    public String getServerAddress() {
+        return mSharedPreferences.getString(Constants.ServerAddressPref, null);
+    }
+
+    @Override
     public void setUserName(String userName) {
         mSharedPreferences.edit().putString(Constants.UserNamePref, userName);
     }
