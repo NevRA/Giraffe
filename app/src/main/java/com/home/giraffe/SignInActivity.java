@@ -7,38 +7,42 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;
+import roboguice.inject.InjectView;
 
 public class SignInActivity extends RoboSherlockActivity {
+    @InjectView(R.id.logo_layout) LinearLayout mLogoLayout;
+    @InjectView(R.id.logo_animation1) ImageView mLogoAnimation1;
+    @InjectView(R.id.logo_animation2) ImageView mLogoAnimation2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin_layout);
 
-        LinearLayout layout = (LinearLayout) findViewById(R.id.logo);
-        final ImageView logo1 = (ImageView) findViewById(R.id.logoImage1);
-        final ImageView logo2 = (ImageView) findViewById(R.id.logoImage2);
+        ShowStartupAnimation();
+    }
 
+    private void ShowStartupAnimation() {
         Animation animation = AnimationUtils.loadAnimation(this, R.layout.logo_animation);
         animation.setFillAfter(true);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                //To change body of implemented methods use File | Settings | File Templates.
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                logo1.setVisibility(View.GONE);
-                logo2.setVisibility(View.VISIBLE);
+                mLogoAnimation1.setVisibility(View.GONE);
+                mLogoAnimation2.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-                //To change body of implemented methods use File | Settings | File Templates.
             }
         });
-        layout.setAnimation(animation);
+        mLogoLayout.setAnimation(animation);
         animation.startNow();
-        layout.invalidate();
+        mLogoLayout.invalidate();
     }
 }
