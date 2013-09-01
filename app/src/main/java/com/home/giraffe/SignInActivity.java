@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;
@@ -22,6 +23,9 @@ import roboguice.inject.InjectView;
 
 public class SignInActivity extends RoboSherlockFragmentActivity implements LoaderManager.LoaderCallbacks {
     @InjectView(R.id.signin) Button mSignIn;
+    @InjectView(R.id.communityUrl) EditText mCommunityUrl;
+    @InjectView(R.id.userName) EditText mUserName;
+    @InjectView(R.id.userPassword) EditText mUserPassword;
     @InjectView(R.id.logo_layout) LinearLayout mLogoLayout;
     @InjectView(R.id.logo_animation1) ImageView mLogoAnimation1;
     @InjectView(R.id.logo_animation2) ImageView mLogoAnimation2;
@@ -39,7 +43,7 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
          mSignIn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportLoaderManager().initLoader(0, null, SignInActivity.this);
+                getSupportLoaderManager().restartLoader(0, null, SignInActivity.this);
             }
         });
     }
@@ -69,7 +73,7 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
 
     @Override
     public Loader onCreateLoader(int i, Bundle bundle) {
-        return new SignInTask(this, "", "", "");
+        return new SignInTask(this, mCommunityUrl.getText().toString(), mUserName.getText().toString(), mUserPassword.getText().toString());
     }
 
     @Override

@@ -7,7 +7,6 @@ import com.home.giraffe.Constants;
 import com.home.giraffe.interfaces.IConnector;
 import com.home.giraffe.interfaces.IRequestsManager;
 import com.home.giraffe.objects.Person;
-import org.apache.http.Header;
 
 public class RequestsManager implements IRequestsManager {
     @Inject
@@ -23,13 +22,12 @@ public class RequestsManager implements IRequestsManager {
     @Override
     public void signIn(String serverAddress, String userName, String userPassword) throws Exception {
         String loginUrl = "https://" + serverAddress + Constants.LOGIN;
-        String csLoginUrl = "https://" + serverAddress + Constants.CS_LOGIN;
         String csMeUrl = "https://" + serverAddress + "/api/core/v3/people/@me";
         String credentialsBody = String.format("username=%s&password=%s&autoLogin=true", Uri.encode(userName), Uri.encode(userPassword));
 
-        HttpResponse loginResponse = mConnector.getRequest(loginUrl);
-        HttpResponse csLoginResponse = mConnector.postRequest(csLoginUrl, credentialsBody, loginResponse.getCookies(), false);
-        HttpResponse meResponse = mConnector.getRequest(csMeUrl, csLoginResponse.getCookies());
-        Person person = mGson.fromJson(meResponse.getBody(), Person.class);
+        HttpResponse authCookiesResponse = mConnector.getRequest(loginUrl);
+        HttpResponse loginResponse = mConnector.postRequest(loginUrl, credentialsBody, authCookiesResponse.getCookies(), false);
+        HttpResponse profileResponse = mConnector.getRequest(csMeUrl, loginResponse.getCookies());
+        Person person = mGson.fromJson(profileResponse.getBody(), Person.class);
     }
 }

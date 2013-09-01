@@ -18,13 +18,20 @@ import org.apache.http.util.EntityUtils;
 
 public class Connector implements IConnector {
 
-    DefaultHttpClient httpClient;
+    DefaultHttpClient mHttpClient;
     public Connector(){
-        httpClient = new DefaultHttpClient();
+        mHttpClient = new DefaultHttpClient();
     }
 
     private String cutSecurityString(String response){
         return response.replaceAll("throw.*;\\s*","");
+    }
+
+    private void proceedCookies(Cookie[] cookies){
+        CookieStore cookieStore = mHttpClient.getCookieStore();
+        for (Cookie cookie : cookies){
+            cookieStore.addCookie(cookie);
+        }
     }
 
     private com.home.giraffe.network.HttpResponse proceedResponse(HttpResponse response) throws Exception {
@@ -33,7 +40,7 @@ public class Connector implements IConnector {
         }
         HttpEntity entity = response.getEntity();
 
-        CookieStore cookieStore = httpClient.getCookieStore();
+        CookieStore cookieStore = mHttpClient.getCookieStore();
         Cookie[] cookies = cookieStore.getCookies().toArray(new Cookie[cookieStore.getCookies().size()]);
         String body = cutSecurityString(EntityUtils.toString(entity));
         return new com.home.giraffe.network.HttpResponse(cookies, body);
@@ -51,13 +58,10 @@ public class Connector implements IConnector {
 
     @Override
     public com.home.giraffe.network.HttpResponse getRequest(String url, Cookie[] cookies) throws Exception {
-        CookieStore cookieStore = httpClient.getCookieStore();
-        for (Cookie cookie : cookies){
-            cookieStore.addCookie(cookie);
-        }
+        proceedCookies(cookies);
 
         HttpGet httpGet = new HttpGet(url);
-        HttpResponse response = httpClient.execute(httpGet);
+        HttpResponse response = mHttpClient.execute(httpGet);
         return proceedResponse(response);
     }
 
@@ -68,13 +72,10 @@ public class Connector implements IConnector {
 
     @Override
     public com.home.giraffe.network.HttpResponse postRequest(String url, String body, Cookie[] cookies, boolean allowRedirect) throws Exception {
-        CookieStore cookieStore = httpClient.getCookieStore();
-        for (Cookie cookie : cookies){
-            cookieStore.addCookie(cookie);
-        }
+        proceedCookies(cookies);
 
         if(!allowRedirect){
-            httpClient.setRedirectHandler(new DefaultRedirectHandler() {
+            mHttpClient.setRedirectHandler(new DefaultRedirectHandler() {
                 @Override
                 public boolean isRedirectRequested(HttpResponse response, HttpContext context) {
                     return false;
@@ -87,7 +88,7 @@ public class Connector implements IConnector {
         httpPost.setEntity(entity);
         httpPost.addHeader(new BasicHeader("Content-Type", "application/x-www-form-urlencoded"));
 
-        HttpResponse response = httpClient.execute(httpPost);
+        HttpResponse response = mHttpClient.execute(httpPost);
         return proceedResponse(response);
     }
 }
