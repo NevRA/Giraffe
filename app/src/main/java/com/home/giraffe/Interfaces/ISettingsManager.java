@@ -1,6 +1,4 @@
-package com.home.giraffe.Interfaces;
-
-import android.R;
+package com.home.giraffe.interfaces;
 
 public interface ISettingsManager {
     boolean isLoggedOn();

@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import com.google.inject.Inject;
 import com.home.giraffe.Constants;
-import com.home.giraffe.Interfaces.ISettingsManager;
+import com.home.giraffe.interfaces.ISettingsManager;
 
 public class SettingsManager implements ISettingsManager {
 

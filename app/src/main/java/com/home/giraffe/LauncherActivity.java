@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;
 import com.google.inject.Inject;
+import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.settings.SettingsManager;
 
 public class LauncherActivity extends RoboSherlockActivity {
     @Inject
-    SettingsManager mSettingsManager;
+    ISettingsManager mSettingsManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
