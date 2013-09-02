@@ -3,12 +3,12 @@ package com.home.giraffe.interfaces;
 public interface ISettingsManager {
     boolean isLoggedOn();
 
-    void setServerAddress(String serverAddress);
-    String getServerAddress();
+    void setCommunityUrl(String communityUrl);
+    String getCommunityUrl();
 
     void setUserName(String userName);
     String getUserName();
 
-    void setUserPassword(String userPassword);
-    String getUserPassword();
+    void setUserToken(String userToken);
+    String getUserToken();
 }

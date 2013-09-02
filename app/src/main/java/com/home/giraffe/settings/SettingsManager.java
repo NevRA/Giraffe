@@ -17,23 +17,22 @@ public class SettingsManager implements ISettingsManager {
 
     @Override
     public boolean isLoggedOn() {
-        return  !TextUtils.isEmpty(getUserName()) &&
-                !TextUtils.isEmpty(getUserPassword());
+        return !TextUtils.isEmpty(getUserToken());
     }
 
     @Override
-    public void setServerAddress(String serverAddress) {
-        mSharedPreferences.edit().putString(Constants.ServerAddressPref, serverAddress);
+    public void setCommunityUrl(String communityUrl) {
+        mSharedPreferences.edit().putString(Constants.CommunityUrl, communityUrl).commit();
     }
 
     @Override
-    public String getServerAddress() {
-        return mSharedPreferences.getString(Constants.ServerAddressPref, null);
+    public String getCommunityUrl() {
+        return mSharedPreferences.getString(Constants.CommunityUrl, null);
     }
 
     @Override
     public void setUserName(String userName) {
-        mSharedPreferences.edit().putString(Constants.UserNamePref, userName);
+        mSharedPreferences.edit().putString(Constants.UserNamePref, userName).commit();
     }
 
     @Override
@@ -42,12 +41,12 @@ public class SettingsManager implements ISettingsManager {
     }
 
     @Override
-    public void setUserPassword(String userPassword) {
-        mSharedPreferences.edit().putString(Constants.UserNamePref, userPassword);
+    public void setUserToken(String userToken) {
+        mSharedPreferences.edit().putString(Constants.UserTokenPref, userToken).commit();
     }
 
     @Override
-    public String getUserPassword() {
-        return mSharedPreferences.getString(Constants.UserPasswordPref, null);
+    public String getUserToken() {
+        return mSharedPreferences.getString(Constants.UserTokenPref, null);
     }
 }

@@ -6,7 +6,7 @@ import com.google.inject.Inject;
 import com.home.giraffe.Constants;
 import com.home.giraffe.interfaces.IConnector;
 import com.home.giraffe.interfaces.IRequestsManager;
-import com.home.giraffe.objects.Person;
+import com.home.giraffe.interfaces.ISettingsManager;
 
 public class RequestsManager implements IRequestsManager {
     @Inject
@@ -16,18 +16,17 @@ public class RequestsManager implements IRequestsManager {
     IConnector mConnector;
 
     @Inject
-    public RequestsManager(){
-    }
+    ISettingsManager mSettingsManager;
 
     @Override
-    public void signIn(String serverAddress, String userName, String userPassword) throws Exception {
-        String loginUrl = "https://" + serverAddress + Constants.LOGIN;
-        String csMeUrl = "https://" + serverAddress + "/api/core/v3/people/@me";
+    public void signIn(String communityUrl, String userName, String userPassword) throws Exception {
+        String loginUrl = "https://" + communityUrl + Constants.LOGIN;
         String credentialsBody = String.format("username=%s&password=%s&autoLogin=true", Uri.encode(userName), Uri.encode(userPassword));
 
         HttpResponse authCookiesResponse = mConnector.getRequest(loginUrl);
         HttpResponse loginResponse = mConnector.postRequest(loginUrl, credentialsBody, authCookiesResponse.getCookies(), false);
-        HttpResponse profileResponse = mConnector.getRequest(csMeUrl, loginResponse.getCookies());
-        Person person = mGson.fromJson(profileResponse.getBody(), Person.class);
+
+        String token = NetworkUtils.getTokenFromCookies(loginResponse.getCookies());
+        mSettingsManager.setUserToken(token);
     }
 }

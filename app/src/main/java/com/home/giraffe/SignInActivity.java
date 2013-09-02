@@ -1,9 +1,8 @@
 package com.home.giraffe;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.app.FragmentActivity;
+import android.os.Handler;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.View;
@@ -13,12 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
 import com.google.inject.Inject;
+import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.tasks.SignInTask;
-import roboguice.RoboGuice;
+import com.home.giraffe.ui.ProgressDialogFragment;
 import roboguice.inject.InjectView;
 
 public class SignInActivity extends RoboSherlockFragmentActivity implements LoaderManager.LoaderCallbacks {
@@ -29,6 +27,11 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
     @InjectView(R.id.logo_layout) LinearLayout mLogoLayout;
     @InjectView(R.id.logo_animation1) ImageView mLogoAnimation1;
     @InjectView(R.id.logo_animation2) ImageView mLogoAnimation2;
+
+    @Inject
+    ISettingsManager mSettingsManager;
+
+    ProgressDialogFragment mWaiter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,16 +76,25 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
 
     @Override
     public Loader onCreateLoader(int i, Bundle bundle) {
+        mWaiter = new ProgressDialogFragment();
+        mWaiter.show(getSupportFragmentManager(), "");
+
         return new SignInTask(this, mCommunityUrl.getText().toString(), mUserName.getText().toString(), mUserPassword.getText().toString());
     }
 
     @Override
     public void onLoadFinished(Loader loader, Object o) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        new Handler().post(new Runnable() {
+            public void run() {
+                mWaiter.dismiss();
+                if(mSettingsManager.isLoggedOn()){
+                    startActivity(new Intent(SignInActivity.this, Main.class));
+                }
+            }
+        });
     }
 
     @Override
     public void onLoaderReset(Loader loader) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }
