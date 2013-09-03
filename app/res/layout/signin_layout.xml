@@ -3,11 +3,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" android:background="@android:color/holo_blue_bright">
+              android:layout_height="match_parent" android:background="@color/holo_blue_bright"
+        >
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:id="@+id/logo_layout" android:layout_marginRight="20dp">
+            android:layout_height="wrap_content" android:id="@+id/logo_layout"
+            android:paddingRight="20dp">
         <ImageView
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
@@ -86,7 +88,7 @@
             android:text="@string/signin_button_label"
             android:id="@+id/signin" android:layout_marginLeft="20dp" android:layout_marginRight="20dp"
             android:layout_gravity="right"
-            android:background="@android:color/white" android:textColor="@android:color/holo_blue_dark"
+            android:background="@android:color/white" android:textColor="@color/holo_blue_dark"
             android:clickable="true"/>
 
 </LinearLayout>
