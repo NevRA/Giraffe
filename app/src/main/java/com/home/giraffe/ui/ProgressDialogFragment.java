@@ -23,5 +23,4 @@ public class ProgressDialogFragment extends DialogFragment {
 
         return dialog;
     }
-
 }
