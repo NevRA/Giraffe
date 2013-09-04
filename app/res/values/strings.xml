@@ -6,4 +6,6 @@
     <string name="signin_button_label">Sign In</string>
     <string name="community_url_hint">Community url</string>
     <string name="loading_in_progress">Loading. Please wait...</string>
+    <string name="message_dialog_error_title">Error</string>
+    <string name="signin_access_denied_error_message">Invalid user name or password. Please try again.</string>
 </resources>

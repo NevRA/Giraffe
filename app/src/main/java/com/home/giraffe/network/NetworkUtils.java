@@ -10,6 +10,6 @@ public class NetworkUtils {
             }
         }
 
-        throw new IllegalArgumentException("Token not found");
+        return null;
     }
 }

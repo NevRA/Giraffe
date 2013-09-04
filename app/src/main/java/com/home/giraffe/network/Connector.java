@@ -35,9 +35,11 @@ public class Connector implements IConnector {
     }
 
     private com.home.giraffe.network.HttpResponse proceedResponse(HttpResponse response) throws Exception {
-        if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK && response.getStatusLine().getStatusCode() != 302  ){
+        if(     response.getStatusLine().getStatusCode() != HttpStatus.SC_OK &&
+                response.getStatusLine().getStatusCode() != 302  ){
             throw new Exception(response.getStatusLine().getReasonPhrase());
         }
+
         HttpEntity entity = response.getEntity();
 
         CookieStore cookieStore = mHttpClient.getCookieStore();
