@@ -1,6 +1,9 @@
 package com.home.giraffe.network;
 
+import com.google.inject.Inject;
+import com.home.giraffe.Constants;
 import com.home.giraffe.interfaces.IConnector;
+import com.home.giraffe.interfaces.ISettingsManager;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -18,25 +21,22 @@ import org.apache.http.util.EntityUtils;
 
 public class Connector implements IConnector {
 
+    @Inject
+    ISettingsManager mSettingsManager;
+
     DefaultHttpClient mHttpClient;
-    public Connector(){
+
+    public Connector() {
         mHttpClient = new DefaultHttpClient();
     }
 
-    private String cutSecurityString(String response){
-        return response.replaceAll("throw.*;\\s*","");
-    }
-
-    private void proceedCookies(Cookie[] cookies){
-        CookieStore cookieStore = mHttpClient.getCookieStore();
-        for (Cookie cookie : cookies){
-            cookieStore.addCookie(cookie);
-        }
+    private String cutSecurityString(String response) {
+        return response.replaceAll("throw.*;\\s*", "");
     }
 
     private com.home.giraffe.network.HttpResponse proceedResponse(HttpResponse response) throws Exception {
-        if(     response.getStatusLine().getStatusCode() != HttpStatus.SC_OK &&
-                response.getStatusLine().getStatusCode() != 302  ){
+        if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK &&
+                response.getStatusLine().getStatusCode() != 302) {
             throw new Exception(response.getStatusLine().getReasonPhrase());
         }
 
@@ -50,33 +50,21 @@ public class Connector implements IConnector {
 
     @Override
     public com.home.giraffe.network.HttpResponse getRequest(String url) throws Exception {
-        return getRequest(url, new Cookie[0]);
-    }
-
-    @Override
-    public com.home.giraffe.network.HttpResponse postRequest(String url, String body) throws Exception {
-        return postRequest(url, body, new Cookie[0]);
-    }
-
-    @Override
-    public com.home.giraffe.network.HttpResponse getRequest(String url, Cookie[] cookies) throws Exception {
-        proceedCookies(cookies);
-
         HttpGet httpGet = new HttpGet(url);
+        httpGet.addHeader(new BasicHeader("Accept", "*/*"));
+        httpGet.addHeader("Cookie", Constants.RememberMeCookie + "=" + mSettingsManager.getUserToken());
         HttpResponse response = mHttpClient.execute(httpGet);
         return proceedResponse(response);
     }
 
     @Override
-    public com.home.giraffe.network.HttpResponse postRequest(String url, String body, Cookie[] cookies) throws Exception {
-        return postRequest(url, body, cookies, true);
+    public com.home.giraffe.network.HttpResponse postRequest(String url, String body) throws Exception {
+        return postRequest(url, body, true);
     }
 
     @Override
-    public com.home.giraffe.network.HttpResponse postRequest(String url, String body, Cookie[] cookies, boolean allowRedirect) throws Exception {
-        proceedCookies(cookies);
-
-        if(!allowRedirect){
+    public com.home.giraffe.network.HttpResponse postRequest(String url, String body, boolean allowRedirect) throws Exception {
+        if (!allowRedirect) {
             mHttpClient.setRedirectHandler(new DefaultRedirectHandler() {
                 @Override
                 public boolean isRedirectRequested(HttpResponse response, HttpContext context) {
@@ -89,6 +77,7 @@ public class Connector implements IConnector {
         HttpPost httpPost = new HttpPost(url);
         httpPost.setEntity(entity);
         httpPost.addHeader(new BasicHeader("Content-Type", "application/x-www-form-urlencoded"));
+        httpPost.addHeader("Cookie", Constants.RememberMeCookie + "=" + mSettingsManager.getUserToken());
 
         HttpResponse response = mHttpClient.execute(httpPost);
         return proceedResponse(response);

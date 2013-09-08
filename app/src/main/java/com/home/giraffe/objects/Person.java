@@ -2,6 +2,7 @@ package com.home.giraffe.objects;
 
 
 public class Person {
-    private String displayName;
-    private int id;
+    public String displayName;
+    public int id;
+    public Jive jive;
 }

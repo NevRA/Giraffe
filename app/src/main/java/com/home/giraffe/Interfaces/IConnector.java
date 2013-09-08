@@ -7,8 +7,5 @@ import org.apache.http.cookie.Cookie;
 public interface IConnector {
     public HttpResponse getRequest(String url) throws Exception;
     public HttpResponse postRequest(String url, String body) throws Exception;
-
-    public HttpResponse getRequest(String url, Cookie[] cookies) throws Exception;
-    public HttpResponse postRequest(String url, String body, Cookie[] cookies) throws Exception;
-    public HttpResponse postRequest(String url, String body, Cookie[] cookies, boolean allowRedirect) throws Exception;
+    public HttpResponse postRequest(String url, String body, boolean allowRedirect) throws Exception;
 }
