@@ -38,13 +38,14 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.my_navigation_profile, container, false);
-        return rootView;
+        return inflater.inflate(R.layout.my_navigation_profile, container, false);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        updateView();
 
         getActivity().getSupportLoaderManager().initLoader(0, null, this);
     }
@@ -61,10 +62,18 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
         }
     }
 
+    private void updateView() {
+        userDisplayName.setText(mSettingsManager.getUserDisplayName());
+        userJobTitle.setText(mSettingsManager.getUserJobTitle());
+        mImageLoader.DisplayImage(mSettingsManager.getCommunityUrl() + String.format(Constants.AVATAR, mSettingsManager.getUserId()), userPic);
+    }
+
     private void updateView(Person person) {
-        userDisplayName.setText(person.displayName);
-        userJobTitle.setText(person.jive.profile.get(0).value);
-        mImageLoader.DisplayImage(mSettingsManager.getCommunityUrl() + String.format(Constants.AVATAR, person.id), userPic);
+        mSettingsManager.setUserDisplayName(person.getDisplayName());
+        mSettingsManager.setUserJobTitle(person.getJobTitle());
+        mSettingsManager.setUserId(person.getId());
+
+        updateView();
     }
 
     @Override

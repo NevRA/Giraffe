@@ -11,8 +11,6 @@ import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.objects.Person;
 
-import java.net.URL;
-
 public class RequestsManager implements IRequestsManager {
     @Inject
     Gson mGson;
@@ -41,6 +39,11 @@ public class RequestsManager implements IRequestsManager {
 
         mSettingsManager.setCommunityUrl(communityUrl);
         mSettingsManager.setUserToken(token);
+
+        Person me = getUserInfo(Constants.ME);
+        mSettingsManager.setUserDisplayName(me.getDisplayName());
+        mSettingsManager.setUserJobTitle(me.getJobTitle());
+        mSettingsManager.setUserId(me.getId());
     }
 
     @Override

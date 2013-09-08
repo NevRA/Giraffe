@@ -6,8 +6,14 @@ public interface ISettingsManager {
     void setCommunityUrl(String communityUrl);
     String getCommunityUrl();
 
-    void setUserName(String userName);
-    String getUserName();
+    void setUserId(int userId);
+    int getUserId();
+
+    void setUserDisplayName(String userDisplayName);
+    String getUserDisplayName();
+
+    void setUserJobTitle(String userJobTitle);
+    String getUserJobTitle();
 
     void setUserToken(String userToken);
     String getUserToken();

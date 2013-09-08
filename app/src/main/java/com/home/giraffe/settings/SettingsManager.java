@@ -31,13 +31,33 @@ public class SettingsManager implements ISettingsManager {
     }
 
     @Override
-    public void setUserName(String userName) {
-        mSharedPreferences.edit().putString(Constants.UserNamePref, userName).commit();
+    public void setUserId(int userId) {
+        mSharedPreferences.edit().putInt(Constants.UserIdPref, userId).commit();
     }
 
     @Override
-    public String getUserName() {
+    public int getUserId() {
+        return mSharedPreferences.getInt(Constants.UserIdPref, -1);
+    }
+
+    @Override
+    public void setUserDisplayName(String userDisplayName) {
+        mSharedPreferences.edit().putString(Constants.UserNamePref, userDisplayName).commit();
+    }
+
+    @Override
+    public String getUserDisplayName() {
         return mSharedPreferences.getString(Constants.UserNamePref, null);
+    }
+
+    @Override
+    public void setUserJobTitle(String userJobTitle) {
+        mSharedPreferences.edit().putString(Constants.UserJobTitlePref, userJobTitle).commit();
+    }
+
+    @Override
+    public String getUserJobTitle() {
+        return mSharedPreferences.getString(Constants.UserJobTitlePref, null);
     }
 
     @Override
