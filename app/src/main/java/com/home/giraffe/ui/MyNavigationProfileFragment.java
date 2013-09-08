@@ -52,7 +52,7 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
 
     @Override
     public Loader<Person> onCreateLoader(int i, Bundle bundle) {
-        return new UserProfileTask(getActivity(), "@me");
+        return new UserProfileTask(getActivity(), Constants.ME);
     }
 
     @Override

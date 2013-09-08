@@ -13,13 +13,6 @@ public class UserProfileTask extends BaseTask<Person> {
     }
 
     @Override
-    protected void onStartLoading() {
-        super.onStartLoading();
-
-        forceLoad();
-    }
-
-    @Override
     public Person loadInBackground() {
         try {
             return getRequestsManager().getUserInfo(mUserId);

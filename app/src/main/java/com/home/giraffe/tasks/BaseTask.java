@@ -22,6 +22,13 @@ public abstract class BaseTask<T> extends RoboAsyncTaskLoader<T> {
         setActivity(activity);
     }
 
+    @Override
+    protected void onStartLoading() {
+        super.onStartLoading();
+
+        forceLoad();
+    }
+
     public FragmentActivity getActivity() {
         return mActivity.get();
     }

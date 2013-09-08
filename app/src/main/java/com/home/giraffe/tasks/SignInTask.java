@@ -16,18 +16,6 @@ public class SignInTask extends BaseTask {
     }
 
     @Override
-    protected void onStartLoading() {
-        super.onStartLoading();
-
-        forceLoad();
-    }
-
-    @Override
-    protected void onStopLoading(){
-
-    }
-
-    @Override
     public Object loadInBackground() {
         try {
             getRequestsManager().signIn(mUrl, mUserName, mUserPassword);
