@@ -7,19 +7,20 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
-import com.home.giraffe.ui.MyNavigationProfileFragment;
+import roboguice.inject.InjectView;
 
 public class Main extends RoboSherlockFragmentActivity{
 
-    MyNavigationProfileFragment mMyNavigationProfileFragment;
+    @InjectView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+
+    @InjectView(R.id.drawer_main)
     ScrollView mDrawerNavigation;
+
     ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mTitle;
-    //MenuListAdapter mMenuAdapter;
 
     @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
@@ -42,12 +43,6 @@ public class Main extends RoboSherlockFragmentActivity{
 
         setContentView(R.layout.drawer_main);
 
-        // Locate DrawerLayout in drawer_main.xml
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        // Locate ListView in drawer_main.xml
-        mDrawerNavigation = (ScrollView) findViewById(R.id.drawer_main);
-
         // Set a custom shadow that overlays the main content when the drawer
         // opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
@@ -64,13 +59,10 @@ public class Main extends RoboSherlockFragmentActivity{
                 R.string.drawer_close) {
 
             public void onDrawerClosed(View view) {
-                // TODO Auto-generated method stub
                 super.onDrawerClosed(view);
             }
 
             public void onDrawerOpened(View drawerView) {
-                // TODO Auto-generated method stub
-                // Set the title on the action when drawer open
                 getSupportActionBar().setTitle("111");
                 super.onDrawerOpened(drawerView);
             }
