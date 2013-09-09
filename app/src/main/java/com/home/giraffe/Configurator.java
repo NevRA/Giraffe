@@ -8,6 +8,7 @@ import com.home.giraffe.network.Connector;
 import com.home.giraffe.network.RequestsManager;
 import com.home.giraffe.settings.SettingsManager;
 import com.home.giraffe.ui.UiManager;
+import de.greenrobot.event.EventBus;
 
 public class Configurator extends AbstractModule {
     @Override
@@ -16,6 +17,7 @@ public class Configurator extends AbstractModule {
         bind(IRequestsManager.class).to(RequestsManager.class).in(Scopes.SINGLETON);
         bind(IUiManager.class).to(UiManager.class).in(Scopes.SINGLETON);
         bind(IImageLoader.class).to(ImageLoader.class).in(Scopes.SINGLETON);
+        bind(EventBus.class).in(Scopes.SINGLETON);
         bind(IConnector.class).to(Connector.class);
     }
 }

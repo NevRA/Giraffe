@@ -15,7 +15,7 @@ import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.objects.Person;
-import com.home.giraffe.tasks.UserProfileTask;
+import com.home.giraffe.tasks.GetUserProfileTask;
 import roboguice.inject.InjectView;
 
 public class MyNavigationProfileFragment extends RoboSherlockFragment implements LoaderManager.LoaderCallbacks<Person>  {
@@ -37,7 +37,6 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.my_navigation_profile, container, false);
     }
 
@@ -47,12 +46,12 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
 
         updateView();
 
-        getActivity().getSupportLoaderManager().initLoader(0, null, this);
+        getActivity().getSupportLoaderManager().restartLoader(4, null, this);
     }
 
     @Override
     public Loader<Person> onCreateLoader(int i, Bundle bundle) {
-        return new UserProfileTask(getActivity(), Constants.ME);
+        return new GetUserProfileTask(getActivity(), Constants.ME);
     }
 
     @Override

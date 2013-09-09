@@ -1,6 +1,7 @@
 package com.home.giraffe.tasks;
 
 import android.support.v4.app.FragmentActivity;
+import com.home.giraffe.objects.Inbox;
 
 public class SignInTask extends BaseTask {
 
@@ -16,7 +17,7 @@ public class SignInTask extends BaseTask {
     }
 
     @Override
-    public Object loadInBackground() {
+    public Inbox loadInBackground() {
         try {
             getRequestsManager().signIn(mUrl, mUserName, mUserPassword);
         } catch (Exception e) {

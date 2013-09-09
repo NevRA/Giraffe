@@ -63,6 +63,11 @@
             <artifactId>roboguice-sherlock</artifactId>
             <version>1.5</version>
         </dependency>
+        <dependency>
+            <groupId>de.greenrobot</groupId>
+            <artifactId>eventbus</artifactId>
+            <version>2.0.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -2,22 +2,38 @@ package com.home.giraffe;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
+import com.google.inject.Inject;
+import com.home.giraffe.events.InboxUnreadCountEvent;
+import com.home.giraffe.ui.InboxFragment;
+import de.greenrobot.event.EventBus;
 import roboguice.inject.InjectView;
 
 public class Main extends RoboSherlockFragmentActivity{
+
+    @Inject
+    EventBus mBus;
+
+    @Inject
+    InboxFragment mInboxFragment;
 
     @InjectView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
     @InjectView(R.id.drawer_main)
     ScrollView mDrawerNavigation;
+
+    @InjectView(R.id.inboxBadge)
+    TextView mInboxBadge;
 
     ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mTitle;
@@ -40,6 +56,7 @@ public class Main extends RoboSherlockFragmentActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mBus.register(this);
 
         setContentView(R.layout.drawer_main);
 
@@ -81,7 +98,7 @@ public class Main extends RoboSherlockFragmentActivity{
         // Locate Position
         switch (position) {
             case 0:
-                //ft.replace(R.id.content_frame, fragment1);
+                ft.replace(R.id.content_frame, mInboxFragment);
                 break;
             case 1:
                 //ft.replace(R.id.content_frame, fragment2);
@@ -116,5 +133,9 @@ public class Main extends RoboSherlockFragmentActivity{
     public void setTitle(CharSequence title) {
         mTitle = title;
         getActionBar().setTitle(mTitle);
+    }
+
+    public void onEvent(final InboxUnreadCountEvent event)  {
+        mInboxBadge.setText(String.valueOf(event.getCount()));
     }
 }
