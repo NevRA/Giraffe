@@ -37,15 +37,45 @@
                     android:layout_height="wrap_content">
                 <ImageView
                         android:id="@+id/image"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="1dp"
+                        android:background="@drawable/ic_main"
+                        android:layout_centerVertical="true"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextView.NavigationDrawer"
+                        android:layout_marginLeft="50dp"
+                        android:text="Overview"
+                        android:layout_centerVertical="true"/>
+                <TextView
+                        android:id="@+id/overviewBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextView.NavigationDrawer"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <FrameLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/drawer_separator_color"/>
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:id="@+id/image"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:background="@drawable/ic_inbox" android:layout_centerVertical="true"/>
                 <TextView
-                        android:layout_toRightOf="@+id/image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextView.NavigationDrawer"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="50dp"
                         android:text="Inbox"
                         android:layout_centerVertical="true"/>
                 <TextView
@@ -72,19 +102,19 @@
                         android:background="@drawable/ic_action"
                         android:layout_centerVertical="true"/>
                 <TextView
-                        android:layout_toRightOf="@+id/image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextView.NavigationDrawer"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="50dp"
                         android:text="Actions"
                         android:layout_centerVertical="true"/>
                 <TextView
-                        android:id="@+id/inboxBadge"
+                        android:id="@+id/actionsBadge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextView.NavigationDrawer"
-                        android:layout_alignParentRight="true" android:layout_centerVertical="true"/>
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
