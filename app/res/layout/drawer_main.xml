@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         style="@style/TextView.NavigationDrawer"
                         android:layout_marginLeft="50dp"
-                        android:text="Overview"
+                        android:text="@string/main_drawer_overview_label"
                         android:layout_centerVertical="true"/>
                 <TextView
                         android:id="@+id/overviewBadge"
@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         style="@style/TextView.NavigationDrawer"
                         android:layout_marginLeft="50dp"
-                        android:text="Inbox"
+                        android:text="@string/main_drawer_inbox_label"
                         android:layout_centerVertical="true"/>
                 <TextView
                         android:id="@+id/inboxBadge"
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         style="@style/TextView.NavigationDrawer"
                         android:layout_marginLeft="50dp"
-                        android:text="Actions"
+                        android:text="@string/main_drawer_actions_label"
                         android:layout_centerVertical="true"/>
                 <TextView
                         android:id="@+id/actionsBadge"

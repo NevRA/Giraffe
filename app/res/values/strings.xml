@@ -11,4 +11,7 @@
     <string name="signin_access_denied_error_message">Invalid user name or password. Please try again.</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="main_drawer_overview_label">Overview</string>
+    <string name="main_drawer_inbox_label">Inbox</string>
+    <string name="main_drawer_actions_label">Actions</string>
 </resources>
