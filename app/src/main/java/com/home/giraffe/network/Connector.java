@@ -7,14 +7,27 @@ import com.home.giraffe.interfaces.ISettingsManager;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.HttpVersion;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnManagerPNames;
+import org.apache.http.conn.params.ConnPerRouteBean;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultRedirectHandler;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
@@ -27,7 +40,25 @@ public class Connector implements IConnector {
     DefaultHttpClient mHttpClient;
 
     public Connector() {
-        mHttpClient = new DefaultHttpClient();
+        mHttpClient = getHttpClient();
+    }
+
+    private DefaultHttpClient getHttpClient(){
+        SchemeRegistry schemeRegistry = new SchemeRegistry();
+        schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+        schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+
+        HttpParams params = new BasicHttpParams();
+        params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(20));
+        params.setParameter(HttpProtocolParams.USE_EXPECT_CONTINUE, false);
+        params.setBooleanParameter(HttpConnectionParams.STALE_CONNECTION_CHECK, false);
+        HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+        HttpProtocolParams.setContentCharset(params, "utf8");
+        HttpConnectionParams.setConnectionTimeout(params, 15 * 1000);
+        HttpConnectionParams.setSoTimeout(params, 3 * 60 * 1000);
+
+        ClientConnectionManager manager = new ThreadSafeClientConnManager(params, schemeRegistry);
+        return new DefaultHttpClient(manager, params);
     }
 
     private String cutSecurityString(String response) {

@@ -46,7 +46,7 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
 
         updateView();
 
-        getActivity().getSupportLoaderManager().restartLoader(4, null, this);
+        getActivity().getSupportLoaderManager().restartLoader(0, null, this);
     }
 
     @Override
