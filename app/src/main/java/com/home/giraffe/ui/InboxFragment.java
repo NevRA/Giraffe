@@ -39,6 +39,8 @@ public class InboxFragment extends RoboSherlockListFragment implements LoaderMan
         if(inbox != null){
             updateView(inbox);
         }
+
+        setListShown(true);
     }
 
     private void updateView(Inbox inbox) {
