@@ -1,0 +1,6 @@
+package com.home.giraffe.ui;
+
+import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFragment;
+
+public class OverviewFragment extends RoboSherlockListFragment {
+}

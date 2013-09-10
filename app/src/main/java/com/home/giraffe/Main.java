@@ -2,19 +2,21 @@ package com.home.giraffe;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.google.inject.Inject;
 import com.home.giraffe.events.InboxUnreadCountEvent;
+import com.home.giraffe.ui.ActionsFragment;
 import com.home.giraffe.ui.InboxFragment;
+import com.home.giraffe.ui.OverviewFragment;
 import de.greenrobot.event.EventBus;
 import roboguice.inject.InjectView;
 
@@ -24,7 +26,13 @@ public class Main extends RoboSherlockFragmentActivity{
     EventBus mBus;
 
     @Inject
+    OverviewFragment mOverviewFragment;
+
+    @Inject
     InboxFragment mInboxFragment;
+
+    @Inject
+    ActionsFragment mActionsFragment;
 
     @InjectView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -34,6 +42,15 @@ public class Main extends RoboSherlockFragmentActivity{
 
     @InjectView(R.id.inboxBadge)
     TextView mInboxBadge;
+
+    @InjectView(R.id.overviewLayout)
+    RelativeLayout mOverviewLayout;
+
+    @InjectView(R.id.inboxLayout)
+    RelativeLayout mInboxLayout;
+
+    @InjectView(R.id.actionsLayout)
+    RelativeLayout mActionsLayout;
 
     ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mTitle;
@@ -80,7 +97,7 @@ public class Main extends RoboSherlockFragmentActivity{
             }
 
             public void onDrawerOpened(View drawerView) {
-                getSupportActionBar().setTitle("111");
+                getSupportActionBar().setTitle("Navigation");
                 super.onDrawerOpened(drawerView);
             }
         };
@@ -88,30 +105,37 @@ public class Main extends RoboSherlockFragmentActivity{
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(0);
+            selectItem(mOverviewFragment, "Overview");
         }
+
+        mOverviewLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectItem(mOverviewFragment, "Overview");
+            }
+        });
+
+        mInboxLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectItem(mInboxFragment, "Inbox");
+            }
+        });
+
+        mActionsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectItem(mActionsFragment, "Actions");
+            }
+        });
     }
 
-    private void selectItem(int position) {
+    private void selectItem(Fragment fragment, String title) {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        // Locate Position
-        switch (position) {
-            case 0:
-                ft.replace(R.id.content_frame, mInboxFragment);
-                break;
-            case 1:
-                //ft.replace(R.id.content_frame, fragment2);
-                break;
-            case 2:
-                //ft.replace(R.id.content_frame, fragment3);
-                break;
-        }
-
+        ft.replace(R.id.content_frame, fragment);
         ft.commit();
-        // Get the title followed by the position
-        //setTitle(title[position]);
-        // Close drawer
+        setTitle(title);
         mDrawerLayout.closeDrawer(mDrawerNavigation);
     }
 

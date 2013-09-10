@@ -33,6 +33,8 @@
                     android:layout_height="1dp"
                     android:background="@color/drawer_separator_color"/>
             <RelativeLayout
+                    android:id="@+id/overviewLayout"
+                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <ImageView
@@ -64,6 +66,7 @@
                     android:layout_height="1dp"
                     android:background="@color/drawer_separator_color"/>
             <RelativeLayout
+                    android:id="@+id/inboxLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <ImageView
@@ -93,6 +96,7 @@
                     android:layout_height="1dp"
                     android:background="@color/drawer_separator_color"/>
             <RelativeLayout
+                    android:id="@+id/actionsLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <ImageView
