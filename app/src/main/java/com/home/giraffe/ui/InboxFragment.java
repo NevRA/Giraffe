@@ -42,7 +42,7 @@ public class InboxFragment extends RoboSherlockListFragment implements LoaderMan
     }
 
     private void updateView(Inbox inbox) {
-        mBus.post(new InboxUnreadCountEvent(inbox.getUnread()));
+        mBus.post(new InboxUnreadCountEvent(inbox.getUnreadCount()));
     }
 
     @Override
