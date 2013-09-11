@@ -17,6 +17,7 @@ public class JiveObject {
         if (objectType.equals("jive:message")){
             return JiveTypes.JiveMessage;
         }
+
         if (objectType.equals("jive:instance")){
             return JiveTypes.JiveInstance;
         }

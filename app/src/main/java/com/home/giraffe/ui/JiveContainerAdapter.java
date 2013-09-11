@@ -47,34 +47,34 @@ public class JiveContainerAdapter extends ArrayAdapter<JiveContainer> {
     }
 
     private View getProjectView(JiveContainer container) {
-        return null;
+        return getUnknownView();
     }
 
     private View getSpaceView(JiveContainer container) {
-        return null;
+        return getUnknownView();
     }
 
     private View getFileView(JiveContainer container) {
-        return null;
+        return getUnknownView();
     }
 
     private View getDiscussionView(JiveContainer container) {
-        return null;
+        return getUnknownView();
     }
 
     private View getPersonView(JiveContainer container) {
-        return null;
+        return getUnknownView();
     }
 
     private View getGroupView(JiveContainer container) {
-        return null;
+        return getUnknownView();
     }
 
     private View getInstanceView(JiveContainer container) {
-        return null;
+        return getUnknownView();
     }
 
     private View getMessageView(JiveContainer container) {
-        return null;
+        return getUnknownView();
     }
 }
