@@ -1,9 +1,12 @@
 package com.home.giraffe.ui;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
+import com.home.giraffe.R;
 import com.home.giraffe.objects.JiveContainer;
 
 import java.util.List;
@@ -43,7 +46,7 @@ public class JiveContainerAdapter extends ArrayAdapter<JiveContainer> {
     }
 
     private View getUnknownView() {
-        return null;
+        return LayoutInflater.from(getContext()).inflate(R.layout.unknown_object, null);
     }
 
     private View getProjectView(JiveContainer container) {
@@ -59,7 +62,11 @@ public class JiveContainerAdapter extends ArrayAdapter<JiveContainer> {
     }
 
     private View getDiscussionView(JiveContainer container) {
-        return getUnknownView();
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.common_object, null);
+        TextView title = (TextView) view.findViewById(R.id.title);
+        title.setText(container.getTitle());
+
+        return view;
     }
 
     private View getPersonView(JiveContainer container) {

@@ -21,6 +21,9 @@ public class ActivityFragment extends RoboSherlockListFragment implements Loader
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        getListView().setDividerHeight(0);
+        getListView().setDivider(null);
+
         getActivity().getSupportLoaderManager().restartLoader(1, null, this);
     }
 
