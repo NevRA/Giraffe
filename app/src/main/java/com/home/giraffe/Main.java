@@ -15,6 +15,7 @@ import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmen
 import com.google.inject.Inject;
 import com.home.giraffe.events.InboxUnreadCountEvent;
 import com.home.giraffe.ui.ActionsFragment;
+import com.home.giraffe.ui.ActivityFragment;
 import com.home.giraffe.ui.InboxFragment;
 import com.home.giraffe.ui.OverviewFragment;
 import de.greenrobot.event.EventBus;
@@ -26,7 +27,7 @@ public class Main extends RoboSherlockFragmentActivity{
     EventBus mBus;
 
     @Inject
-    OverviewFragment mOverviewFragment;
+    ActivityFragment mActivityFragment;
 
     @Inject
     InboxFragment mInboxFragment;
@@ -43,8 +44,8 @@ public class Main extends RoboSherlockFragmentActivity{
     @InjectView(R.id.inboxBadge)
     TextView mInboxBadge;
 
-    @InjectView(R.id.overviewLayout)
-    RelativeLayout mOverviewLayout;
+    @InjectView(R.id.activityLayout)
+    RelativeLayout mActivityLayout;
 
     @InjectView(R.id.inboxLayout)
     RelativeLayout mInboxLayout;
@@ -105,13 +106,13 @@ public class Main extends RoboSherlockFragmentActivity{
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(mOverviewFragment, "Overview");
+            selectItem(mActivityFragment, "Overview");
         }
 
-        mOverviewLayout.setOnClickListener(new View.OnClickListener() {
+        mActivityLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectItem(mOverviewFragment, "Overview");
+                selectItem(mActivityFragment, "Activity");
             }
         });
 

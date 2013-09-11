@@ -26,7 +26,7 @@ public class InboxFragment extends RoboSherlockListFragment implements LoaderMan
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getActivity().getSupportLoaderManager().restartLoader(1, null, this);
+        getActivity().getSupportLoaderManager().restartLoader(2, null, this);
     }
 
     @Override
@@ -39,8 +39,6 @@ public class InboxFragment extends RoboSherlockListFragment implements LoaderMan
         if(inbox != null){
             updateView(inbox);
         }
-
-        setListShown(true);
     }
 
     private void updateView(Inbox inbox) {

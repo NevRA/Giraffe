@@ -7,8 +7,6 @@ import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFra
 public class OverviewFragment extends RoboSherlockListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);    //To change body of overridden methods use File | Settings | File Templates.
-
-        setListShown(true);
+        super.onViewCreated(view, savedInstanceState);
     }
 }

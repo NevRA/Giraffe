@@ -14,4 +14,5 @@
     <string name="main_drawer_overview_label">Overview</string>
     <string name="main_drawer_inbox_label">Inbox</string>
     <string name="main_drawer_actions_label">Actions</string>
+    <string name="main_drawer_activity_label">Activity</string>
 </resources>

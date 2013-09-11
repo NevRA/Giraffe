@@ -9,6 +9,7 @@ import com.home.giraffe.interfaces.IConnector;
 import com.home.giraffe.interfaces.IRequestsManager;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
+import com.home.giraffe.objects.Activities;
 import com.home.giraffe.objects.Inbox;
 import com.home.giraffe.objects.Person;
 
@@ -59,5 +60,12 @@ public class RequestsManager implements IRequestsManager {
         String inbox = mSettingsManager.getCommunityUrl() + Constants.INBOX;
 
         return mGson.fromJson(mConnector.getRequest(inbox).getBody(), Inbox.class);
+    }
+
+    @Override
+    public Activities getActivities() throws Exception {
+        String activities = mSettingsManager.getCommunityUrl() + Constants.ACTIVITIES;
+
+        return mGson.fromJson(mConnector.getRequest(activities).getBody(), Activities.class);
     }
 }
