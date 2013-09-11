@@ -6,14 +6,9 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFragment;
 import com.home.giraffe.objects.Activities;
-import com.home.giraffe.objects.JiveContainer;
 import com.home.giraffe.tasks.GetActivitiesTask;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ActivityFragment extends RoboSherlockListFragment implements LoaderManager.LoaderCallbacks<Activities> {
 
@@ -42,15 +37,7 @@ public class ActivityFragment extends RoboSherlockListFragment implements Loader
     }
 
     private void updateView(Activities activities) {
-
-        List<String> data = new ArrayList<String>();
-        for (JiveContainer container : activities.getList()) {
-            String title = container.getTitle();
-            if (title != null)
-                data.add(container.getTitle());
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, data);
+        JiveContainerAdapter adapter = new JiveContainerAdapter(getActivity(), android.R.layout.simple_list_item_1, activities.getList());
         setListAdapter(adapter);
     }
 
