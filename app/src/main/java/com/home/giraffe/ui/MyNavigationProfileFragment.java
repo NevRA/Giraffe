@@ -14,11 +14,11 @@ import com.home.giraffe.Constants;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.interfaces.ISettingsManager;
-import com.home.giraffe.objects.Person;
+import com.home.giraffe.objects.Author;
 import com.home.giraffe.tasks.GetUserProfileTask;
 import roboguice.inject.InjectView;
 
-public class MyNavigationProfileFragment extends RoboSherlockFragment implements LoaderManager.LoaderCallbacks<Person>  {
+public class MyNavigationProfileFragment extends RoboSherlockFragment implements LoaderManager.LoaderCallbacks<Author>  {
 
     @Inject
     IImageLoader mImageLoader;
@@ -50,14 +50,14 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
     }
 
     @Override
-    public Loader<Person> onCreateLoader(int i, Bundle bundle) {
+    public Loader<Author> onCreateLoader(int i, Bundle bundle) {
         return new GetUserProfileTask(getActivity(), Constants.ME);
     }
 
     @Override
-    public void onLoadFinished(Loader<Person> personLoader, Person person) {
-        if(person != null){
-            updateView(person);
+    public void onLoadFinished(Loader<Author> personLoader, Author author) {
+        if(author != null){
+            updateView(author);
         }
     }
 
@@ -67,15 +67,15 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
         mImageLoader.DisplayImage(mSettingsManager.getCommunityUrl() + String.format(Constants.AVATAR, mSettingsManager.getUserId()), userPic);
     }
 
-    private void updateView(Person person) {
-        mSettingsManager.setUserDisplayName(person.getDisplayName());
-        mSettingsManager.setUserJobTitle(person.getJobTitle());
-        mSettingsManager.setUserId(person.getId());
+    private void updateView(Author author) {
+        mSettingsManager.setUserDisplayName(author.getDisplayName());
+        mSettingsManager.setUserJobTitle(author.getJobTitle());
+        mSettingsManager.setUserId(author.getId());
 
         updateView();
     }
 
     @Override
-    public void onLoaderReset(Loader<Person> personLoader) {
+    public void onLoaderReset(Loader<Author> personLoader) {
     }
 }

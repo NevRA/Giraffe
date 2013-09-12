@@ -2,6 +2,7 @@ package com.home.giraffe.objects;
 
 public class JiveObject {
     private String id;
+    private String summary;
     private String displayName;
     private String objectType;
 
@@ -11,6 +12,10 @@ public class JiveObject {
 
     public String getId() {
         return id;
+    }
+
+    public String getSummary() {
+        return summary;
     }
 
     public JiveTypes getObjectType() {

@@ -9,9 +9,7 @@ import com.home.giraffe.interfaces.IConnector;
 import com.home.giraffe.interfaces.IRequestsManager;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
-import com.home.giraffe.objects.Activities;
-import com.home.giraffe.objects.Inbox;
-import com.home.giraffe.objects.Person;
+import com.home.giraffe.objects.*;
 
 public class RequestsManager implements IRequestsManager {
     @Inject
@@ -42,17 +40,17 @@ public class RequestsManager implements IRequestsManager {
         mSettingsManager.setCommunityUrl(communityUrl);
         mSettingsManager.setUserToken(token);
 
-        Person me = getUserInfo(Constants.ME);
+        Author me = getUserInfo(Constants.ME);
         mSettingsManager.setUserDisplayName(me.getDisplayName());
         mSettingsManager.setUserJobTitle(me.getJobTitle());
         mSettingsManager.setUserId(me.getId());
     }
 
     @Override
-    public Person getUserInfo(String userId) throws Exception {
+    public Author getUserInfo(String userId) throws Exception {
         String profile = mSettingsManager.getCommunityUrl() + Constants.PEOPLE + userId;
 
-        return mGson.fromJson(mConnector.getRequest(profile).getBody(), Person.class);
+        return mGson.fromJson(mConnector.getRequest(profile).getBody(), Author.class);
     }
 
     @Override
@@ -66,6 +64,14 @@ public class RequestsManager implements IRequestsManager {
     public Activities getActivities() throws Exception {
         String activities = mSettingsManager.getCommunityUrl() + Constants.ACTIVITIES;
 
-        return mGson.fromJson(mConnector.getRequest(activities).getBody(), Activities.class);
+        Activities result =  mGson.fromJson(mConnector.getRequest(activities).getBody(), Activities.class);
+        for (JiveContainer container : result.getList()){
+            if(container.getType() == JiveTypes.JiveMessage){
+                Discussion discussion =  mGson.fromJson(mConnector.getRequest(container.getParentId()).getBody(), Discussion.class);
+                container.setDiscussion(discussion);
+            }
+        }
+
+        return result;
     }
 }

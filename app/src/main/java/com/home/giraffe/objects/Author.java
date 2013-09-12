@@ -1,10 +1,10 @@
 package com.home.giraffe.objects;
 
 
-public class Person {
-    private String displayName;
-    private int id;
-    private Jive jive;
+public class Author {
+    String displayName;
+    int id;
+    Jive jive;
 
     public String getDisplayName() {
         return displayName;

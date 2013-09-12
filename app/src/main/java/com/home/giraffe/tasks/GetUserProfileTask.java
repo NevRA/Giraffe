@@ -1,9 +1,9 @@
 package com.home.giraffe.tasks;
 
 import android.support.v4.app.FragmentActivity;
-import com.home.giraffe.objects.Person;
+import com.home.giraffe.objects.Author;
 
-public class GetUserProfileTask extends BaseTask<Person> {
+public class GetUserProfileTask extends BaseTask<Author> {
 
     private String mUserId;
 
@@ -13,7 +13,7 @@ public class GetUserProfileTask extends BaseTask<Person> {
     }
 
     @Override
-    public Person loadInBackground() {
+    public Author loadInBackground() {
         try {
             return getRequestsManager().getUserInfo(mUserId);
         } catch (Exception e) {

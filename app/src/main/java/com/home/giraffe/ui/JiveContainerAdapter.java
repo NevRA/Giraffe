@@ -5,19 +5,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.inject.Inject;
 import com.home.giraffe.R;
+import com.home.giraffe.interfaces.IImageLoader;
+import com.home.giraffe.objects.Discussion;
 import com.home.giraffe.objects.JiveContainer;
+import roboguice.RoboGuice;
 
 import java.util.List;
 
 public class JiveContainerAdapter extends ArrayAdapter<JiveContainer> {
+    IImageLoader mImageLoader;
 
     private List<JiveContainer> mItems;
 
     public JiveContainerAdapter(Context context, int textViewResourceId, List<JiveContainer> objects) {
         super(context, textViewResourceId, objects);
         mItems = objects;
+        mImageLoader = RoboGuice.getInjector(context).getProvider(IImageLoader.class).get();
     }
 
     @Override
@@ -63,8 +70,26 @@ public class JiveContainerAdapter extends ArrayAdapter<JiveContainer> {
 
     private View getDiscussionView(JiveContainer container) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.common_object, null);
+
+        ImageView icon = (ImageView) view.findViewById(R.id.icon);
+        if(container.isQuestion()){
+            icon.setImageResource(R.drawable.ic_question_discussion);
+        }
+        else{
+            icon.setImageResource(R.drawable.ic_discussion);
+        }
+
+        TextView userDisplayName = (TextView) view.findViewById(R.id.userDisplayName);
+        userDisplayName.setText(container.getUserDisplayName());
+
         TextView title = (TextView) view.findViewById(R.id.title);
         title.setText(container.getTitle());
+
+        TextView content = (TextView) view.findViewById(R.id.content);
+        content.setText(container.getObjectSummary());
+
+        ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
+        mImageLoader.DisplayImage(container.getUserAvatar(), avatar);
 
         return view;
     }
@@ -82,6 +107,30 @@ public class JiveContainerAdapter extends ArrayAdapter<JiveContainer> {
     }
 
     private View getMessageView(JiveContainer container) {
-        return getUnknownView();
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.common_object, null);
+
+        ImageView icon = (ImageView) view.findViewById(R.id.icon);
+        if(container.isQuestion()){
+            icon.setImageResource(R.drawable.ic_question_discussion);
+        }
+        else{
+            icon.setImageResource(R.drawable.ic_discussion);
+        }
+
+        Discussion discussion = container.getDiscussion();
+
+        TextView userDisplayName = (TextView) view.findViewById(R.id.userDisplayName);
+        userDisplayName.setText(discussion.getAuthor().getDisplayName());
+
+        TextView title = (TextView) view.findViewById(R.id.title);
+        title.setText(container.getTitle());
+
+        TextView content = (TextView) view.findViewById(R.id.content);
+        content.setText(container.getParentSummary());
+
+        ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
+        mImageLoader.DisplayImage(container.getUserAvatar(), avatar);
+
+        return view;
     }
 }

@@ -11,7 +11,7 @@
                   android:minHeight="80dp"
                   android:layout_marginBottom="10dp"
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content" android:padding="5dp">
+                  android:layout_height="wrap_content" android:padding="10dp">
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                       android:orientation="horizontal"
                       android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             <ImageView
                     android:id="@+id/icon"
                     android:layout_width="24dp"
-                    android:layout_height="24dp" android:background="@drawable/ic_discussion"
+                    android:layout_height="24dp"
                     android:layout_gravity="center"/>
             <TextView
                     android:id="@+id/title"
@@ -32,7 +32,34 @@
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp" android:background="@color/drawer_separator_color" android:clickable="true"
-                android:layout_marginTop="5dp" android:layout_marginBottom="5dp">
+                android:layout_marginTop="10dp" android:layout_marginBottom="10dp">
         </FrameLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:id="@+id/avatar" android:layout_gravity="top"/>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-3dp"
+                    android:layout_marginLeft="10dp">
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userDisplayName" android:textStyle="bold" android:text="John Smith"
+                        android:layout_gravity="top" />
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/content" android:ellipsize="end"
+                        android:maxLines="6" android:longClickable="false"
+                        android:text="Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
