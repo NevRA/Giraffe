@@ -7,7 +7,11 @@ import com.home.giraffe.interfaces.ISettingsManager;
 import org.apache.http.cookie.Cookie;
 
 public class NetworkUtils {
-    public static String getTokenFromCookies(Cookie[] cookies){
+    @Inject
+    ISettingsManager mSettingsManager;
+
+
+    public String getTokenFromCookies(Cookie[] cookies){
         for (Cookie cookie : cookies){
             if(!TextUtils.isEmpty(cookie.getValue()) && cookie.getName().equals(Constants.RememberMeCookie)){
                 return cookie.getValue();
@@ -15,5 +19,9 @@ public class NetworkUtils {
         }
 
         return null;
+    }
+
+    public String getMyAvatarUrl(){
+       return mSettingsManager.getCommunityUrl() + String.format(Constants.AVATAR, mSettingsManager.getUserId());
     }
 }

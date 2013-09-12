@@ -14,6 +14,7 @@ import com.home.giraffe.Constants;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.interfaces.ISettingsManager;
+import com.home.giraffe.network.NetworkUtils;
 import com.home.giraffe.objects.Author;
 import com.home.giraffe.tasks.GetUserProfileTask;
 import roboguice.inject.InjectView;
@@ -25,6 +26,9 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
 
     @Inject
     ISettingsManager mSettingsManager;
+
+    @Inject
+    NetworkUtils mNetworkUtils;
 
     @InjectView(R.id.userDisplayName)
     TextView userDisplayName;
@@ -64,7 +68,7 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
     private void updateView() {
         userDisplayName.setText(mSettingsManager.getUserDisplayName());
         userJobTitle.setText(mSettingsManager.getUserJobTitle());
-        mImageLoader.DisplayImage(mSettingsManager.getCommunityUrl() + String.format(Constants.AVATAR, mSettingsManager.getUserId()), userPic);
+        mImageLoader.DisplayImage(mNetworkUtils.getMyAvatarUrl(), userPic);
     }
 
     private void updateView(Author author) {

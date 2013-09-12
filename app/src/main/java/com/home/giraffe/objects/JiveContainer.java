@@ -20,8 +20,8 @@ public class JiveContainer {
         return object.getId();
     }
 
-    public String getParentId() {
-        return object.getId();
+    public Jive getJive() {
+        return jive;
     }
 
     public JiveTypes getType() {

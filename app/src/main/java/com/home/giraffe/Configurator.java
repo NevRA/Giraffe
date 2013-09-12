@@ -5,6 +5,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.home.giraffe.interfaces.*;
 import com.home.giraffe.network.Connector;
+import com.home.giraffe.network.NetworkUtils;
 import com.home.giraffe.network.RequestsManager;
 import com.home.giraffe.settings.SettingsManager;
 import com.home.giraffe.ui.UiManager;
@@ -18,6 +19,7 @@ public class Configurator extends AbstractModule {
         bind(IUiManager.class).to(UiManager.class).in(Scopes.SINGLETON);
         bind(IImageLoader.class).to(ImageLoader.class).in(Scopes.SINGLETON);
         bind(EventBus.class).in(Scopes.SINGLETON);
+        bind(NetworkUtils.class).in(Scopes.SINGLETON);
         bind(IConnector.class).to(Connector.class);
     }
 }

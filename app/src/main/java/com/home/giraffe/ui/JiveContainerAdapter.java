@@ -12,6 +12,7 @@ import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.objects.Discussion;
 import com.home.giraffe.objects.JiveContainer;
+import org.jsoup.Jsoup;
 import roboguice.RoboGuice;
 
 import java.util.List;
@@ -118,18 +119,21 @@ public class JiveContainerAdapter extends ArrayAdapter<JiveContainer> {
         }
 
         Discussion discussion = container.getDiscussion();
+        if(discussion == null){
+            return getUnknownView();
+        }
 
         TextView userDisplayName = (TextView) view.findViewById(R.id.userDisplayName);
         userDisplayName.setText(discussion.getAuthor().getDisplayName());
 
         TextView title = (TextView) view.findViewById(R.id.title);
-        title.setText(container.getTitle());
+        title.setText(discussion.getSubject());
 
         TextView content = (TextView) view.findViewById(R.id.content);
-        content.setText(container.getParentSummary());
+        content.setText(Jsoup.parse(discussion.getContent().getText()).text());
 
         ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
-        mImageLoader.DisplayImage(container.getUserAvatar(), avatar);
+        mImageLoader.DisplayImage(discussion.getAuthor().getResources().getAvatar().getRef(), avatar);
 
         return view;
     }

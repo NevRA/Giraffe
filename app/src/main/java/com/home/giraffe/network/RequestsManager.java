@@ -16,6 +16,9 @@ public class RequestsManager implements IRequestsManager {
     Gson mGson;
 
     @Inject
+    NetworkUtils mNetworkUtils;
+
+    @Inject
     IUiManager mUiManager;
 
     @Inject
@@ -32,7 +35,7 @@ public class RequestsManager implements IRequestsManager {
 
         HttpResponse loginResponse = mConnector.postRequest(loginUrl, credentialsBody, false);
 
-        String token = NetworkUtils.getTokenFromCookies(loginResponse.getCookies());
+        String token = mNetworkUtils.getTokenFromCookies(loginResponse.getCookies());
         if(token == null){
             throw new Exception(mUiManager.getString(R.string.signin_access_denied_error_message));
         }
@@ -66,8 +69,8 @@ public class RequestsManager implements IRequestsManager {
 
         Activities result =  mGson.fromJson(mConnector.getRequest(activities).getBody(), Activities.class);
         for (JiveContainer container : result.getList()){
-            if(container.getType() == JiveTypes.JiveMessage){
-                Discussion discussion =  mGson.fromJson(mConnector.getRequest(container.getParentId()).getBody(), Discussion.class);
+            if(container.getType() == JiveTypes.JiveMessage && container.getJive().getParent() != null){
+                Discussion discussion =  mGson.fromJson(mConnector.getRequest(container.getJive().getParent().getId()).getBody(), Discussion.class);
                 container.setDiscussion(discussion);
             }
         }

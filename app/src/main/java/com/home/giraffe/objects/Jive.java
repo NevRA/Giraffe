@@ -11,8 +11,8 @@ public class Jive {
 
     ArrayList<Profile> profile;
 
-    public String getParentId() {
-        return parent.getId();
+    public JiveObject getParent() {
+        return parent;
     }
 
     public String getParentSummary() {
