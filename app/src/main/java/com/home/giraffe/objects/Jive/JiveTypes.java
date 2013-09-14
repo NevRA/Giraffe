@@ -1,8 +1,9 @@
-package com.home.giraffe.objects;
+package com.home.giraffe.objects.Jive;
 
 public enum JiveTypes {
     Unknown,
     JiveMessage,
+    JiveComment,
     JiveInstance,
     JiveGroup,
     JivePerson,
@@ -10,4 +11,5 @@ public enum JiveTypes {
     JiveFile,
     JiveSpace,
     JiveProject,
+    JiveLevel,
 }

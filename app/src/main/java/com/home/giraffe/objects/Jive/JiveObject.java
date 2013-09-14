@@ -1,4 +1,4 @@
-package com.home.giraffe.objects;
+package com.home.giraffe.objects.Jive;
 
 public class JiveObject {
     private String id;
@@ -18,9 +18,13 @@ public class JiveObject {
         return summary;
     }
 
-    public JiveTypes getObjectType() {
+    public JiveTypes getType() {
         if (objectType.equals("jive:message")){
             return JiveTypes.JiveMessage;
+        }
+
+        if (objectType.equals("jive:comment")){
+            return JiveTypes.JiveComment;
         }
 
         if (objectType.equals("jive:instance")){
@@ -49,6 +53,10 @@ public class JiveObject {
 
         if (objectType.equals("jive:project")){
             return JiveTypes.JiveProject;
+        }
+
+        if (objectType.equals("jive:level")){
+            return JiveTypes.JiveLevel;
         }
 
         return JiveTypes.Unknown;

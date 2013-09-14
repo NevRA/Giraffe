@@ -1,6 +1,6 @@
-package com.home.giraffe.objects;
+package com.home.giraffe.objects.Jive;
 
-public class Inbox {
+public class JiveInbox {
     private int unread;
 
     public int getUnreadCount() {

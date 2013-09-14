@@ -1,4 +1,4 @@
-package com.home.giraffe.objects;
+package com.home.giraffe.objects.Jive;
 
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ public class Jive {
     boolean question;
     int replyCount;
 
-    ArrayList<Profile> profile;
+    ArrayList<JiveProfile> profile;
 
     public JiveObject getParent() {
         return parent;
@@ -28,7 +28,7 @@ public class Jive {
     }
 
     public String getJobTitle(){
-        for (Profile prof : profile){
+        for (JiveProfile prof : profile){
             if(prof.jive_label.equalsIgnoreCase("title")){
                 return prof.value;
             }

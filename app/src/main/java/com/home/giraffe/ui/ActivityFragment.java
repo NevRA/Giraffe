@@ -40,7 +40,7 @@ public class ActivityFragment extends RoboSherlockListFragment implements Loader
     }
 
     private void updateView(Activities activities) {
-        JiveContainerAdapter adapter = new JiveContainerAdapter(getActivity(), android.R.layout.simple_list_item_1, activities.getList());
+        ActivitiesAdapter adapter = new ActivitiesAdapter(getActivity(), android.R.layout.simple_list_item_1, activities.getItems());
         setListAdapter(adapter);
     }
 

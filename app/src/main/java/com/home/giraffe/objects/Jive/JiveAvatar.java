@@ -1,6 +1,6 @@
-package com.home.giraffe.objects;
+package com.home.giraffe.objects.Jive;
 
-public class Avatar {
+public class JiveAvatar {
     String ref;
 
     public String getRef() {

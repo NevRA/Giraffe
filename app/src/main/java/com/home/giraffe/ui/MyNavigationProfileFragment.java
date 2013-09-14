@@ -15,11 +15,11 @@ import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.network.NetworkUtils;
-import com.home.giraffe.objects.Author;
+import com.home.giraffe.objects.Jive.JiveAuthor;
 import com.home.giraffe.tasks.GetUserProfileTask;
 import roboguice.inject.InjectView;
 
-public class MyNavigationProfileFragment extends RoboSherlockFragment implements LoaderManager.LoaderCallbacks<Author>  {
+public class MyNavigationProfileFragment extends RoboSherlockFragment implements LoaderManager.LoaderCallbacks<JiveAuthor>  {
 
     @Inject
     IImageLoader mImageLoader;
@@ -54,14 +54,14 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
     }
 
     @Override
-    public Loader<Author> onCreateLoader(int i, Bundle bundle) {
+    public Loader<JiveAuthor> onCreateLoader(int i, Bundle bundle) {
         return new GetUserProfileTask(getActivity(), Constants.ME);
     }
 
     @Override
-    public void onLoadFinished(Loader<Author> personLoader, Author author) {
-        if(author != null){
-            updateView(author);
+    public void onLoadFinished(Loader<JiveAuthor> personLoader, JiveAuthor jiveAuthor) {
+        if(jiveAuthor != null){
+            updateView(jiveAuthor);
         }
     }
 
@@ -71,15 +71,15 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
         mImageLoader.DisplayImage(mNetworkUtils.getMyAvatarUrl(), userPic);
     }
 
-    private void updateView(Author author) {
-        mSettingsManager.setUserDisplayName(author.getDisplayName());
-        mSettingsManager.setUserJobTitle(author.getJobTitle());
-        mSettingsManager.setUserId(author.getId());
+    private void updateView(JiveAuthor jiveAuthor) {
+        mSettingsManager.setUserDisplayName(jiveAuthor.getDisplayName());
+        mSettingsManager.setUserJobTitle(jiveAuthor.getJobTitle());
+        mSettingsManager.setUserId(jiveAuthor.getId());
 
         updateView();
     }
 
     @Override
-    public void onLoaderReset(Loader<Author> personLoader) {
+    public void onLoaderReset(Loader<JiveAuthor> personLoader) {
     }
 }

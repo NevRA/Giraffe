@@ -1,11 +1,30 @@
 package com.home.giraffe.objects;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Activities {
-    private ArrayList<JiveContainer> list;
+    public Activities(){
+        setItems(Collections.synchronizedList(new ArrayList<BaseJiveObject>()));
+    }
 
-    public ArrayList<JiveContainer> getList() {
-        return list;
+    private List<BaseJiveObject> mItems;
+
+    public List<BaseJiveObject> getItems() {
+        return mItems;
+    }
+
+    public void setItems(List<BaseJiveObject> items) {
+        mItems = items;
+    }
+
+    public BaseJiveObject findItemById(String id){
+        for (BaseJiveObject object : getItems()) {
+            if (object.getId().equalsIgnoreCase(id)){
+                return object;
+            }
+        }
+        return null;
     }
 }

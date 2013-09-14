@@ -9,7 +9,7 @@ import com.home.giraffe.interfaces.IConnector;
 import com.home.giraffe.interfaces.IRequestsManager;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
-import com.home.giraffe.objects.*;
+import com.home.giraffe.objects.Jive.*;
 
 public class RequestsManager implements IRequestsManager {
     @Inject
@@ -43,38 +43,32 @@ public class RequestsManager implements IRequestsManager {
         mSettingsManager.setCommunityUrl(communityUrl);
         mSettingsManager.setUserToken(token);
 
-        Author me = getUserInfo(Constants.ME);
+        JiveAuthor me = getUserInfo(Constants.ME);
         mSettingsManager.setUserDisplayName(me.getDisplayName());
         mSettingsManager.setUserJobTitle(me.getJobTitle());
         mSettingsManager.setUserId(me.getId());
     }
 
     @Override
-    public Author getUserInfo(String userId) throws Exception {
+    public JiveAuthor getUserInfo(String userId) throws Exception {
         String profile = mSettingsManager.getCommunityUrl() + Constants.PEOPLE + userId;
-
-        return mGson.fromJson(mConnector.getRequest(profile).getBody(), Author.class);
+        return mGson.fromJson(mConnector.getRequest(profile).getBody(), JiveAuthor.class);
     }
 
     @Override
-    public Inbox getInbox() throws Exception {
+    public JiveInbox getInbox() throws Exception {
         String inbox = mSettingsManager.getCommunityUrl() + Constants.INBOX;
-
-        return mGson.fromJson(mConnector.getRequest(inbox).getBody(), Inbox.class);
+        return mGson.fromJson(mConnector.getRequest(inbox).getBody(), JiveInbox.class);
     }
 
     @Override
-    public Activities getActivities() throws Exception {
+    public JivePost getPost(String url) throws Exception {
+        return mGson.fromJson(mConnector.getRequest(url).getBody(), JivePost.class);
+    }
+
+    @Override
+    public JiveActivities getActivities() throws Exception {
         String activities = mSettingsManager.getCommunityUrl() + Constants.ACTIVITIES;
-
-        Activities result =  mGson.fromJson(mConnector.getRequest(activities).getBody(), Activities.class);
-        for (JiveContainer container : result.getList()){
-            if(container.getType() == JiveTypes.JiveMessage && container.getJive().getParent() != null){
-                Discussion discussion =  mGson.fromJson(mConnector.getRequest(container.getJive().getParent().getId()).getBody(), Discussion.class);
-                container.setDiscussion(discussion);
-            }
-        }
-
-        return result;
+        return mGson.fromJson(mConnector.getRequest(activities).getBody(), JiveActivities.class);
     }
 }

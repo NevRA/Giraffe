@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFragment;
 import com.google.inject.Inject;
 import com.home.giraffe.events.InboxUnreadCountEvent;
-import com.home.giraffe.objects.Inbox;
+import com.home.giraffe.objects.Jive.JiveInbox;
 import com.home.giraffe.tasks.GetInboxTask;
 import de.greenrobot.event.EventBus;
 
-public class InboxFragment extends RoboSherlockListFragment implements LoaderManager.LoaderCallbacks<Inbox>{
+public class InboxFragment extends RoboSherlockListFragment implements LoaderManager.LoaderCallbacks<JiveInbox>{
     @Inject
     EventBus mBus;
 
@@ -30,22 +30,22 @@ public class InboxFragment extends RoboSherlockListFragment implements LoaderMan
     }
 
     @Override
-    public Loader<Inbox> onCreateLoader(int i, Bundle bundle) {
+    public Loader<JiveInbox> onCreateLoader(int i, Bundle bundle) {
         return new GetInboxTask(getActivity());
     }
 
     @Override
-    public void onLoadFinished(Loader<Inbox> inboxLoader, Inbox inbox) {
+    public void onLoadFinished(Loader<JiveInbox> inboxLoader, JiveInbox inbox) {
         if(inbox != null){
             updateView(inbox);
         }
     }
 
-    private void updateView(Inbox inbox) {
+    private void updateView(JiveInbox inbox) {
         mBus.post(new InboxUnreadCountEvent(inbox.getUnreadCount()));
     }
 
     @Override
-    public void onLoaderReset(Loader<Inbox> inboxLoader) {
+    public void onLoaderReset(Loader<JiveInbox> inboxLoader) {
     }
 }

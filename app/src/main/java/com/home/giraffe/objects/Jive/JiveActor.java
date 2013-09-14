@@ -1,16 +1,15 @@
-package com.home.giraffe.objects;
+package com.home.giraffe.objects.Jive;
 
-public class Actor {
+public class JiveActor {
     String id;
     String displayName;
-    Image image;
+    JiveImage image;
 
     public String getId() {
         return id;
     }
-
-    public String getAvatar() {
-        return image.getUrl();
+    public JiveImage getImage() {
+        return image;
     }
 
     public String getDisplayName() {

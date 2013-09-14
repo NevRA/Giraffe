@@ -1,6 +1,6 @@
-package com.home.giraffe.objects;
+package com.home.giraffe.objects.Jive;
 
-public class Image {
+public class JiveImage {
     private String url;
 
     public String getUrl() {

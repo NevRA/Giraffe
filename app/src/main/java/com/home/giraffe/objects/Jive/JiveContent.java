@@ -1,7 +1,6 @@
-package com.home.giraffe.objects;
+package com.home.giraffe.objects.Jive;
 
-
-public class Content {
+public class JiveContent {
     private String text;
 
     public String getText() {
