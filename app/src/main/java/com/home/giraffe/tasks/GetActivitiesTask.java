@@ -30,7 +30,7 @@ public class GetActivitiesTask extends BaseTask<Activities> {
         return mActivities;
     }
 
-    private void processJiveContainer(JiveContainer jiveContainer) {
+    private void processJiveContainer(JiveContainer jiveContainer) throws Exception {
         JiveActor jiveActor = jiveContainer.getActor();
         JiveVerbTypes jiveVerbTypes = jiveContainer.getVerbType();
 
@@ -75,8 +75,48 @@ public class GetActivitiesTask extends BaseTask<Activities> {
 //                break;
     }
 
-    private void processJiveComment(JiveContainer jiveContainer) {
+    private void processJiveComment(JiveContainer jiveContainer) throws Exception {
+        JiveObject jiveParent = jiveContainer.getJive().getParent();
+        Post post = (Post)getObjectsStorage().get(jiveParent.getId());
 
+        if(post == null){
+            JivePost jivePost = mRequestsManager.getPost(jiveParent.getId());
+            Actor actor = (Actor)getObjectsStorage().get(jiveParent.getId());
+            if(actor == null){
+                JiveAuthor jiveAuthor = mRequestsManager.getUserInfo(jivePost.getAuthor().getId());
+                getObjectsStorage().add(Actor.fromJiveAuthor(jiveAuthor));
+            }
+
+            switch (jiveParent.getType()) {
+                case JiveDiscussion:
+                    post = new Discussion(jiveParent.getId());
+                    break;
+                case JiveDocument:
+                    post = new Document(jiveParent.getId());
+                    break;
+                case JiveFile:
+                    post = new File(jiveParent.getId());
+                    break;
+                case JivePoll:
+                    post = new Poll(jiveParent.getId());
+                    break;
+                case JivePost:
+                    post = new Post(jiveParent.getId());
+                    break;
+                default:
+                    return;
+            }
+
+            post.fromJivePost(jivePost);
+        }
+
+        getObjectsStorage().add(post);
+
+        ActivityItem activityItem = mActivities.getActivity(post.getId(), post.getType());
+        if(activityItem == null){
+            activityItem = new ActivityItem(post.getId(), post.getType());
+            mActivities.addActivity(activityItem);
+        }
     }
 
     private void processJivePost(JiveContainer jiveContainer) {
@@ -85,27 +125,24 @@ public class GetActivitiesTask extends BaseTask<Activities> {
         switch (object.getType()) {
             case JiveDiscussion:
                 post = new Discussion(object.getId());
-                post.fromJiveContainer(jiveContainer);
                 break;
             case JiveDocument:
                 post = new Document(object.getId());
-                post.fromJiveContainer(jiveContainer);
                 break;
             case JiveFile:
                 post = new File(object.getId());
-                post.fromJiveContainer(jiveContainer);
                 break;
             case JivePoll:
                 post = new Poll(object.getId());
-                post.fromJiveContainer(jiveContainer);
                 break;
             case JivePost:
                 post = new Post(object.getId());
-                post.fromJiveContainer(jiveContainer);
                 break;
             default:
                 return;
         }
+
+        post.fromJiveContainer(jiveContainer);
 
         getObjectsStorage().add(post);
 

@@ -33,17 +33,15 @@ public class Post extends BaseObjectWithContent {
         JiveActor jiveActor = jiveContainer.getActor();
         JiveObject jiveObject = jiveContainer.getObject();
 
-        setId(jiveObject.getId());
         setTitle(jiveContainer.getTitle());
         setContent(jiveObject.getSummary());
         setActorId(jiveActor.getId());
     }
 
-    public void fromJivePost(String id, JivePost jivePost) {
+    public void fromJivePost(JivePost jivePost) {
         JiveAuthor jiveAuthor = jivePost.getAuthor();
         JiveContent jiveContent = jivePost.getContent();
 
-        setId(id);
         setTitle(jivePost.getSubject());
         setContent(jiveContent.getText());
         setActorId(jiveAuthor.getId());
