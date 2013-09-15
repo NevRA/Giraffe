@@ -38,6 +38,8 @@ public class Post extends BaseObjectWithContent {
         JiveContent jiveContent = jivePost.getContent();
 
         setId(jivePost.getId());
+        setReplyCount(jivePost.getReplyCount());
+        setLikeCount(jivePost.getLikeCount());
         setTitle(jivePost.getSubject());
         setContent(jiveContent.getText());
         setActorId(jiveAuthor.getId());

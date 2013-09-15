@@ -91,6 +91,12 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
         ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
         mImageLoader.DisplayImage(actor.getAvatarUrl(), avatar);
 
+        TextView replies = (TextView) view.findViewById(R.id.replies);
+        replies.setText(Integer.toString(post.getReplyCount()));
+
+        TextView likes = (TextView) view.findViewById(R.id.likes);
+        likes.setText(Integer.toString(post.getLikeCount()));
+
         return view;
     }
 

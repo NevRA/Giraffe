@@ -9,7 +9,10 @@ import com.home.giraffe.interfaces.IConnector;
 import com.home.giraffe.interfaces.IRequestsManager;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
-import com.home.giraffe.objects.Jive.*;
+import com.home.giraffe.objects.Jive.JiveActivities;
+import com.home.giraffe.objects.Jive.JiveAuthor;
+import com.home.giraffe.objects.Jive.JiveInbox;
+import com.home.giraffe.objects.Jive.JivePost;
 
 public class RequestsManager implements IRequestsManager {
     @Inject
@@ -35,7 +38,7 @@ public class RequestsManager implements IRequestsManager {
         HttpResponse loginResponse = mConnector.postRequest(loginUrl, credentialsBody, false);
 
         String token = mNetworkUtils.getTokenFromCookies(loginResponse.getCookies());
-        if(token == null){
+        if (token == null) {
             throw new Exception(mUiManager.getString(R.string.signin_access_denied_error_message));
         }
 

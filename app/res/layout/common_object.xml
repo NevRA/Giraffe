@@ -61,5 +61,52 @@
                         android:text="Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit"/>
             </LinearLayout>
         </LinearLayout>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp" android:background="@color/drawer_separator_color" android:clickable="true"
+                android:layout_marginTop="10dp" android:layout_marginBottom="10dp">
+        </FrameLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/imageComment"
+                        android:background="@drawable/ic_comment"
+                        android:layout_alignParentLeft="true"/>
+                <TextView
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/imageComment"
+                        android:textColor="@color/gray"
+                        android:text="0"
+                        android:id="@+id/replies"
+                        />
+                <ImageView
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:layout_marginLeft="30dp"
+                        android:id="@+id/imageLike"
+                        android:layout_toRightOf="@+id/replies"
+                        android:background="@drawable/ic_like"/>
+                <TextView
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/imageLike"
+                        android:textColor="@color/gray"
+                        android:text="0"
+                        android:id="@+id/likes"
+                        />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

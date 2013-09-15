@@ -7,6 +7,8 @@ public class JivePost {
     private boolean question;
     private String type;
     private JiveResources resources;
+    private int replyCount;
+    private int likeCount;
 
     public String getId() {
         return getResources().getSelf().getRef();
@@ -26,6 +28,14 @@ public class JivePost {
 
     public boolean isQuestion(){
         return question;
+    }
+
+    public int getReplyCount(){
+        return replyCount;
+    }
+
+    public int getLikeCount(){
+        return likeCount;
     }
 
     public JiveResources getResources() {
