@@ -87,26 +87,7 @@ public class GetActivitiesTask extends BaseTask<Activities> {
                 getObjectsStorage().add(Actor.fromJiveAuthor(jiveAuthor));
             }
 
-            switch (jiveParent.getType()) {
-                case JiveDiscussion:
-                    post = new Discussion(jiveParent.getId());
-                    break;
-                case JiveDocument:
-                    post = new Document(jiveParent.getId());
-                    break;
-                case JiveFile:
-                    post = new File(jiveParent.getId());
-                    break;
-                case JivePoll:
-                    post = new Poll(jiveParent.getId());
-                    break;
-                case JivePost:
-                    post = new Post(jiveParent.getId());
-                    break;
-                default:
-                    return;
-            }
-
+            post = getPostFromObjectType(jiveParent);
             post.fromJivePost(jivePost);
         }
 
@@ -121,27 +102,7 @@ public class GetActivitiesTask extends BaseTask<Activities> {
 
     private void processJivePost(JiveContainer jiveContainer) {
         JiveObject object = jiveContainer.getObject();
-        Post post;
-        switch (object.getType()) {
-            case JiveDiscussion:
-                post = new Discussion(object.getId());
-                break;
-            case JiveDocument:
-                post = new Document(object.getId());
-                break;
-            case JiveFile:
-                post = new File(object.getId());
-                break;
-            case JivePoll:
-                post = new Poll(object.getId());
-                break;
-            case JivePost:
-                post = new Post(object.getId());
-                break;
-            default:
-                return;
-        }
-
+        Post post = getPostFromObjectType(object);
         post.fromJiveContainer(jiveContainer);
 
         getObjectsStorage().add(post);
@@ -163,5 +124,28 @@ public class GetActivitiesTask extends BaseTask<Activities> {
 
     private void processJivePromotion(JiveContainer jiveContainer) {
         //To change body of created methods use File | Settings | File Templates.
+    }
+
+    private Post getPostFromObjectType(JiveObject jiveObject){
+        Post post = null;
+        switch (jiveObject.getType()) {
+            case JiveDiscussion:
+                post = new Discussion(jiveObject.getId());
+                break;
+            case JiveDocument:
+                post = new Document(jiveObject.getId());
+                break;
+            case JiveFile:
+                post = new File(jiveObject.getId());
+                break;
+            case JivePoll:
+                post = new Poll(jiveObject.getId());
+                break;
+            case JivePost:
+                post = new Post(jiveObject.getId());
+                break;
+        }
+
+        return post;
     }
 }
