@@ -8,6 +8,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
+import org.apache.http.Header;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -71,7 +72,7 @@ public class Connector implements IConnector {
             throw new Exception(response.getStatusLine().getReasonPhrase());
         }
 
-        HttpEntity entity = response.getEntity();
+        HttpEntity entity = getEntityFromResponse(response);
 
         CookieStore cookieStore = mHttpClient.getCookieStore();
         Cookie[] cookies = cookieStore.getCookies().toArray(new Cookie[cookieStore.getCookies().size()]);
@@ -79,10 +80,26 @@ public class Connector implements IConnector {
         return new com.home.giraffe.network.HttpResponse(cookies, body);
     }
 
+    private HttpEntity getEntityFromResponse(HttpResponse response)
+    {
+        Header[] contentEncodings = response.getHeaders("Content-Encoding");
+        if (contentEncodings != null)
+            for (Header header : contentEncodings)
+            {
+                if (header.getValue().equalsIgnoreCase("gzip"))
+                {
+                    return new NetworkUtils.GzipDecompressingEntity(response.getEntity());
+                }
+            }
+
+        return response.getEntity();
+    }
+
     @Override
     public com.home.giraffe.network.HttpResponse getRequest(String url) throws Exception {
         HttpGet httpGet = new HttpGet(url);
-        httpGet.addHeader(new BasicHeader("Accept", "*/*"));
+        httpGet.addHeader("Accept-Encoding", "gzip");
+        httpGet.addHeader("Accept", "*/*");
         httpGet.addHeader("Cookie", Constants.RememberMeCookie + "=" + mSettingsManager.getUserToken());
         HttpResponse response = mHttpClient.execute(httpGet);
         return proceedResponse(response);
@@ -107,6 +124,7 @@ public class Connector implements IConnector {
         StringEntity entity = new StringEntity(body, HTTP.UTF_8);
         HttpPost httpPost = new HttpPost(url);
         httpPost.setEntity(entity);
+        httpPost.addHeader("Accept-Encoding", "gzip");
         httpPost.addHeader(new BasicHeader("Content-Type", "application/x-www-form-urlencoded"));
         httpPost.addHeader("Cookie", Constants.RememberMeCookie + "=" + mSettingsManager.getUserToken());
 
