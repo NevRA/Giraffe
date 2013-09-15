@@ -28,7 +28,7 @@ public class RequestsManager implements IRequestsManager {
     ISettingsManager mSettingsManager;
 
     @Override
-    public void signIn(String url, String userName, String userPassword) throws Exception {
+    public String signIn(String url, String userName, String userPassword) throws Exception {
         String communityUrl  = url.contains("http") || url.contains("https") ? url : "https://" + url;
         String loginUrl = communityUrl + Constants.LOGIN;
         String credentialsBody = String.format("username=%s&password=%s&autoLogin=true", Uri.encode(userName), Uri.encode(userPassword));
@@ -40,19 +40,12 @@ public class RequestsManager implements IRequestsManager {
             throw new Exception(mUiManager.getString(R.string.signin_access_denied_error_message));
         }
 
-        mSettingsManager.setCommunityUrl(communityUrl);
-        mSettingsManager.setUserToken(token);
-
-        JiveAuthor me = getUserInfo(Constants.ME);
-        mSettingsManager.setUserDisplayName(me.getDisplayName());
-        mSettingsManager.setUserJobTitle(me.getJobTitle());
-        mSettingsManager.setUserId(me.getId());
+        return token;
     }
 
     @Override
     public JiveAuthor getUserInfo(String userId) throws Exception {
-        String profile = mSettingsManager.getCommunityUrl() + Constants.PEOPLE + userId;
-        return mGson.fromJson(mConnector.getRequest(profile).getBody(), JiveAuthor.class);
+        return mGson.fromJson(mConnector.getRequest(userId).getBody(), JiveAuthor.class);
     }
 
     @Override

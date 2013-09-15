@@ -52,6 +52,10 @@ public class JivePost {
             return JiveTypes.JiveFile;
         }
 
+        if (type.equals("document")){
+            return JiveTypes.JiveDocument;
+        }
+
         if (type.equals("space")){
             return JiveTypes.JiveSpace;
         }
@@ -62,6 +66,10 @@ public class JivePost {
 
         if (type.equals("level")){
             return JiveTypes.JiveLevel;
+        }
+
+        if (type.equals("task")){
+            return JiveTypes.JiveTask;
         }
 
         return JiveTypes.Unknown;

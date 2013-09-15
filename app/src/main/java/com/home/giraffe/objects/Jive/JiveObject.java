@@ -47,6 +47,10 @@ public class JiveObject {
             return JiveTypes.JiveFile;
         }
 
+        if (objectType.equals("jive:document")){
+            return JiveTypes.JiveDocument;
+        }
+
         if (objectType.equals("jive:space")){
             return JiveTypes.JiveSpace;
         }
@@ -57,6 +61,18 @@ public class JiveObject {
 
         if (objectType.equals("jive:level")){
             return JiveTypes.JiveLevel;
+        }
+
+        if (objectType.equals("jive:task")){
+            return JiveTypes.JiveTask;
+        }
+
+        if (objectType.equals("jive:poll")){
+            return JiveTypes.JivePoll;
+        }
+
+        if (objectType.equals("jive:post")){
+            return JiveTypes.JivePost;
         }
 
         return JiveTypes.Unknown;

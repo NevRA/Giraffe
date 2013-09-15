@@ -1,9 +1,14 @@
 package com.home.giraffe.objects.Jive;
 
 public class JiveResources {
-    private JiveAvatar avatar;
+    private JiveRef avatar;
+    private JiveRef self;
 
-    public JiveAvatar getAvatar() {
+    public JiveRef getAvatar() {
         return avatar;
+    }
+
+    public JiveRef getSelf() {
+        return self;
     }
 }

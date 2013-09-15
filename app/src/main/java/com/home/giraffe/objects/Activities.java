@@ -5,24 +5,25 @@ import java.util.Collections;
 import java.util.List;
 
 public class Activities {
-    public Activities(){
-        setItems(Collections.synchronizedList(new ArrayList<BaseJiveObject>()));
+    private List<ActivityItem> mActivityItems;
+
+    public Activities() {
+        mActivityItems = Collections.synchronizedList(new ArrayList<ActivityItem>());
     }
 
-    private List<BaseJiveObject> mItems;
-
-    public List<BaseJiveObject> getItems() {
-        return mItems;
+    public List<ActivityItem> getActivities() {
+        return mActivityItems;
     }
 
-    public void setItems(List<BaseJiveObject> items) {
-        mItems = items;
+    public void addActivity(ActivityItem activityItem) {
+        mActivityItems.add(activityItem);
     }
 
-    public BaseJiveObject findItemById(String id){
-        for (BaseJiveObject object : getItems()) {
-            if (object.getId().equalsIgnoreCase(id)){
-                return object;
+    public ActivityItem getActivity(String id, BaseObjectTypes type) {
+        for (ActivityItem activity : getActivities()) {
+            if (activity.getId().equalsIgnoreCase(id) &&
+                    activity.getType() == type) {
+                return activity;
             }
         }
         return null;

@@ -2,18 +2,30 @@ package com.home.giraffe.tasks;
 
 import android.support.v4.app.FragmentActivity;
 import com.google.inject.Inject;
+import com.home.giraffe.Utils;
 import com.home.giraffe.interfaces.IRequestsManager;
+import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
+import com.home.giraffe.storages.ObjectsStorage;
 import roboguice.content.RoboAsyncTaskLoader;
 
 import java.lang.ref.WeakReference;
 
 public abstract class BaseTask<T> extends RoboAsyncTaskLoader<T> {
     @Inject
+    ObjectsStorage mObjectsStorage;
+
+    @Inject
+    Utils mUtils;
+
+    @Inject
     IRequestsManager mRequestsManager;
 
     @Inject
     IUiManager mUiManager;
+
+    @Inject
+    ISettingsManager mSettingsManager;
 
     WeakReference<FragmentActivity> mActivity;
 
@@ -43,5 +55,17 @@ public abstract class BaseTask<T> extends RoboAsyncTaskLoader<T> {
 
     public IUiManager getUiManager() {
         return mUiManager;
+    }
+
+    public ObjectsStorage getObjectsStorage() {
+        return mObjectsStorage;
+    }
+
+    public Utils getUtils() {
+        return mUtils;
+    }
+
+    public ISettingsManager getSettingsManager(){
+        return mSettingsManager;
     }
 }

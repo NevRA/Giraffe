@@ -55,7 +55,7 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
 
     @Override
     public Loader<JiveAuthor> onCreateLoader(int i, Bundle bundle) {
-        return new GetUserProfileTask(getActivity(), Constants.ME);
+        return new GetUserProfileTask(getActivity(), mSettingsManager.getUserId());
     }
 
     @Override

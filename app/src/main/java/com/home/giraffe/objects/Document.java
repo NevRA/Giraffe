@@ -1,12 +1,12 @@
 package com.home.giraffe.objects;
 
-public class Comment extends BaseObject {
-    public Comment(String id) {
+public class Document extends Post {
+    public Document(String id) {
         super(id);
     }
 
     @Override
     public BaseObjectTypes getType() {
-        return BaseObjectTypes.Comment;
+        return BaseObjectTypes.Document;
     }
 }

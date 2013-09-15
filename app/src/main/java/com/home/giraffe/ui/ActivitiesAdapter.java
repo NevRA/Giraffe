@@ -9,69 +9,76 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
-import com.home.giraffe.objects.BaseJiveObject;
-import com.home.giraffe.objects.Discussion;
+import com.home.giraffe.objects.ActivityItem;
+import com.home.giraffe.objects.Actor;
+import com.home.giraffe.objects.BaseObject;
+import com.home.giraffe.objects.Post;
+import com.home.giraffe.storages.ObjectsStorage;
 import roboguice.RoboGuice;
 
 import java.util.List;
 
-public class ActivitiesAdapter extends ArrayAdapter<BaseJiveObject> {
+public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
     IImageLoader mImageLoader;
+    ObjectsStorage mObjectsStorage;
 
-    private List<BaseJiveObject> mObjects;
+    private List<ActivityItem> mItems;
 
-    public ActivitiesAdapter(Context context, int textViewResourceId, List<BaseJiveObject> objects) {
+    public ActivitiesAdapter(Context context, int textViewResourceId, List<ActivityItem> objects) {
         super(context, textViewResourceId, objects);
-        mObjects = objects;
+        mItems = objects;
         mImageLoader = RoboGuice.getInjector(context).getProvider(IImageLoader.class).get();
+        mObjectsStorage = RoboGuice.getInjector(context).getProvider(ObjectsStorage.class).get();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        BaseJiveObject object = mObjects.get(position);
-        switch (object.getType()) {
-            case Message:
-                return getMessageView(object);
-            case Instance:
-                return getInstanceView(object);
-            case Group:
-                return getGroupView(object);
-            case Person:
-                return getPersonView(object);
+        ActivityItem item = mItems.get(position);
+        switch (item.getType()) {
+
+            case Actor:
+                break;
+            case Comment:
+                break;
             case Discussion:
-                return getDiscussionView((Discussion)object);
             case File:
-                return getFileView(object);
-            case Space:
-                return getSpaceView(object);
-            case Project:
-                return getProjectView(object);
-            default:
-                return getUnknownView();
+            case Document:
+                return getPostView(item);
+            case Poll:
+                break;
+            case Promotion:
+                break;
+            case Like:
+                break;
         }
+
+        return getUnknownView();
     }
 
     private View getUnknownView() {
         return LayoutInflater.from(getContext()).inflate(R.layout.unknown_object, null);
     }
 
-    private View getProjectView(BaseJiveObject object) {
+    private View getProjectView(BaseObject object) {
         return getUnknownView();
     }
 
-    private View getSpaceView(BaseJiveObject object) {
+    private View getSpaceView(BaseObject object) {
         return getUnknownView();
     }
 
-    private View getFileView(BaseJiveObject object) {
+    private View getFileView(BaseObject object) {
         return getUnknownView();
     }
 
-    private View getDiscussionView(Discussion discussion) {
+    private View getPostView(ActivityItem activityItem) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.common_object, null);
 
+        Post post = (Post)mObjectsStorage.get(activityItem.getId());
+        Actor actor = (Actor)mObjectsStorage.get(post.getActorId());
+
         ImageView icon = (ImageView) view.findViewById(R.id.icon);
-        if(discussion.isQuestion()){
+        if(/*activityItem.isQuestion() TODO*/true){
             icon.setImageResource(R.drawable.ic_question_discussion);
         }
         else{
@@ -79,33 +86,33 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseJiveObject> {
         }
 
         TextView userDisplayName = (TextView) view.findViewById(R.id.userDisplayName);
-        userDisplayName.setText(discussion.getAuthor().getDisplayName());
+        userDisplayName.setText(actor.getDisplayName());
 
         TextView title = (TextView) view.findViewById(R.id.title);
-        title.setText(discussion.getTitle());
+        title.setText(post.getTitle());
 
         TextView content = (TextView) view.findViewById(R.id.content);
-        content.setText(discussion.getContent());
+        content.setText(post.getContent());
 
         ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
-        mImageLoader.DisplayImage(discussion.getAuthor().getAvatarUrl(), avatar);
+        mImageLoader.DisplayImage(actor.getAvatarUrl(), avatar);
 
         return view;
     }
 
-    private View getPersonView(BaseJiveObject object) {
+    private View getPersonView(BaseObject object) {
         return getUnknownView();
     }
 
-    private View getGroupView(BaseJiveObject object) {
+    private View getGroupView(BaseObject object) {
         return getUnknownView();
     }
 
-    private View getInstanceView(BaseJiveObject object) {
+    private View getInstanceView(BaseObject object) {
         return getUnknownView();
     }
 
-    private View getMessageView(BaseJiveObject object) {
+    private View getMessageView(BaseObject object) {
         return getUnknownView();
     }
 }

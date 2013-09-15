@@ -6,7 +6,7 @@ import com.home.giraffe.objects.Jive.JiveInbox;
 import com.home.giraffe.objects.Jive.JivePost;
 
 public interface IRequestsManager {
-    void signIn(String serverAddress, String userName, String userPassword) throws Exception;
+    String signIn(String serverAddress, String userName, String userPassword) throws Exception;
     JiveAuthor getUserInfo(String userName) throws Exception;
     JiveInbox getInbox() throws Exception;
     JivePost getPost(String url) throws Exception;

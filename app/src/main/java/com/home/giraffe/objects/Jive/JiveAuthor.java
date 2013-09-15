@@ -3,7 +3,6 @@ package com.home.giraffe.objects.Jive;
 
 public class JiveAuthor {
     String displayName;
-    int id;
     Jive jive;
     private JiveResources resources;
 
@@ -11,8 +10,8 @@ public class JiveAuthor {
         return displayName;
     }
 
-    public int getId() {
-        return id;
+    public String getId() {
+        return getResources().getSelf().getRef();
     }
 
     public String getJobTitle(){

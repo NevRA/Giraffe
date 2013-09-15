@@ -27,7 +27,7 @@ public class NetworkUtils {
     }
 
     public String getMyAvatarUrl(){
-       return mSettingsManager.getCommunityUrl() + String.format(Constants.AVATAR, mSettingsManager.getUserId());
+       return mSettingsManager.getUserId() + "/" + "avatar";
     }
 
     public static class GzipDecompressingEntity extends HttpEntityWrapper

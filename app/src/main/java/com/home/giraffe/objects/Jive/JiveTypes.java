@@ -8,8 +8,12 @@ public enum JiveTypes {
     JiveGroup,
     JivePerson,
     JiveDiscussion,
+    JiveDocument,
     JiveFile,
     JiveSpace,
     JiveProject,
+    JivePoll,
+    JiveTask,
     JiveLevel,
+    JivePost,
 }

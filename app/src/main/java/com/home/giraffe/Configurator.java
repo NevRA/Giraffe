@@ -7,7 +7,9 @@ import com.home.giraffe.interfaces.*;
 import com.home.giraffe.network.Connector;
 import com.home.giraffe.network.NetworkUtils;
 import com.home.giraffe.network.RequestsManager;
+import com.home.giraffe.objects.Post;
 import com.home.giraffe.settings.SettingsManager;
+import com.home.giraffe.storages.ObjectsStorage;
 import com.home.giraffe.ui.UiManager;
 import de.greenrobot.event.EventBus;
 
@@ -20,6 +22,8 @@ public class Configurator extends AbstractModule {
         bind(IImageLoader.class).to(ImageLoader.class).in(Scopes.SINGLETON);
         bind(EventBus.class).in(Scopes.SINGLETON);
         bind(NetworkUtils.class).in(Scopes.SINGLETON);
+        bind(Utils.class).in(Scopes.SINGLETON);
+        bind(ObjectsStorage.class).in(Scopes.SINGLETON);
         bind(IConnector.class).to(Connector.class);
     }
 }

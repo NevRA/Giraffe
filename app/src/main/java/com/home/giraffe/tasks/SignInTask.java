@@ -1,6 +1,9 @@
 package com.home.giraffe.tasks;
 
 import android.support.v4.app.FragmentActivity;
+import com.home.giraffe.Constants;
+import com.home.giraffe.interfaces.ISettingsManager;
+import com.home.giraffe.objects.Jive.JiveAuthor;
 import com.home.giraffe.objects.Jive.JiveInbox;
 
 public class SignInTask extends BaseTask {
@@ -19,7 +22,18 @@ public class SignInTask extends BaseTask {
     @Override
     public JiveInbox loadInBackground() {
         try {
-            getRequestsManager().signIn(mUrl, mUserName, mUserPassword);
+            String token = getRequestsManager().signIn(mUrl, mUserName, mUserPassword);
+
+            ISettingsManager settingsManager = getSettingsManager();
+
+            settingsManager.setCommunityUrl(mUrl);
+            settingsManager.setUserToken(token);
+
+            JiveAuthor me = getRequestsManager().getUserInfo(mUrl + Constants.PEOPLE + Constants.ME);
+            settingsManager.setUserDisplayName(me.getDisplayName());
+            settingsManager.setUserJobTitle(me.getJobTitle());
+            settingsManager.setUserId(me.getId());
+
         } catch (Exception e) {
             getUiManager().showError(getActivity(), e);
         }
