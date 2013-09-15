@@ -106,7 +106,7 @@ public class Main extends RoboSherlockFragmentActivity{
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(mActivityFragment, "Overview");
+            selectItem(mActivityFragment, "Activity");
         }
 
         mActivityLayout.setOnClickListener(new View.OnClickListener() {

@@ -6,13 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.actionbarsherlock.app.ActionBar;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
-import com.home.giraffe.objects.ActivityItem;
-import com.home.giraffe.objects.Actor;
-import com.home.giraffe.objects.BaseObject;
-import com.home.giraffe.objects.Post;
+import com.home.giraffe.objects.*;
 import com.home.giraffe.storages.ObjectsStorage;
 import roboguice.RoboGuice;
 
@@ -66,7 +65,7 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
     }
 
     private View getPostView(ActivityItem activityItem) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.common_object, null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.post_object, null);
 
         Post post = (Post)mObjectsStorage.get(activityItem.getId());
         Actor actor = (Actor)mObjectsStorage.get(post.getActorId());
@@ -97,7 +96,35 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
         TextView likes = (TextView) view.findViewById(R.id.likes);
         likes.setText(Integer.toString(post.getLikeCount()));
 
+        if(!post.getCommentIds().isEmpty())
+            addComments(post, view);
+
         return view;
+    }
+
+    private void addComments(Post post, View postView) {
+        LinearLayout comments = (LinearLayout)postView.findViewById(R.id.comments);
+
+        for (String commentId : post.getCommentIds()){
+
+            Comment comment = (Comment) mObjectsStorage.get(commentId);
+            Actor actor = (Actor)mObjectsStorage.get(comment.getActorId());
+
+            LinearLayout commentView = (LinearLayout)LayoutInflater.from(getContext()).inflate(R.layout.comment_object, comments, false);
+
+            TextView userDisplayName = (TextView)commentView.findViewById(R.id.userDisplayName);
+            userDisplayName.setText(actor.getDisplayName());
+
+            TextView content = (TextView)commentView.findViewById(R.id.content);
+            content.setText(comment.getContent());
+
+            ImageView avatar = (ImageView) commentView.findViewById(R.id.avatar);
+            mImageLoader.DisplayImage(actor.getAvatarUrl(), avatar);
+
+            comments.addView(commentView);
+        }
+
+        comments.setVisibility(View.VISIBLE);
     }
 
     private View getPersonView(BaseObject object) {
