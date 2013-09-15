@@ -20,22 +20,21 @@ public class SignInTask extends BaseTask {
     }
 
     @Override
-    public JiveInbox loadInBackground() {
+    public Object loadInBackground() {
         try {
-            String token = getRequestsManager().signIn(mUrl, mUserName, mUserPassword);
+            String communityUrl  = mUrl.contains("http") || mUrl.contains("https") ? mUrl : "https://" + mUrl;
+            String token = mRequestsManager.signIn(communityUrl, mUserName, mUserPassword);
 
-            ISettingsManager settingsManager = getSettingsManager();
+            mSettingsManager.setCommunityUrl(communityUrl);
+            mSettingsManager.setUserToken(token);
 
-            settingsManager.setCommunityUrl(mUrl);
-            settingsManager.setUserToken(token);
-
-            JiveAuthor me = getRequestsManager().getUserInfo(mUrl + Constants.PEOPLE + Constants.ME);
-            settingsManager.setUserDisplayName(me.getDisplayName());
-            settingsManager.setUserJobTitle(me.getJobTitle());
-            settingsManager.setUserId(me.getId());
+            JiveAuthor me = mRequestsManager.getUserInfo(communityUrl + Constants.PEOPLE + Constants.ME);
+            mSettingsManager.setUserDisplayName(me.getDisplayName());
+            mSettingsManager.setUserJobTitle(me.getJobTitle());
+            mSettingsManager.setUserId(me.getId());
 
         } catch (Exception e) {
-            getUiManager().showError(getActivity(), e);
+            mUiManager.showError(getActivity(), e);
         }
 
         return null;

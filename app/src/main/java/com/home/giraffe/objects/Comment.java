@@ -1,6 +1,6 @@
 package com.home.giraffe.objects;
 
-public class Comment extends BaseObject {
+public class Comment extends BaseObjectWithContent {
     public Comment(String id) {
         super(id);
     }

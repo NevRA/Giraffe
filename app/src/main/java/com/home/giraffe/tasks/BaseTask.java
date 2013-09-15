@@ -48,24 +48,4 @@ public abstract class BaseTask<T> extends RoboAsyncTaskLoader<T> {
     public void setActivity(FragmentActivity activity) {
         this.mActivity = new WeakReference<FragmentActivity>(activity);
     }
-
-    public IRequestsManager getRequestsManager() {
-        return mRequestsManager;
-    }
-
-    public IUiManager getUiManager() {
-        return mUiManager;
-    }
-
-    public ObjectsStorage getObjectsStorage() {
-        return mObjectsStorage;
-    }
-
-    public Utils getUtils() {
-        return mUtils;
-    }
-
-    public ISettingsManager getSettingsManager(){
-        return mSettingsManager;
-    }
 }

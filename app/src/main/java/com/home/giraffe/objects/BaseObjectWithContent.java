@@ -1,5 +1,7 @@
 package com.home.giraffe.objects;
 
+import com.home.giraffe.objects.Jive.*;
+
 public abstract class BaseObjectWithContent extends BaseObject {
     protected BaseObjectWithContent(String id) {
         super(id);
@@ -31,5 +33,15 @@ public abstract class BaseObjectWithContent extends BaseObject {
 
     public void setTitle(String title) {
         mTitle = title;
+    }
+
+    public void fromJiveContainer(JiveContainer jiveContainer) {
+        JiveActor jiveActor = jiveContainer.getActor();
+        JiveObject jiveObject = jiveContainer.getObject();
+
+        setId(jiveObject.getId());
+        setTitle(jiveContainer.getTitle());
+        setContent(jiveObject.getSummary());
+        setActorId(jiveActor.getId());
     }
 }

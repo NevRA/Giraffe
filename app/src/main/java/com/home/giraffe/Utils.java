@@ -1,48 +1,54 @@
 package com.home.giraffe;
 
-import com.home.giraffe.objects.BaseObjectTypes;
+import com.home.giraffe.objects.*;
+import com.home.giraffe.objects.Jive.JiveContainer;
+import com.home.giraffe.objects.Jive.JivePost;
 import com.home.giraffe.objects.Jive.JiveTypes;
-import com.home.giraffe.objects.Jive.JiveVerbTypes;
 
 public class Utils {
-    public BaseObjectTypes getBaseObjectTypeByJiveTypes(JiveTypes parentJiveType, JiveVerbTypes jiveVerbTypes){
-        if(jiveVerbTypes == JiveVerbTypes.JiveLiked){
-            return BaseObjectTypes.Like;
-        }
 
-        if(jiveVerbTypes == JiveVerbTypes.JivePromoted){
-            return BaseObjectTypes.Promotion;
-        }
+    public Comment getCommentFromJiveContainer(JiveContainer jiveContainer){
+        Comment comment = new Comment(jiveContainer.getObject().getId());
+        comment.fromJiveContainer(jiveContainer);
 
-        switch (parentJiveType) {
-            case JiveComment:
-                break;
-            case JiveMessage:
-                break;
-            case JiveInstance:
-                break;
-            case JiveGroup:
-                break;
-            case JivePerson:
-                break;
+        return comment;
+    }
+
+
+    public Post getPostFromJiveContainer(JiveContainer jiveContainer){
+        Post post = getPostFromObjectType(jiveContainer.getObject().getType());
+        post.fromJiveContainer(jiveContainer);
+
+        return post;
+    }
+
+    public Post getPostFromJivePost(JivePost jivePost){
+        Post post = getPostFromObjectType(jivePost.getType());
+        post.fromJivePost(jivePost);
+
+        return post;
+    }
+
+    public Post getPostFromObjectType(JiveTypes jiveTypes){
+        Post post = null;
+        switch (jiveTypes) {
             case JiveDiscussion:
-                return BaseObjectTypes.Discussion;
+                post = new Discussion("");
+                break;
             case JiveDocument:
-                return BaseObjectTypes.Document;
+                post = new Document("");
+                break;
             case JiveFile:
-                return BaseObjectTypes.File;
-            case JiveSpace:
+                post = new File("");
                 break;
-            case JiveProject:
-                break;
-            case JiveTask:
-                return BaseObjectTypes.Task;
             case JivePoll:
-                return BaseObjectTypes.Poll;
-            case JiveLevel:
+                post = new Poll("");
+                break;
+            case JivePost:
+                post = new Post("");
                 break;
         }
 
-        return BaseObjectTypes.Unknown;
+        return post;
     }
 }

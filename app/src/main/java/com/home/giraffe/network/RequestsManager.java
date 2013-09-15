@@ -29,8 +29,7 @@ public class RequestsManager implements IRequestsManager {
 
     @Override
     public String signIn(String url, String userName, String userPassword) throws Exception {
-        String communityUrl  = url.contains("http") || url.contains("https") ? url : "https://" + url;
-        String loginUrl = communityUrl + Constants.LOGIN;
+        String loginUrl = url + Constants.LOGIN;
         String credentialsBody = String.format("username=%s&password=%s&autoLogin=true", Uri.encode(userName), Uri.encode(userPassword));
 
         HttpResponse loginResponse = mConnector.postRequest(loginUrl, credentialsBody, false);

@@ -15,9 +15,9 @@ public class GetUserProfileTask extends BaseTask<JiveAuthor> {
     @Override
     public JiveAuthor loadInBackground() {
         try {
-            return getRequestsManager().getUserInfo(mUserId);
+            return mRequestsManager.getUserInfo(mUserId);
         } catch (Exception e) {
-            getUiManager().showError(getActivity(), e);
+            mUiManager.showError(getActivity(), e);
         }
 
         return null;

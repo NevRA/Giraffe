@@ -35,17 +35,11 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ActivityItem item = mItems.get(position);
         switch (item.getType()) {
-
-            case Actor:
-                break;
-            case Comment:
-                break;
             case Discussion:
             case File:
+            case Poll:
             case Document:
                 return getPostView(item);
-            case Poll:
-                break;
             case Promotion:
                 break;
             case Like:

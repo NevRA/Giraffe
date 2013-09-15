@@ -6,6 +6,11 @@ public class JivePost {
     private JiveContent content;
     private boolean question;
     private String type;
+    private JiveResources resources;
+
+    public String getId() {
+        return getResources().getSelf().getRef();
+    }
 
     public JiveAuthor getAuthor() {
         return author;
@@ -21,6 +26,10 @@ public class JivePost {
 
     public boolean isQuestion(){
         return question;
+    }
+
+    public JiveResources getResources() {
+        return resources;
     }
 
     public JiveTypes getType() {

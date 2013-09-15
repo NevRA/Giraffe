@@ -3,7 +3,6 @@ package com.home.giraffe.tasks;
 import android.support.v4.app.FragmentActivity;
 import com.home.giraffe.objects.*;
 import com.home.giraffe.objects.Jive.*;
-import com.home.giraffe.storages.ObjectsStorage;
 
 public class GetActivitiesTask extends BaseTask<Activities> {
     private Activities mActivities;
@@ -16,15 +15,12 @@ public class GetActivitiesTask extends BaseTask<Activities> {
     @Override
     public Activities loadInBackground() {
         try {
-
-            ObjectsStorage storage = getObjectsStorage();
-
-            JiveActivities jiveActivities = getRequestsManager().getActivities();
-            for (JiveContainer jiveContainer : jiveActivities.getList()){
+            JiveActivities jiveActivities = mRequestsManager.getActivities();
+            for (JiveContainer jiveContainer : jiveActivities.getList()) {
                 processJiveContainer(jiveContainer);
             }
         } catch (Exception e) {
-            getUiManager().showError(getActivity(), e);
+            mUiManager.showError(getActivity(), e);
         }
 
         return mActivities;
@@ -34,82 +30,58 @@ public class GetActivitiesTask extends BaseTask<Activities> {
         JiveActor jiveActor = jiveContainer.getActor();
         JiveVerbTypes jiveVerbTypes = jiveContainer.getVerbType();
 
-        getObjectsStorage().add(Actor.fromJiveActor(jiveActor));
+        mObjectsStorage.add(Actor.fromJiveActor(jiveActor));
 
-        if(jiveVerbTypes == JiveVerbTypes.JivePromoted){
+        if (jiveVerbTypes == JiveVerbTypes.JivePromoted) {
             processJivePromotion(jiveContainer);
-        }
-
-        else if(jiveVerbTypes == JiveVerbTypes.JiveLiked){
+        } else if (jiveVerbTypes == JiveVerbTypes.JiveLiked) {
             processJiveLike(jiveContainer);
-        }
-
-        else if(jiveVerbTypes == JiveVerbTypes.JiveCompleted){
+        } else if (jiveVerbTypes == JiveVerbTypes.JiveCompleted) {
             processJiveTask(jiveContainer);
-        }
-
-        else if(jiveVerbTypes == JiveVerbTypes.JiveCreated){
+        } else if (jiveVerbTypes == JiveVerbTypes.JiveCreated) {
             processJivePost(jiveContainer);
-        }
-
-        else if(jiveVerbTypes == JiveVerbTypes.JiveReplied ||
-                jiveVerbTypes == JiveVerbTypes.JiveCommented){
+        } else if (jiveVerbTypes == JiveVerbTypes.JiveReplied ||
+                jiveVerbTypes == JiveVerbTypes.JiveCommented) {
             processJiveComment(jiveContainer);
         }
-
-//        switch (jiveType) {
-//            case Unknown:
-//                break;
-//            case JiveMessage:
-//            case JiveComment:
-//                ActivityItem item = mActivities.getActivity(jiveParent.getId(), jiveParent.getType());
-//                if(object == null){
-//                    JivePost jivePost = mRequestsManager.getPost(parent.getId());
-//                    if(jivePost.getType() == JiveTypes.JiveDiscussion){
-//                        object = Post.fromJivePost(parent.getId(), jivePost);
-//                        activities.getItems().add(object);
-//                    }
-//                    else{
-//                    }
-//                }
-//                break;
     }
 
     private void processJiveComment(JiveContainer jiveContainer) throws Exception {
         JiveObject jiveParent = jiveContainer.getJive().getParent();
-        Post post = (Post)getObjectsStorage().get(jiveParent.getId());
+        Post post = (Post) mObjectsStorage.get(jiveParent.getId());
 
-        if(post == null){
+        if (post == null) {
             JivePost jivePost = mRequestsManager.getPost(jiveParent.getId());
-            Actor actor = (Actor)getObjectsStorage().get(jiveParent.getId());
-            if(actor == null){
-                JiveAuthor jiveAuthor = mRequestsManager.getUserInfo(jivePost.getAuthor().getId());
-                getObjectsStorage().add(Actor.fromJiveAuthor(jiveAuthor));
+            Actor actor = (Actor) mObjectsStorage.get(jiveParent.getId());
+            if (actor == null) {
+                mObjectsStorage.add(Actor.fromJiveAuthor(jivePost.getAuthor()));
             }
 
-            post = getPostFromObjectType(jiveParent);
-            post.fromJivePost(jivePost);
+            post = mUtils.getPostFromJivePost(jivePost);
         }
 
-        getObjectsStorage().add(post);
+        Comment comment = mUtils.getCommentFromJiveContainer(jiveContainer);
+        post.addCommentId(comment.getId());
 
-        ActivityItem activityItem = mActivities.getActivity(post.getId(), post.getType());
-        if(activityItem == null){
-            activityItem = new ActivityItem(post.getId(), post.getType());
-            mActivities.addActivity(activityItem);
-        }
+        addObjectToStorage(comment);
+        addObjectToActivities(post);
     }
 
     private void processJivePost(JiveContainer jiveContainer) {
-        JiveObject object = jiveContainer.getObject();
-        Post post = getPostFromObjectType(object);
-        post.fromJiveContainer(jiveContainer);
+        Post post = mUtils.getPostFromJiveContainer(jiveContainer);
+        addObjectToActivities(post);
+    }
 
-        getObjectsStorage().add(post);
+    private void addObjectToStorage(BaseObject object){
+        mObjectsStorage.add(object);
+    }
 
-        ActivityItem activityItem = mActivities.getActivity(post.getId(), post.getType());
-        if(activityItem == null){
-            activityItem = new ActivityItem(post.getId(), post.getType());
+    private void addObjectToActivities(BaseObject object){
+        addObjectToStorage(object);
+
+        ActivityItem activityItem = mActivities.getActivity(object.getId(), object.getType());
+        if (activityItem == null) {
+            activityItem = new ActivityItem(object.getId(), object.getType());
             mActivities.addActivity(activityItem);
         }
     }
@@ -124,28 +96,5 @@ public class GetActivitiesTask extends BaseTask<Activities> {
 
     private void processJivePromotion(JiveContainer jiveContainer) {
         //To change body of created methods use File | Settings | File Templates.
-    }
-
-    private Post getPostFromObjectType(JiveObject jiveObject){
-        Post post = null;
-        switch (jiveObject.getType()) {
-            case JiveDiscussion:
-                post = new Discussion(jiveObject.getId());
-                break;
-            case JiveDocument:
-                post = new Document(jiveObject.getId());
-                break;
-            case JiveFile:
-                post = new File(jiveObject.getId());
-                break;
-            case JivePoll:
-                post = new Poll(jiveObject.getId());
-                break;
-            case JivePost:
-                post = new Post(jiveObject.getId());
-                break;
-        }
-
-        return post;
     }
 }

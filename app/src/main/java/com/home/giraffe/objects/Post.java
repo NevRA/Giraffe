@@ -1,8 +1,12 @@
 package com.home.giraffe.objects;
 
-import com.home.giraffe.objects.Jive.*;
+import com.home.giraffe.objects.Jive.JiveAuthor;
+import com.home.giraffe.objects.Jive.JiveContent;
+import com.home.giraffe.objects.Jive.JivePost;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Post extends BaseObjectWithContent {
     public Post(String id) {
@@ -21,27 +25,19 @@ public class Post extends BaseObjectWithContent {
         return mCommentIds;
     }
 
-    public void addCommentId(String commentId){
+    public void addCommentId(String commentId) {
         mCommentIds.add(commentId);
     }
 
-    public void clearCommentIds(){
+    public void clearCommentIds() {
         mCommentIds.clear();
-    }
-
-    public void fromJiveContainer(JiveContainer jiveContainer) {
-        JiveActor jiveActor = jiveContainer.getActor();
-        JiveObject jiveObject = jiveContainer.getObject();
-
-        setTitle(jiveContainer.getTitle());
-        setContent(jiveObject.getSummary());
-        setActorId(jiveActor.getId());
     }
 
     public void fromJivePost(JivePost jivePost) {
         JiveAuthor jiveAuthor = jivePost.getAuthor();
         JiveContent jiveContent = jivePost.getContent();
 
+        setId(jivePost.getId());
         setTitle(jivePost.getSubject());
         setContent(jiveContent.getText());
         setActorId(jiveAuthor.getId());

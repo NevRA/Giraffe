@@ -11,9 +11,9 @@ public class GetInboxTask extends BaseTask<JiveInbox> {
     @Override
     public JiveInbox loadInBackground() {
         try {
-            return getRequestsManager().getInbox();
+            return mRequestsManager.getInbox();
         } catch (Exception e) {
-            getUiManager().showError(getActivity(), e);
+            mUiManager.showError(getActivity(), e);
         }
 
         return null;

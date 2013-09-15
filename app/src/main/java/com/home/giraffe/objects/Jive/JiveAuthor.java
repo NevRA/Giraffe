@@ -2,8 +2,8 @@ package com.home.giraffe.objects.Jive;
 
 
 public class JiveAuthor {
-    String displayName;
-    Jive jive;
+    private String displayName;
+    private Jive jive;
     private JiveResources resources;
 
     public String getDisplayName() {
