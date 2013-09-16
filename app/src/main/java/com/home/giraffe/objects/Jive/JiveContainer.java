@@ -65,6 +65,10 @@ public class JiveContainer {
             return JiveVerbTypes.JiveJoined;
         }
 
+        if(verb.equals("jive:bookmarked")){
+            return JiveVerbTypes.JiveBookmarked;
+        }
+
         throw new IllegalArgumentException("Unsupported jive verb type: " + verb);
     }
 }

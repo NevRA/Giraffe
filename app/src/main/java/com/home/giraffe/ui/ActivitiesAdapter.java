@@ -1,13 +1,11 @@
 package com.home.giraffe.ui;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.actionbarsherlock.app.ActionBar;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
@@ -103,6 +101,8 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
     }
 
     private void addComments(Post post, View postView) {
+
+        RelativeLayout comments_layout = (RelativeLayout)postView.findViewById(R.id.comments_layout);
         LinearLayout comments = (LinearLayout)postView.findViewById(R.id.comments);
 
         for (String commentId : post.getCommentIds()){
@@ -112,11 +112,8 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
 
             LinearLayout commentView = (LinearLayout)LayoutInflater.from(getContext()).inflate(R.layout.comment_object, comments, false);
 
-            TextView userDisplayName = (TextView)commentView.findViewById(R.id.userDisplayName);
-            userDisplayName.setText(actor.getDisplayName());
-
             TextView content = (TextView)commentView.findViewById(R.id.content);
-            content.setText(comment.getContent());
+            content.setText(Html.fromHtml("<b>" + actor.getDisplayName() + "</b>" + " " + comment.getContent()));
 
             ImageView avatar = (ImageView) commentView.findViewById(R.id.avatar);
             mImageLoader.DisplayImage(actor.getAvatarUrl(), avatar);
@@ -124,7 +121,7 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
             comments.addView(commentView);
         }
 
-        comments.setVisibility(View.VISIBLE);
+        comments_layout.setVisibility(View.VISIBLE);
     }
 
     private View getPersonView(BaseObject object) {

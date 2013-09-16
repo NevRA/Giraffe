@@ -14,5 +14,7 @@ public enum JiveVerbTypes {
     JivePromoted,
 
     JiveJoined,
-    JiveCompleted
+    JiveCompleted,
+
+    JiveBookmarked
 }

@@ -8,10 +8,11 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="vertical"
                   android:background="@color/white"
+                  android:padding="10dp"
                   android:minHeight="80dp"
-                  android:layout_marginBottom="10dp"
+                  android:layout_marginBottom="15dp"
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content" android:padding="10dp">
+                  android:layout_height="wrap_content">
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                       android:orientation="horizontal"
                       android:layout_width="match_parent"
@@ -51,11 +52,14 @@
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/userDisplayName" android:textStyle="bold" android:text="John Smith"
-                        android:layout_gravity="top" />
+                        android:id="@+id/userDisplayName"
+                        android:textStyle="bold"
+                        android:text="John Smith"
+                        android:layout_gravity="top"/>
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        style="@style/TextView.Post.Content"
                         android:id="@+id/content" android:ellipsize="end"
                         android:maxLines="6" android:longClickable="false"
                         android:text="Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit"/>
@@ -104,17 +108,38 @@
                         android:layout_toRightOf="@+id/imageLike"
                         android:textColor="@color/gray"
                         android:text="0"
-                        android:id="@+id/likes"
-                        />
+                        android:id="@+id/likes"/>
             </RelativeLayout>
         </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:id="@+id/comments_layout"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="-10dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/label"
+                android:text="NEW COMMENTS"
+                android:layout_gravity="top"
+                android:layout_marginBottom="20dp"/>
+        <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:id="@+id/imageLike"
+                android:background="@drawable/ic_arrow_down"/>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:orientation="vertical"
-                android:visibility="gone"
+                android:layout_below="@+id/label"
                 android:id="@+id/comments"
-                android:layout_marginTop="10dp"/>
-    </LinearLayout>
+                android:orientation="vertical"/>
+    </RelativeLayout>
 </LinearLayout>
