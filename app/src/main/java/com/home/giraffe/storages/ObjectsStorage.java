@@ -2,35 +2,29 @@ package com.home.giraffe.storages;
 
 import com.home.giraffe.objects.BaseObject;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ObjectsStorage {
-    private List<BaseObject> mObjects;
+    private Map<String, BaseObject> mObjects;
 
-    public ObjectsStorage(){
-        mObjects = Collections.synchronizedList(new ArrayList<BaseObject>());
+    public ObjectsStorage() {
+        mObjects = Collections.synchronizedMap(new HashMap<String, BaseObject>());
     }
 
-    public List<BaseObject> getObjects(){
+    public Map<String, BaseObject> getObjects() {
         return mObjects;
     }
 
-    public void add(BaseObject object){
+    public void add(BaseObject object) {
         BaseObject orig = get(object.getId());
-        if(orig == null){
-            mObjects.add(object);
-            return;
+        if (orig == null) {
+            mObjects.put(object.getId(), object);
         }
     }
 
-    public BaseObject get(String id){
-        for (BaseObject object : getObjects()) {
-            if (object.getId().equalsIgnoreCase(id)){
-                return object;
-            }
-        }
-        return null;
+    public BaseObject get(String id) {
+        return getObjects().get(id);
     }
 }

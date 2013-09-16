@@ -75,6 +75,10 @@ public class JivePost {
             return JiveTypes.JiveDocument;
         }
 
+        if (type.equals("poll")){
+            return JiveTypes.JivePoll;
+        }
+
         if (type.equals("space")){
             return JiveTypes.JiveSpace;
         }

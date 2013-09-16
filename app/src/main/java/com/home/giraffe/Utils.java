@@ -7,7 +7,7 @@ import com.home.giraffe.objects.Jive.JiveTypes;
 
 public class Utils {
 
-    public Comment getCommentFromJiveContainer(JiveContainer jiveContainer){
+    public Comment getCommentFromJiveContainer(JiveContainer jiveContainer) {
         Comment comment = new Comment(jiveContainer.getObject().getId());
         comment.fromJiveContainer(jiveContainer);
 
@@ -15,22 +15,22 @@ public class Utils {
     }
 
 
-    public Post getPostFromJiveContainer(JiveContainer jiveContainer){
+    public Post getPostFromJiveContainer(JiveContainer jiveContainer) {
         Post post = getPostFromObjectType(jiveContainer.getObject().getType());
         post.fromJiveContainer(jiveContainer);
 
         return post;
     }
 
-    public Post getPostFromJivePost(JivePost jivePost){
+    public Post getPostFromJivePost(JivePost jivePost) {
         Post post = getPostFromObjectType(jivePost.getType());
         post.fromJivePost(jivePost);
 
         return post;
     }
 
-    public Post getPostFromObjectType(JiveTypes jiveTypes){
-        Post post = null;
+    public Post getPostFromObjectType(JiveTypes jiveTypes) {
+        Post post;
         switch (jiveTypes) {
             case JiveDiscussion:
                 post = new Discussion("");
@@ -44,7 +44,7 @@ public class Utils {
             case JivePoll:
                 post = new Poll("");
                 break;
-            case JivePost:
+            default:
                 post = new Post("");
                 break;
         }
