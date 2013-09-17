@@ -62,8 +62,7 @@ public class RequestsManager implements IRequestsManager {
     }
 
     @Override
-    public JiveActivities getActivities() throws Exception {
-        String activities = mSettingsManager.getCommunityUrl() + Constants.ACTIVITIES;
-        return mGson.fromJson(mConnector.getRequest(activities).getBody(), JiveActivities.class);
+    public JiveActivities getActivities(String url) throws Exception {
+        return mGson.fromJson(mConnector.getRequest(url).getBody(), JiveActivities.class);
     }
 }

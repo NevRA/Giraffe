@@ -6,7 +6,7 @@ public class Constants {
     public static final String API = "/api/core/v3/";
     public static final String PEOPLE = API + "people/";
     public static final String INBOX = API + "inbox/";
-    public static final String ACTIVITIES = API + "activities?count=50";
+    public static final String ACTIVITIES = API + "activities?count=40";
     public static final String ME = "@me";
 
     public static final String RememberMeCookie = "SPRING_SECURITY_REMEMBER_ME_COOKIE";

@@ -6,16 +6,22 @@ import com.home.giraffe.objects.Jive.*;
 
 public class GetActivitiesTask extends BaseTask<Activities> {
     private Activities mActivities;
+    private String mUrl;
 
-    public GetActivitiesTask(FragmentActivity activity) {
+
+    public GetActivitiesTask(FragmentActivity activity, String url) {
         super(activity);
+        mUrl = url;
         mActivities = new Activities();
     }
 
     @Override
     public Activities loadInBackground() {
         try {
-            JiveActivities jiveActivities = mRequestsManager.getActivities();
+            JiveActivities jiveActivities = mRequestsManager.getActivities(mUrl);
+            mActivities.setNext(jiveActivities.getLinks().getNext());
+            mActivities.setPrevious(jiveActivities.getLinks().getPrevious());
+
             for (JiveContainer jiveContainer : jiveActivities.getList()) {
                 processJiveContainer(jiveContainer);
             }

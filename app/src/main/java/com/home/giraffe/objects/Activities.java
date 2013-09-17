@@ -6,9 +6,27 @@ import java.util.List;
 
 public class Activities {
     private List<ActivityItem> mActivityItems;
+    private String mNext;
+    private String mPrevious;
 
     public Activities() {
         mActivityItems = Collections.synchronizedList(new ArrayList<ActivityItem>());
+    }
+
+    public String getPrevious() {
+        return mPrevious;
+    }
+
+    public void setPrevious(String previous) {
+        mPrevious = previous;
+    }
+
+    public String getNext() {
+        return mNext;
+    }
+
+    public void setNext(String next) {
+        mNext = next;
     }
 
     public List<ActivityItem> getActivities() {

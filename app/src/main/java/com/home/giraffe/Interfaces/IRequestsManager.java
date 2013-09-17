@@ -10,5 +10,5 @@ public interface IRequestsManager {
     JiveAuthor getUserInfo(String userName) throws Exception;
     JiveInbox getInbox() throws Exception;
     JivePost getPost(String url) throws Exception;
-    JiveActivities getActivities() throws Exception;
+    JiveActivities getActivities(String url) throws Exception;
 }
