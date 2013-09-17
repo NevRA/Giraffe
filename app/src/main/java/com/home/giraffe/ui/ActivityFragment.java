@@ -12,6 +12,8 @@ import com.home.giraffe.tasks.GetActivitiesTask;
 
 public class ActivityFragment extends RoboSherlockListFragment implements LoaderManager.LoaderCallbacks<Activities> {
 
+    private Activities mActivities;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -24,7 +26,13 @@ public class ActivityFragment extends RoboSherlockListFragment implements Loader
         getListView().setDividerHeight(0);
         getListView().setDivider(null);
 
-        getActivity().getSupportLoaderManager().restartLoader(1, null, this);
+        if(mActivities == null){
+            mActivities = new Activities();
+            getActivity().getSupportLoaderManager().restartLoader(1, null, this);
+        }
+        else{
+            updateView();
+        }
     }
 
     @Override
@@ -35,12 +43,13 @@ public class ActivityFragment extends RoboSherlockListFragment implements Loader
     @Override
     public void onLoadFinished(Loader<Activities> inboxLoader, Activities activities) {
         if (activities != null) {
-            updateView(activities);
+            mActivities.addActivities(activities.getActivities());
+            updateView();
         }
     }
 
-    private void updateView(Activities activities) {
-        ActivitiesAdapter adapter = new ActivitiesAdapter(getActivity(), android.R.layout.simple_list_item_1, activities.getActivities());
+    private void updateView() {
+        ActivitiesAdapter adapter = new ActivitiesAdapter(getActivity(), android.R.layout.simple_list_item_1, mActivities.getActivities());
         setListAdapter(adapter);
     }
 

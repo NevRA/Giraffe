@@ -19,6 +19,10 @@ public class Activities {
         mActivityItems.add(activityItem);
     }
 
+    public void addActivities(List<ActivityItem> activityItems) {
+        mActivityItems.addAll(activityItems);
+    }
+
     public ActivityItem getActivity(String id, BaseObjectTypes type) {
         for (ActivityItem activity : getActivities()) {
             if (activity.getId().equalsIgnoreCase(id) &&
