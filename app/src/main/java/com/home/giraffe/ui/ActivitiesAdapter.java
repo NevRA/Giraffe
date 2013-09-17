@@ -35,6 +35,7 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
             case Discussion:
             case File:
             case Poll:
+            case Post:
             case Document:
                 return getPostView(item);
             case Promotion:
