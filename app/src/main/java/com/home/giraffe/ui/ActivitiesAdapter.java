@@ -101,12 +101,11 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
     }
 
     private void addComments(Post post, View postView) {
-
-        RelativeLayout comments_layout = (RelativeLayout)postView.findViewById(R.id.comments_layout);
-        LinearLayout comments = (LinearLayout)postView.findViewById(R.id.comments);
+        final RelativeLayout comments_layout = (RelativeLayout)postView.findViewById(R.id.comments_layout);
+        final LinearLayout comments = (LinearLayout)postView.findViewById(R.id.comments);
+        final ImageView arrow = (ImageView)postView.findViewById(R.id.imageArrow);
 
         for (String commentId : post.getCommentIds()){
-
             Comment comment = (Comment) mObjectsStorage.get(commentId);
             Actor actor = (Actor)mObjectsStorage.get(comment.getActorId());
 
@@ -122,6 +121,19 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
         }
 
         comments_layout.setVisibility(View.VISIBLE);
+        comments_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(comments.getVisibility() == View.VISIBLE){
+                    comments.setVisibility(View.GONE);
+                    arrow.setBackgroundResource(R.drawable.ic_arrow_down);
+                }
+                else{
+                    comments.setVisibility(View.VISIBLE);
+                    arrow.setBackgroundResource(R.drawable.ic_arrow_up);
+                }
+            }
+        });
     }
 
     private View getPersonView(BaseObject object) {

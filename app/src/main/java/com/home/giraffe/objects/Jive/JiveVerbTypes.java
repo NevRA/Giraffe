@@ -13,8 +13,7 @@ public enum JiveVerbTypes {
 
     JivePromoted,
 
-    JiveJoined,
     JiveCompleted,
 
-    JiveBookmarked
+    JiveJoined, JiveInstalled, JiveVoted, JiveBookmarked // TODO
 }

@@ -15,4 +15,5 @@
     <string name="main_drawer_inbox_label">Inbox</string>
     <string name="main_drawer_actions_label">Actions</string>
     <string name="main_drawer_activity_label">Activity</string>
+    <string name="new_comments_label">NEW COMMENTS</string>
 </resources>
