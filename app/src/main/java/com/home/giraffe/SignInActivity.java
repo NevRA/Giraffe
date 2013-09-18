@@ -1,6 +1,8 @@
 package com.home.giraffe;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.LoaderManager;
@@ -8,10 +10,7 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.*;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.google.inject.Inject;
 import com.home.giraffe.interfaces.ISettingsManager;
@@ -24,6 +23,7 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
     @InjectView(R.id.communityUrl) EditText mCommunityUrl;
     @InjectView(R.id.userName) EditText mUserName;
     @InjectView(R.id.userPassword) EditText mUserPassword;
+    @InjectView(R.id.appVersion) TextView mAppVersion;
     @InjectView(R.id.logo_layout) LinearLayout mLogoLayout;
     @InjectView(R.id.logo_animation1) ImageView mLogoAnimation1;
     @InjectView(R.id.logo_animation2) ImageView mLogoAnimation2;
@@ -43,6 +43,7 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
     }
 
     private void Init() {
+        showAppVersion();
         resetSettings();
         mSignIn.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -50,6 +51,16 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
                 getSupportLoaderManager().restartLoader(0, null, SignInActivity.this);
             }
         });
+    }
+
+    private void showAppVersion() {
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            mAppVersion.setText("v " + pInfo.versionName);
+
+        } catch (PackageManager.NameNotFoundException e) {
+            // TODO
+        }
     }
 
     private void resetSettings() {
