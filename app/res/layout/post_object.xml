@@ -78,8 +78,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:id="@+id/imageComment"
                         android:background="@drawable/ic_comment"
                         android:layout_alignParentLeft="true"/>
@@ -94,8 +94,8 @@
                         android:id="@+id/replies"
                         />
                 <ImageView
-                        android:layout_width="21dp"
-                        android:layout_height="21dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:layout_marginLeft="30dp"
                         android:id="@+id/imageLike"
                         android:layout_toRightOf="@+id/replies"
