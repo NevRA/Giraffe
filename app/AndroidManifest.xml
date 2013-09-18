@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignInActivity"
+                  android:windowSoftInputMode="stateHidden"
                   android:launchMode="singleTop"
                   android:theme="@style/Theme.Sherlock.Light.NoActionBar"
                   android:noHistory="true"
