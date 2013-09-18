@@ -77,6 +77,10 @@ public class JiveContainer {
             return JiveVerbTypes.JiveVoted;
         }
 
+        if(verb.equals("jive:projectCompleted")){
+            return JiveVerbTypes.JiveProjectCompleted;
+        }
+
         throw new IllegalArgumentException("Unsupported jive verb type: " + verb);
     }
 }

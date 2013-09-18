@@ -15,5 +15,5 @@ public enum JiveVerbTypes {
 
     JiveCompleted,
 
-    JiveJoined, JiveInstalled, JiveVoted, JiveBookmarked // TODO
+    JiveJoined, JiveInstalled, JiveVoted, JiveProjectCompleted, JiveBookmarked // TODO
 }

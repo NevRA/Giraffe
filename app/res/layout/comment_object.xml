@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 style="@style/TextView.Comment.Content"
                 android:id="@+id/content" android:ellipsize="end"
-                android:maxLines="3" android:longClickable="false"
+                android:maxLines="5" android:longClickable="false"
                 android:text="Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit"/>
     </LinearLayout>
 

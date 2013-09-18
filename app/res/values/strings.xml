@@ -16,4 +16,5 @@
     <string name="main_drawer_actions_label">Actions</string>
     <string name="main_drawer_activity_label">Activity</string>
     <string name="new_comments_label">NEW COMMENTS</string>
+    <string name="new_comment_label">NEW COMMENT</string>
 </resources>

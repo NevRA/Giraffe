@@ -12,7 +12,8 @@ public enum VerbTypes {
     CorrectAnswer,
     Completed,
     Voted,
-    Installed;
+    Installed,
+    ProjectCompleted;
 
     public static VerbTypes fromJiveVerbTypes(JiveVerbTypes types){
         switch (types) {
@@ -36,6 +37,8 @@ public enum VerbTypes {
                 return Voted;
             case JiveInstalled:
                 return Installed;
+            case JiveProjectCompleted:
+                return ProjectCompleted;
         }
 
         throw new IllegalArgumentException("Unsupported jive verb type");

@@ -9,6 +9,7 @@ import android.widget.*;
 import com.actionbarsherlock.app.ActionBar;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
+import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.objects.*;
 import com.home.giraffe.storages.ObjectsStorage;
 import roboguice.RoboGuice;
@@ -16,6 +17,7 @@ import roboguice.RoboGuice;
 import java.util.List;
 
 public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
+    IUiManager mUiManager;
     IImageLoader mImageLoader;
     ObjectsStorage mObjectsStorage;
 
@@ -26,6 +28,7 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
         mItems = objects;
         mImageLoader = RoboGuice.getInjector(context).getProvider(IImageLoader.class).get();
         mObjectsStorage = RoboGuice.getInjector(context).getProvider(ObjectsStorage.class).get();
+        mUiManager = RoboGuice.getInjector(context).getProvider(IUiManager.class).get();
     }
 
     @Override
@@ -102,7 +105,8 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
     }
 
     private void addComments(Post post, View postView) {
-        final RelativeLayout comments_layout = (RelativeLayout)postView.findViewById(R.id.comments_layout);
+        RelativeLayout comments_layout = (RelativeLayout)postView.findViewById(R.id.comments_layout);
+        TextView newCommentsLabel = (TextView)postView.findViewById(R.id.new_comments_label);
         final LinearLayout comments = (LinearLayout)postView.findViewById(R.id.comments);
         final ImageView arrow = (ImageView)postView.findViewById(R.id.imageArrow);
 
@@ -121,15 +125,22 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
             comments.addView(commentView);
         }
 
+        int commentsCount = post.getCommentIds().size();
+        newCommentsLabel.setText(
+                Integer.toString(commentsCount) +
+                " " +
+                mUiManager.getString(commentsCount == 1 ?
+                        R.string.new_comment_label :
+                        R.string.new_comments_label));
+
         comments_layout.setVisibility(View.VISIBLE);
         comments_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(comments.getVisibility() == View.VISIBLE){
+                if (comments.getVisibility() == View.VISIBLE) {
                     comments.setVisibility(View.GONE);
                     arrow.setBackgroundResource(R.drawable.ic_arrow_down);
-                }
-                else{
+                } else {
                     comments.setVisibility(View.VISIBLE);
                     arrow.setBackgroundResource(R.drawable.ic_arrow_up);
                 }
