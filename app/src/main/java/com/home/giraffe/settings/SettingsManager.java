@@ -69,4 +69,9 @@ public class SettingsManager implements ISettingsManager {
     public String getUserToken() {
         return mSharedPreferences.getString(Constants.UserTokenPref, null);
     }
+
+    @Override
+    public void clear() {
+        mSharedPreferences.edit().clear().commit();
+    }
 }

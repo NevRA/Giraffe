@@ -17,4 +17,6 @@ public interface ISettingsManager {
 
     void setUserToken(String userToken);
     String getUserToken();
+
+    void clear();
 }

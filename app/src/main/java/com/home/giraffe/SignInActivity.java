@@ -43,12 +43,17 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
     }
 
     private void Init() {
-         mSignIn.setOnClickListener( new View.OnClickListener() {
+        resetSettings();
+        mSignIn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getSupportLoaderManager().restartLoader(0, null, SignInActivity.this);
             }
         });
+    }
+
+    private void resetSettings() {
+        mSettingsManager.clear();
     }
 
     private void ShowStartupAnimation() {

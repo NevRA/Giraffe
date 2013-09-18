@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 
 public interface IUiManager {
     <T> void startActivity(Class<T> type);
+    void startActivityFromIntent(Intent intent);
     String getString(int resourceId);
     void showError(FragmentActivity activity, Exception e);
 }

@@ -33,7 +33,7 @@
                 android:layout_height="35dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/sign_out_button_label"
-                android:id="@+id/signout"
+                android:id="@+id/signOut"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 style="@style/Button.Dark"

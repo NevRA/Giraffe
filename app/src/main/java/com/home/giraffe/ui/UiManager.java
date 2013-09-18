@@ -18,7 +18,12 @@ public class UiManager implements IUiManager {
     @Override
     public <T> void startActivity(final Class<T> type) {
         Intent intent = new Intent(mContext, type);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+    }
+
+    @Override
+    public void startActivityFromIntent(Intent intent) {
         mContext.startActivity(intent);
     }
 
