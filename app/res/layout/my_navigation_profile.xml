@@ -33,12 +33,10 @@
                 android:layout_height="35dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/sign_out_button_label"
-                android:textSize="12sp"
                 android:id="@+id/signout"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:background="@color/holo_blue_dark"
-                android:textColor="@android:color/white"
-                android:clickable="true"/>
+                style="@style/Button.Normal"
+                />
     </RelativeLayout>
 </LinearLayout>

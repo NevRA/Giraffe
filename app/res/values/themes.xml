@@ -37,4 +37,11 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/dark_gray</item>
     </style>
+
+    <style name="Button.Normal" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/button_background_colors</item>
+        <item name="android:textColor">@drawable/button_text_colors</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
