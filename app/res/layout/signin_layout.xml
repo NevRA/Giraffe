@@ -93,7 +93,7 @@
                 android:text="@string/sign_in_button_label"
                 android:id="@+id/signin" android:layout_marginLeft="20dp" android:layout_marginRight="20dp"
                 android:layout_gravity="right"
-                style="@style/Button.Normal"/>
+                style="@style/Button.Light"/>
 
     </LinearLayout>
 </ScrollView>

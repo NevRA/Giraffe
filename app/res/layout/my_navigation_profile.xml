@@ -36,7 +36,7 @@
                 android:id="@+id/signout"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                style="@style/Button.Normal"
+                style="@style/Button.Dark"
                 />
     </RelativeLayout>
 </LinearLayout>

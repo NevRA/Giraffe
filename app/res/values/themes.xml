@@ -38,10 +38,15 @@
         <item name="android:textColor">@color/dark_gray</item>
     </style>
 
-    <style name="Button.Normal" parent="@android:style/Widget.Button">
-        <item name="android:background">@drawable/button_background_colors</item>
-        <item name="android:textColor">@drawable/button_text_colors</item>
-        <item name="android:textSize">16sp</item>
+    <style name="Button.Light" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/button_background_colors_light</item>
+        <item name="android:textColor">@drawable/button_text_colors_light</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Button.Dark" parent="Button.Light">
+        <item name="android:background">@drawable/button_background_colors_dark</item>
+        <item name="android:textColor">@drawable/button_text_colors_dark</item>
     </style>
 
 </resources>
