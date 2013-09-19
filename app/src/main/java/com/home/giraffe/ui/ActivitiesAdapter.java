@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.actionbarsherlock.app.ActionBar;
 import com.home.giraffe.R;
+import com.home.giraffe.Utils;
 import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.objects.*;
@@ -19,6 +20,7 @@ import java.util.List;
 public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
     IUiManager mUiManager;
     IImageLoader mImageLoader;
+    Utils mUtils;
     ObjectsStorage mObjectsStorage;
 
     private List<ActivityItem> mItems;
@@ -29,6 +31,7 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
         mImageLoader = RoboGuice.getInjector(context).getProvider(IImageLoader.class).get();
         mObjectsStorage = RoboGuice.getInjector(context).getProvider(ObjectsStorage.class).get();
         mUiManager = RoboGuice.getInjector(context).getProvider(IUiManager.class).get();
+        mUtils = RoboGuice.getInjector(context).getProvider(Utils.class).get();
     }
 
     @Override
@@ -72,13 +75,8 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
         Post post = (Post)mObjectsStorage.get(activityItem.getId());
         Actor actor = (Actor)mObjectsStorage.get(post.getActorId());
 
-        ImageView icon = (ImageView) view.findViewById(R.id.icon);
-        if(/*activityItem.isQuestion() TODO*/true){
-            icon.setImageResource(R.drawable.ic_question_discussion);
-        }
-        else{
-            icon.setImageResource(R.drawable.ic_discussion);
-        }
+        TextView postType = (TextView) view.findViewById(R.id.postType);
+        postType.setText(mUtils.getObjectNameFromObject(post).toUpperCase());
 
         TextView userDisplayName = (TextView) view.findViewById(R.id.userDisplayName);
         userDisplayName.setText(actor.getDisplayName());

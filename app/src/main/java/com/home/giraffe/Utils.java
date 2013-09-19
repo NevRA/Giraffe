@@ -51,4 +51,28 @@ public class Utils {
 
         return post;
     }
+
+    public String getObjectNameFromObject(BaseObject object) {
+        if(object instanceof Discussion){
+            return "discussion";
+        }
+
+        if(object instanceof Document){
+            return "document";
+        }
+
+        if(object instanceof File){
+            return "file";
+        }
+
+        if(object instanceof Poll){
+            return "poll";
+        }
+
+        if(object instanceof Post){
+            return "post";
+        }
+
+        return "unknown";
+    }
 }

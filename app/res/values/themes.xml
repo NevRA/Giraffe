@@ -29,6 +29,10 @@
         <item name="android:textColor">@color/dark_gray</item>
     </style>
 
+    <style name="TextView.Post.Title" parent="android:TextAppearance.Widget.TextView">
+        <item name="android:textSize">15sp</item>
+    </style>
+
     <style name="TextView.Post.Content" parent="android:TextAppearance.Widget.TextView">
         <item name="android:textSize">15sp</item>
     </style>
