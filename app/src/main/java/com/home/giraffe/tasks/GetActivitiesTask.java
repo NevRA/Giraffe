@@ -35,6 +35,10 @@ public class GetActivitiesTask extends BaseTask<Activities> {
     private void processJiveContainer(JiveContainer jiveContainer) throws Exception {
         JiveActor jiveActor = jiveContainer.getActor();
         JiveVerbTypes jiveVerbTypes = jiveContainer.getVerbType();
+        JiveObject jiveObject = jiveContainer.getObject();
+
+        if(jiveObject == null)
+            return; // for some group updates etc.
 
         mObjectsStorage.add(Actor.fromJiveActor(jiveActor));
 

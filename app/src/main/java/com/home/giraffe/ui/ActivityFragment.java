@@ -12,22 +12,33 @@ import android.widget.LinearLayout;
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFragment;
 import com.google.inject.Inject;
 import com.home.giraffe.Constants;
+import com.home.giraffe.Main;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.objects.Activities;
 import com.home.giraffe.tasks.GetActivitiesTask;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-public class ActivityFragment extends RoboSherlockListFragment implements LoaderManager.LoaderCallbacks<Activities> {
+public class ActivityFragment extends RoboSherlockListFragment implements LoaderManager.LoaderCallbacks<Activities>, PullToRefreshAttacher.OnRefreshListener {
 
     @Inject
     ISettingsManager mSettingsManager;
 
+    private PullToRefreshAttacher mPullToRefreshAttacher;
     private LinearLayout mFooter;
     private Activities mActivities;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);    //To change body of overridden methods use File | Settings | File Templates.
+
+        mPullToRefreshAttacher = ((Main) getActivity()).getPullToRefreshAttacher();
+        mPullToRefreshAttacher.addRefreshableView(getListView(), this);
     }
 
     @Override
@@ -130,5 +141,10 @@ public class ActivityFragment extends RoboSherlockListFragment implements Loader
 
     @Override
     public void onLoaderReset(Loader<Activities> inboxLoader) {
+    }
+
+    @Override
+    public void onRefreshStarted(View view) {
+        // TODO
     }
 }

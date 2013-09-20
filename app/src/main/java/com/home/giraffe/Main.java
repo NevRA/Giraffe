@@ -20,6 +20,7 @@ import com.home.giraffe.ui.InboxFragment;
 import com.home.giraffe.ui.OverviewFragment;
 import de.greenrobot.event.EventBus;
 import roboguice.inject.InjectView;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class Main extends RoboSherlockFragmentActivity{
 
@@ -55,6 +56,7 @@ public class Main extends RoboSherlockFragmentActivity{
 
     ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mTitle;
+    private PullToRefreshAttacher mPullToRefreshAttacher;
 
     @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
@@ -71,12 +73,22 @@ public class Main extends RoboSherlockFragmentActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    public PullToRefreshAttacher getPullToRefreshAttacher() {
+        return mPullToRefreshAttacher;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBus.register(this);
 
         setContentView(R.layout.drawer_main);
+
+        /**
+         * Here we create a PullToRefreshAttacher manually without an Options instance.
+         * PullToRefreshAttacher will manually create one using default values.
+         */
+        mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
 
         // Set a custom shadow that overlays the main content when the drawer
         // opens

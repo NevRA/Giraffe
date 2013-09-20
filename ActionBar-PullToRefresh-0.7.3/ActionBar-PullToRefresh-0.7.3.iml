@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="GEN_FOLDER_RELATIVE_PATH_APT" value="/../../../Downloads/ActionBar-PullToRefresh-0.7.3/ActionBar-PullToRefresh-0.7.3/library/gen" />
+        <option name="GEN_FOLDER_RELATIVE_PATH_AIDL" value="/../../../Downloads/ActionBar-PullToRefresh-0.7.3/ActionBar-PullToRefresh-0.7.3/library/gen" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/../../../Downloads/ActionBar-PullToRefresh-0.7.3/ActionBar-PullToRefresh-0.7.3/library/AndroidManifest.xml" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="/../../../Downloads/ActionBar-PullToRefresh-0.7.3/ActionBar-PullToRefresh-0.7.3/library/res" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/../../../Downloads/ActionBar-PullToRefresh-0.7.3/ActionBar-PullToRefresh-0.7.3/library/assets" />
+        <option name="LIBS_FOLDER_RELATIVE_PATH" value="/../../../Downloads/ActionBar-PullToRefresh-0.7.3/ActionBar-PullToRefresh-0.7.3/library/libs" />
+        <option name="LIBRARY_PROJECT" value="true" />
+        <option name="UPDATE_PROPERTY_FILES" value="true" />
+        <resOverlayFolders>
+          <path>/../../../Downloads/ActionBar-PullToRefresh-0.7.3/ActionBar-PullToRefresh-0.7.3/library/res-overlay</path>
+        </resOverlayFolders>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$USER_HOME$/Downloads/ActionBar-PullToRefresh-0.7.3/ActionBar-PullToRefresh-0.7.3/library">
+      <sourceFolder url="file://$USER_HOME$/Downloads/ActionBar-PullToRefresh-0.7.3/ActionBar-PullToRefresh-0.7.3/library/src" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/Downloads/ActionBar-PullToRefresh-0.7.3/ActionBar-PullToRefresh-0.7.3/library/gen" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="Android 2.3.3 Platform" jdkType="Android SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
+
