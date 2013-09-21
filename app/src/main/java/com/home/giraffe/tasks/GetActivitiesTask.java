@@ -59,6 +59,8 @@ public class GetActivitiesTask extends BaseTask<Activities> {
                 break;
             case JivePoll:
                 break;
+            case JiveLevel:
+                break;
             case Unknown:
             case JiveSpace:
             case JiveProject:
@@ -66,12 +68,11 @@ public class GetActivitiesTask extends BaseTask<Activities> {
             case JiveGroup:
             case JivePerson:
             case JiveTask:
-            case JiveLevel:
                 return;
 
         }
 
-        mObjectsStorage.add(Actor.fromJiveActor(jiveActor));
+        mObjectsStorage.add(new Actor(jiveActor));
 
         if (jiveVerbTypes == JiveVerbTypes.JivePromoted) {
             processJivePromotion(jiveContainer);
@@ -95,7 +96,7 @@ public class GetActivitiesTask extends BaseTask<Activities> {
             JivePost jivePost = mRequestsManager.getPost(jiveParent.getId());
             Actor actor = (Actor) mObjectsStorage.get(jiveParent.getId());
             if (actor == null) {
-                mObjectsStorage.add(Actor.fromJiveAuthor(jivePost.getAuthor()));
+                mObjectsStorage.add(new Actor(jivePost.getAuthor()));
             }
 
             post = mUtils.getPostFromJivePost(jivePost);
@@ -136,6 +137,8 @@ public class GetActivitiesTask extends BaseTask<Activities> {
     }
 
     private void processJivePromotion(JiveContainer jiveContainer) {
-        //To change body of created methods use File | Settings | File Templates.
+        Promotion promotion = new Promotion(jiveContainer);
+
+        addObjectToActivities(promotion);
     }
 }

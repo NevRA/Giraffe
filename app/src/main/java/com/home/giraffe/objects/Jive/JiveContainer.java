@@ -4,6 +4,7 @@ public class JiveContainer {
     String verb;
     String title;
     String content;
+    String published;
     JiveObject object;
     JiveActor actor;
     Jive jive;
@@ -26,6 +27,10 @@ public class JiveContainer {
 
     public JiveActor getActor() {
         return actor;
+    }
+
+    public String getPublished() {
+        return published;
     }
 
     public JiveVerbTypes getVerbType(){

@@ -7,8 +7,18 @@ public class Actor extends BaseObject{
     private String mDisplayName;
     private String mAvatarUrl;
 
-    protected Actor(String id) {
+    public Actor(String id) {
         super(id);
+    }
+
+    public Actor(JiveActor jiveActor) {
+        super(null);
+        fromJiveActor(jiveActor);
+    }
+
+    public Actor(JiveAuthor jiveAuthor) {
+        super(null);
+        fromJiveAuthor(jiveAuthor);
     }
 
     @Override
@@ -32,19 +42,15 @@ public class Actor extends BaseObject{
         mAvatarUrl = avatarUrl;
     }
 
-    public static Actor fromJiveActor(JiveActor jiveActor){
-        Actor actor = new Actor(jiveActor.getId());
-        actor.setDisplayName(jiveActor.getDisplayName());
-        actor.setAvatarUrl(jiveActor.getImage().getUrl());
-
-        return actor;
+    public void fromJiveActor(JiveActor jiveActor){
+        setId(jiveActor.getId());
+        setDisplayName(jiveActor.getDisplayName());
+        setAvatarUrl(jiveActor.getImage().getUrl());
     }
 
-    public static Actor fromJiveAuthor(JiveAuthor jiveAuthor){
-        Actor actor = new Actor(jiveAuthor.getId());
-        actor.setDisplayName(jiveAuthor.getDisplayName());
-        actor.setAvatarUrl(jiveAuthor.getResources().getAvatar().getRef());
-
-        return actor;
+    public void fromJiveAuthor(JiveAuthor jiveAuthor){
+        setId(jiveAuthor.getId());
+        setDisplayName(jiveAuthor.getDisplayName());
+        setAvatarUrl(jiveAuthor.getResources().getAvatar().getRef());
     }
 }
