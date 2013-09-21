@@ -13,12 +13,16 @@ public class GetActivitiesTask extends BaseTask<Activities> {
         super(activity);
         mUrl = url;
         mActivities = new Activities();
+        mActivities.setCurrent(url);
     }
 
     @Override
     public Activities loadInBackground() {
         try {
             JiveActivities jiveActivities = mRequestsManager.getActivities(mUrl);
+            if(jiveActivities.getList().isEmpty()){
+                return mActivities;
+            }
             mActivities.setNext(jiveActivities.getLinks().getNext());
             mActivities.setPrevious(jiveActivities.getLinks().getPrevious());
 
@@ -39,6 +43,33 @@ public class GetActivitiesTask extends BaseTask<Activities> {
 
         if(jiveObject == null)
             return; // for some group updates etc.
+
+        switch (jiveObject.getType()) {
+            case JiveMessage:
+                break;
+            case JiveComment:
+                break;
+            case JiveDiscussion:
+                break;
+            case JiveDocument:
+                break;
+            case JiveFile:
+                break;
+            case JivePost:
+                break;
+            case JivePoll:
+                break;
+            case Unknown:
+            case JiveSpace:
+            case JiveProject:
+            case JiveInstance:
+            case JiveGroup:
+            case JivePerson:
+            case JiveTask:
+            case JiveLevel:
+                return;
+
+        }
 
         mObjectsStorage.add(Actor.fromJiveActor(jiveActor));
 

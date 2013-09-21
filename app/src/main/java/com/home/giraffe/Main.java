@@ -11,22 +11,15 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.google.inject.Inject;
+import com.home.giraffe.base.BaseFragmentActivity;
 import com.home.giraffe.events.InboxUnreadCountEvent;
 import com.home.giraffe.ui.ActionsFragment;
 import com.home.giraffe.ui.ActivityFragment;
 import com.home.giraffe.ui.InboxFragment;
-import com.home.giraffe.ui.OverviewFragment;
-import de.greenrobot.event.EventBus;
 import roboguice.inject.InjectView;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-public class Main extends RoboSherlockFragmentActivity{
-
-    @Inject
-    EventBus mBus;
-
+public class Main extends BaseFragmentActivity {
     @Inject
     ActivityFragment mActivityFragment;
 
@@ -56,7 +49,6 @@ public class Main extends RoboSherlockFragmentActivity{
 
     ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mTitle;
-    private PullToRefreshAttacher mPullToRefreshAttacher;
 
     @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
@@ -73,22 +65,11 @@ public class Main extends RoboSherlockFragmentActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    public PullToRefreshAttacher getPullToRefreshAttacher() {
-        return mPullToRefreshAttacher;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBus.register(this);
 
         setContentView(R.layout.drawer_main);
-
-        /**
-         * Here we create a PullToRefreshAttacher manually without an Options instance.
-         * PullToRefreshAttacher will manually create one using default values.
-         */
-        mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
 
         // Set a custom shadow that overlays the main content when the drawer
         // opens
@@ -172,7 +153,7 @@ public class Main extends RoboSherlockFragmentActivity{
         getActionBar().setTitle(mTitle);
     }
 
-    public void onEvent(final InboxUnreadCountEvent event)  {
+    public void onEvent(final InboxUnreadCountEvent event) {
         mInboxBadge.setText(String.valueOf(event.getCount()));
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Activities {
     private List<ActivityItem> mActivityItems;
+    private String mCurrent;
     private String mNext;
     private String mPrevious;
 
@@ -29,6 +30,14 @@ public class Activities {
         mNext = next;
     }
 
+    public String getCurrent() {
+        return mCurrent;
+    }
+
+    public void setCurrent(String current) {
+        mCurrent = current;
+    }
+
     public List<ActivityItem> getActivities() {
         return mActivityItems;
     }
@@ -38,7 +47,11 @@ public class Activities {
     }
 
     public void addActivities(List<ActivityItem> activityItems) {
-        mActivityItems.addAll(activityItems);
+        addActivities(mActivityItems.size(), activityItems);
+    }
+
+    public void addActivities(int pos, List<ActivityItem> activityItems) {
+        mActivityItems.addAll(pos, activityItems);
     }
 
     public ActivityItem getActivity(String id, BaseObjectTypes type) {
