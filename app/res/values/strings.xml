@@ -17,4 +17,8 @@
     <string name="main_drawer_activity_label">Activity</string>
     <string name="new_comments_label">NEW COMMENTS</string>
     <string name="new_comment_label">NEW COMMENT</string>
+    <string name="news_updates_label">NEWS UPDATES</string>
+    <string name="achieved_level">achieved a new status level:</string>
+    <string name="group_joined">joined:</string>
+
 </resources>

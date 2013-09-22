@@ -1,4 +1,6 @@
-package com.home.giraffe.objects;
+package com.home.giraffe.objects.activity;
+
+import com.home.giraffe.objects.BaseObject;
 
 import java.util.ArrayList;
 import java.util.Collections;

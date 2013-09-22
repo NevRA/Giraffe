@@ -11,6 +11,9 @@ public class Constants {
 
     public static final String RememberMeCookie = "SPRING_SECURITY_REMEMBER_ME_COOKIE";
 
+    public static final String SocialNewsId = "SocialNews";
+    public static final String LikesId = "Likes";
+
     public static final String CommunityUrl = "CommunityUrlPref";
     public static final String UserIdPref = "UserIdPref";
     public static final String UserNamePref = "UserNamePref";

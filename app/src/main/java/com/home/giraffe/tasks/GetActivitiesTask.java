@@ -1,8 +1,13 @@
 package com.home.giraffe.tasks;
 
 import android.support.v4.app.FragmentActivity;
+import com.home.giraffe.Constants;
 import com.home.giraffe.objects.*;
 import com.home.giraffe.objects.Jive.*;
+import com.home.giraffe.objects.activity.Activities;
+import com.home.giraffe.objects.socialnews.JoinedSocialNewsItem;
+import com.home.giraffe.objects.socialnews.LevelSocialNewsItem;
+import com.home.giraffe.objects.socialnews.SocialNews;
 
 public class GetActivitiesTask extends BaseTask<Activities> {
     private Activities mActivities;
@@ -61,22 +66,26 @@ public class GetActivitiesTask extends BaseTask<Activities> {
                 break;
             case JiveLevel:
                 break;
+            case JiveGroup:
+                break;
+            case JiveProject:
+                break;
+
             case Unknown:
             case JiveSpace:
-            case JiveProject:
             case JiveInstance:
-            case JiveGroup:
             case JivePerson:
             case JiveTask:
                 return;
-
         }
 
         mObjectsStorage.add(new Actor(jiveActor));
 
         if (jiveVerbTypes == JiveVerbTypes.JivePromoted) {
             processJivePromotion(jiveContainer);
-        } else if (jiveVerbTypes == JiveVerbTypes.JiveLiked) {
+        }else if (jiveVerbTypes == JiveVerbTypes.JiveJoined) {
+            processJiveJoined(jiveContainer);
+        }else if (jiveVerbTypes == JiveVerbTypes.JiveLiked) {
             processJiveLike(jiveContainer);
         } else if (jiveVerbTypes == JiveVerbTypes.JiveCompleted) {
             processJiveTask(jiveContainer);
@@ -131,9 +140,27 @@ public class GetActivitiesTask extends BaseTask<Activities> {
         //To change body of created methods use File | Settings | File Templates.
     }
 
-    private void processJivePromotion(JiveContainer jiveContainer) {
-        Promotion promotion = new Promotion(jiveContainer);
+    private void processJiveJoined(JiveContainer jiveContainer) {
+        JoinedSocialNewsItem joinedNews = new JoinedSocialNewsItem(jiveContainer);
 
-        // TODO
+        SocialNews socialNews = (SocialNews)mActivities.getActivity(Constants.SocialNewsId);
+        if(socialNews == null){
+            socialNews = new SocialNews();
+            mActivities.addActivity(socialNews);
+        }
+
+        socialNews.addNews(joinedNews);
+    }
+
+    private void processJivePromotion(JiveContainer jiveContainer) {
+        LevelSocialNewsItem levelNews = new LevelSocialNewsItem(jiveContainer);
+
+        SocialNews socialNews = (SocialNews)mActivities.getActivity(Constants.SocialNewsId);
+        if(socialNews == null){
+            socialNews = new SocialNews();
+            mActivities.addActivity(socialNews);
+        }
+
+        socialNews.addNews(levelNews);
     }
 }

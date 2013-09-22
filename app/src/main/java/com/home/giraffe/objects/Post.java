@@ -4,7 +4,9 @@ import com.home.giraffe.objects.Jive.JiveAuthor;
 import com.home.giraffe.objects.Jive.JiveContent;
 import com.home.giraffe.objects.Jive.JivePost;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Post extends BaseObjectWithContent {
     public Post(String id) {
@@ -26,7 +28,7 @@ public class Post extends BaseObjectWithContent {
         mComments.clear();
     }
 
-    public String getFriendlyName(){
+    public String getFriendlyName() {
         return "Post";
     }
 

@@ -8,7 +8,7 @@ import com.google.inject.Inject;
 import com.home.giraffe.Constants;
 import com.home.giraffe.base.BaseListFragment;
 import com.home.giraffe.interfaces.ISettingsManager;
-import com.home.giraffe.objects.Activities;
+import com.home.giraffe.objects.activity.Activities;
 import com.home.giraffe.tasks.GetActivitiesTask;
 
 public class ActivityFragment extends BaseListFragment<Activities> {

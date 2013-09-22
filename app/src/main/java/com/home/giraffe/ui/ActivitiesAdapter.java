@@ -11,6 +11,10 @@ import com.home.giraffe.Utils;
 import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.objects.*;
+import com.home.giraffe.objects.socialnews.BaseSocialNewsItem;
+import com.home.giraffe.objects.socialnews.JoinedSocialNewsItem;
+import com.home.giraffe.objects.socialnews.LevelSocialNewsItem;
+import com.home.giraffe.objects.socialnews.SocialNews;
 import com.home.giraffe.storages.ObjectsStorage;
 import roboguice.RoboGuice;
 
@@ -39,7 +43,66 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
         if(item instanceof Post){
             return getPostView(item);
         }
+        if(item instanceof SocialNews){
+            return getSocialNewsView(item);
+        }
+
         return getUnknownView();
+    }
+
+    private View getSocialNewsView(BaseObject activityItem) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.social_news_parent_preview, null);
+
+        RelativeLayout new_layout = (RelativeLayout)view.findViewById(R.id.news_layout);
+
+        SocialNews socialNews = (SocialNews)activityItem;
+
+        TextView postType = (TextView) view.findViewById(R.id.postType);
+        postType.setText("social news".toUpperCase());
+
+        final LinearLayout news = (LinearLayout)view.findViewById(R.id.news);
+        final ImageView arrow = (ImageView)view.findViewById(R.id.imageArrow);
+
+        for (BaseSocialNewsItem newsItem : socialNews.getNews()){
+            LinearLayout newsItemView = (LinearLayout)LayoutInflater.from(getContext()).inflate(R.layout.social_news_preview, news, false);
+
+            ImageView avatar = (ImageView) newsItemView.findViewById(R.id.avatar);
+            mImageLoader.DisplayImage(newsItem.getActor().getAvatarUrl(), avatar);
+
+            TextView content = (TextView)newsItemView.findViewById(R.id.content);
+
+
+            if(newsItem instanceof LevelSocialNewsItem){
+                LevelSocialNewsItem levelNews = (LevelSocialNewsItem)newsItem;
+                content.setText(Html.fromHtml("<b>" + levelNews.getActor().getDisplayName() + "</b>" + " " +
+                        mUiManager.getString(R.string.achieved_level) + " " +
+                        levelNews.getLevel()));
+            }
+
+            if(newsItem instanceof JoinedSocialNewsItem){
+                JoinedSocialNewsItem joinedNews = (JoinedSocialNewsItem)newsItem;
+                content.setText(Html.fromHtml("<b>" + joinedNews.getActor().getDisplayName() + "</b>" + " " +
+                        mUiManager.getString(R.string.group_joined) + " " +
+                        joinedNews.getGroup()));
+            }
+
+            news.addView(newsItemView);
+        }
+
+        new_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (news.getVisibility() == View.VISIBLE) {
+                    news.setVisibility(View.GONE);
+                    arrow.setBackgroundResource(R.drawable.ic_arrow_down);
+                } else {
+                    news.setVisibility(View.VISIBLE);
+                    arrow.setBackgroundResource(R.drawable.ic_arrow_up);
+                }
+            }
+        });
+
+        return view;
     }
 
     private View getUnknownView() {
@@ -47,7 +110,7 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
     }
 
     private View getPostView(BaseObject activityItem) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.post_object, null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.post_preview, null);
 
         Post post = (Post)activityItem;
         Actor actor = post.getActor();
@@ -87,7 +150,7 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
 
         for (Comment comment : post.getComments()){
             Actor actor = comment.getActor();
-            LinearLayout commentView = (LinearLayout)LayoutInflater.from(getContext()).inflate(R.layout.comment_object, comments, false);
+            LinearLayout commentView = (LinearLayout)LayoutInflater.from(getContext()).inflate(R.layout.comment_preview, comments, false);
 
             TextView content = (TextView)commentView.findViewById(R.id.content);
             content.setText(Html.fromHtml("<b>" + actor.getDisplayName() + "</b>" + " " + comment.getContent()));
