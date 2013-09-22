@@ -7,11 +7,6 @@ public class Discussion extends Post{
         super(id);
     }
 
-    @Override
-    public BaseObjectTypes getType() {
-        return BaseObjectTypes.Discussion;
-    }
-
     private boolean mIsQuestion;
 
     public boolean isQuestion() {
@@ -20,6 +15,11 @@ public class Discussion extends Post{
 
     public void setIsQuestion(boolean isQuestion) {
         mIsQuestion = isQuestion;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "Discussion";
     }
 
     @Override

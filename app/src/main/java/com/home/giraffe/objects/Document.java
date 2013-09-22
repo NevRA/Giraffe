@@ -6,7 +6,7 @@ public class Document extends Post {
     }
 
     @Override
-    public BaseObjectTypes getType() {
-        return BaseObjectTypes.Document;
+    public String getFriendlyName() {
+        return "Document";
     }
 }

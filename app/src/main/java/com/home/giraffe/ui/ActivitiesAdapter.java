@@ -16,15 +16,15 @@ import roboguice.RoboGuice;
 
 import java.util.List;
 
-public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
+public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
     IUiManager mUiManager;
     IImageLoader mImageLoader;
     Utils mUtils;
     ObjectsStorage mObjectsStorage;
 
-    private List<ActivityItem> mItems;
+    private List<BaseObject> mItems;
 
-    public ActivitiesAdapter(Context context, int textViewResourceId, List<ActivityItem> objects) {
+    public ActivitiesAdapter(Context context, int textViewResourceId, List<BaseObject> objects) {
         super(context, textViewResourceId, objects);
         mItems = objects;
         mImageLoader = RoboGuice.getInjector(context).getProvider(IImageLoader.class).get();
@@ -35,20 +35,10 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ActivityItem item = mItems.get(position);
-        switch (item.getType()) {
-            case Discussion:
-            case File:
-            case Poll:
-            case Post:
-            case Document:
-                return getPostView(item);
-            case Promotion:
-                break;
-            case Like:
-                break;
+        BaseObject item = mItems.get(position);
+        if(item instanceof Post){
+            return getPostView(item);
         }
-
         return getUnknownView();
     }
 
@@ -56,26 +46,14 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
         return LayoutInflater.from(getContext()).inflate(R.layout.unknown_object, null);
     }
 
-    private View getProjectView(BaseObject object) {
-        return getUnknownView();
-    }
-
-    private View getSpaceView(BaseObject object) {
-        return getUnknownView();
-    }
-
-    private View getFileView(BaseObject object) {
-        return getUnknownView();
-    }
-
-    private View getPostView(ActivityItem activityItem) {
+    private View getPostView(BaseObject activityItem) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.post_object, null);
 
-        Post post = (Post)mObjectsStorage.get(activityItem.getId());
-        Actor actor = (Actor)mObjectsStorage.get(post.getActorId());
+        Post post = (Post)activityItem;
+        Actor actor = post.getActor();
 
         TextView postType = (TextView) view.findViewById(R.id.postType);
-        postType.setText(mUtils.getObjectNameFromObject(post).toUpperCase());
+        postType.setText(post.getFriendlyName().toUpperCase());
 
         TextView userDisplayName = (TextView) view.findViewById(R.id.userDisplayName);
         userDisplayName.setText(actor.getDisplayName());
@@ -95,7 +73,7 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
         TextView likes = (TextView) view.findViewById(R.id.likes);
         likes.setText(Integer.toString(post.getLikeCount()));
 
-        if(!post.getCommentIds().isEmpty())
+        if(!post.getComments().isEmpty())
             addComments(post, view);
 
         return view;
@@ -107,10 +85,8 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
         final LinearLayout comments = (LinearLayout)postView.findViewById(R.id.comments);
         final ImageView arrow = (ImageView)postView.findViewById(R.id.imageArrow);
 
-        for (String commentId : post.getCommentIds()){
-            Comment comment = (Comment) mObjectsStorage.get(commentId);
-            Actor actor = (Actor)mObjectsStorage.get(comment.getActorId());
-
+        for (Comment comment : post.getComments()){
+            Actor actor = comment.getActor();
             LinearLayout commentView = (LinearLayout)LayoutInflater.from(getContext()).inflate(R.layout.comment_object, comments, false);
 
             TextView content = (TextView)commentView.findViewById(R.id.content);
@@ -122,7 +98,7 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
             comments.addView(commentView);
         }
 
-        int commentsCount = post.getCommentIds().size();
+        int commentsCount = post.getComments().size();
         newCommentsLabel.setText(
                 Integer.toString(commentsCount) +
                 " " +
@@ -143,21 +119,5 @@ public class ActivitiesAdapter extends ArrayAdapter<ActivityItem> {
                 }
             }
         });
-    }
-
-    private View getPersonView(BaseObject object) {
-        return getUnknownView();
-    }
-
-    private View getGroupView(BaseObject object) {
-        return getUnknownView();
-    }
-
-    private View getInstanceView(BaseObject object) {
-        return getUnknownView();
-    }
-
-    private View getMessageView(BaseObject object) {
-        return getUnknownView();
     }
 }

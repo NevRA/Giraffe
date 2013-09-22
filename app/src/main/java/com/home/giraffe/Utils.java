@@ -6,29 +6,6 @@ import com.home.giraffe.objects.Jive.JivePost;
 import com.home.giraffe.objects.Jive.JiveTypes;
 
 public class Utils {
-
-    public Comment getCommentFromJiveContainer(JiveContainer jiveContainer) {
-        Comment comment = new Comment(jiveContainer.getObject().getId());
-        comment.fromJiveContainer(jiveContainer);
-
-        return comment;
-    }
-
-
-    public Post getPostFromJiveContainer(JiveContainer jiveContainer) {
-        Post post = getPostFromObjectType(jiveContainer.getObject().getType());
-        post.fromJiveContainer(jiveContainer);
-
-        return post;
-    }
-
-    public Post getPostFromJivePost(JivePost jivePost) {
-        Post post = getPostFromObjectType(jivePost.getType());
-        post.fromJivePost(jivePost);
-
-        return post;
-    }
-
     public Post getPostFromObjectType(JiveTypes jiveTypes) {
         Post post;
         switch (jiveTypes) {
@@ -50,29 +27,5 @@ public class Utils {
         }
 
         return post;
-    }
-
-    public String getObjectNameFromObject(BaseObject object) {
-        if(object instanceof Discussion){
-            return "discussion";
-        }
-
-        if(object instanceof Document){
-            return "document";
-        }
-
-        if(object instanceof File){
-            return "file";
-        }
-
-        if(object instanceof Poll){
-            return "poll";
-        }
-
-        if(object instanceof Post){
-            return "post";
-        }
-
-        return "unknown";
     }
 }

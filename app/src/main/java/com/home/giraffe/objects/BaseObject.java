@@ -7,8 +7,6 @@ public abstract class BaseObject {
         setId(id);
     }
 
-    abstract public BaseObjectTypes getType();
-
     public String getId() {
         return mId;
     }

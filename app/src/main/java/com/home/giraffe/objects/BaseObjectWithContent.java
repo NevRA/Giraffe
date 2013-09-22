@@ -12,7 +12,7 @@ public abstract class BaseObjectWithContent extends BaseObject {
     private int mLikeCount;
     private String mTitle;
     private String mContent;
-    private String mActorId;
+    private Actor mActor;
 
     public int getReplyCount(){
         return mReplyCount;
@@ -30,12 +30,12 @@ public abstract class BaseObjectWithContent extends BaseObject {
         mLikeCount = likeCount;
     }
 
-    public String getActorId() {
-        return mActorId;
+    public Actor getActor() {
+        return mActor;
     }
 
-    public void setActorId(String actorId) {
-        mActorId = actorId;
+    public void setActor(Actor actor) {
+        mActor = actor;
     }
 
     public String getContent() {
@@ -64,6 +64,6 @@ public abstract class BaseObjectWithContent extends BaseObject {
         setReplyCount(jive.getReplyCount());
         setTitle(jiveContainer.getTitle());
         setContent(jiveObject.getSummary());
-        setActorId(jiveActor.getId());
+        setActor(new Actor(jiveActor));
     }
 }

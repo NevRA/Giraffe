@@ -5,13 +5,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class Activities {
-    private List<ActivityItem> mActivityItems;
+    private List<BaseObject> mActivityItems;
     private String mCurrent;
     private String mNext;
     private String mPrevious;
 
     public Activities() {
-        mActivityItems = Collections.synchronizedList(new ArrayList<ActivityItem>());
+        mActivityItems = Collections.synchronizedList(new ArrayList<BaseObject>());
     }
 
     public String getPrevious() {
@@ -38,26 +38,25 @@ public class Activities {
         mCurrent = current;
     }
 
-    public List<ActivityItem> getActivities() {
+    public List<BaseObject> getActivities() {
         return mActivityItems;
     }
 
-    public void addActivity(ActivityItem activityItem) {
+    public void addActivity(BaseObject activityItem) {
         mActivityItems.add(activityItem);
     }
 
-    public void addActivities(List<ActivityItem> activityItems) {
+    public void addActivities(List<BaseObject> activityItems) {
         addActivities(mActivityItems.size(), activityItems);
     }
 
-    public void addActivities(int pos, List<ActivityItem> activityItems) {
+    public void addActivities(int pos, List<BaseObject> activityItems) {
         mActivityItems.addAll(pos, activityItems);
     }
 
-    public ActivityItem getActivity(String id, BaseObjectTypes type) {
-        for (ActivityItem activity : getActivities()) {
-            if (activity.getId().equalsIgnoreCase(id) &&
-                    activity.getType() == type) {
+    public BaseObject getActivity(String id) {
+        for (BaseObject activity : getActivities()) {
+            if (activity.getId().equalsIgnoreCase(id)){
                 return activity;
             }
         }

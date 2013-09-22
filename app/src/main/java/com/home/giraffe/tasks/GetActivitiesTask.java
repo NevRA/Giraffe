@@ -94,23 +94,19 @@ public class GetActivitiesTask extends BaseTask<Activities> {
 
         if (post == null) {
             JivePost jivePost = mRequestsManager.getPost(jiveParent.getId());
-            Actor actor = (Actor) mObjectsStorage.get(jiveParent.getId());
-            if (actor == null) {
-                mObjectsStorage.add(new Actor(jivePost.getAuthor()));
-            }
-
-            post = mUtils.getPostFromJivePost(jivePost);
+            post = mUtils.getPostFromObjectType(jivePost.getType());
+            post.fromJivePost(jivePost);
         }
 
-        Comment comment = mUtils.getCommentFromJiveContainer(jiveContainer);
-        post.addCommentId(comment.getId());
+        Comment comment = new Comment(jiveContainer);
+        post.addComment(comment);
 
-        addObjectToStorage(comment);
         addObjectToActivities(post);
     }
 
     private void processJivePost(JiveContainer jiveContainer) {
-        Post post = mUtils.getPostFromJiveContainer(jiveContainer);
+        Post post = mUtils.getPostFromObjectType(jiveContainer.getObject().getType());
+        post.fromJiveContainer(jiveContainer);
         addObjectToActivities(post);
     }
 
@@ -121,10 +117,9 @@ public class GetActivitiesTask extends BaseTask<Activities> {
     private void addObjectToActivities(BaseObject object){
         addObjectToStorage(object);
 
-        ActivityItem activityItem = mActivities.getActivity(object.getId(), object.getType());
+        BaseObject activityItem = mActivities.getActivity(object.getId());
         if (activityItem == null) {
-            activityItem = new ActivityItem(object.getId(), object.getType());
-            mActivities.addActivity(activityItem);
+            mActivities.addActivity(object);
         }
     }
 
@@ -139,6 +134,6 @@ public class GetActivitiesTask extends BaseTask<Activities> {
     private void processJivePromotion(JiveContainer jiveContainer) {
         Promotion promotion = new Promotion(jiveContainer);
 
-        addObjectToActivities(promotion);
+        // TODO
     }
 }

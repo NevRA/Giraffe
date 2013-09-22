@@ -4,33 +4,30 @@ import com.home.giraffe.objects.Jive.JiveAuthor;
 import com.home.giraffe.objects.Jive.JiveContent;
 import com.home.giraffe.objects.Jive.JivePost;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Post extends BaseObjectWithContent {
     public Post(String id) {
         super(id);
-        mCommentIds = Collections.synchronizedSet(new HashSet<String>());
+        mComments = Collections.synchronizedSet(new LinkedHashSet<Comment>());
     }
 
-    @Override
-    public BaseObjectTypes getType() {
-        return BaseObjectTypes.Post;
+    private Set<Comment> mComments;
+
+    public Set<Comment> getComments() {
+        return mComments;
     }
 
-    private Set<String> mCommentIds;
-
-    public Set<String> getCommentIds() {
-        return mCommentIds;
-    }
-
-    public void addCommentId(String commentId) {
-        mCommentIds.add(commentId);
+    public void addComment(Comment comment) {
+        mComments.add(comment);
     }
 
     public void clearCommentIds() {
-        mCommentIds.clear();
+        mComments.clear();
+    }
+
+    public String getFriendlyName(){
+        return "Post";
     }
 
     public void fromJivePost(JivePost jivePost) {
@@ -42,6 +39,6 @@ public class Post extends BaseObjectWithContent {
         setLikeCount(jivePost.getLikeCount());
         setTitle(jivePost.getSubject());
         setContent(jiveContent.getText());
-        setActorId(jiveAuthor.getId());
+        setActor(new Actor(jiveAuthor));
     }
 }

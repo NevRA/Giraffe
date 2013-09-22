@@ -6,7 +6,7 @@ public class Poll extends Post {
     }
 
     @Override
-    public BaseObjectTypes getType() {
-        return BaseObjectTypes.Poll;
+    public String getFriendlyName() {
+        return "Poll";
     }
 }

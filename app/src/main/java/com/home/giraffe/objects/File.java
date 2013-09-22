@@ -6,7 +6,7 @@ public class File extends Post {
     }
 
     @Override
-    public BaseObjectTypes getType() {
-        return BaseObjectTypes.File;
+    public String getFriendlyName() {
+        return "File";
     }
 }
