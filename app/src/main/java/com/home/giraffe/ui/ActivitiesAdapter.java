@@ -10,7 +10,10 @@ import com.home.giraffe.R;
 import com.home.giraffe.Utils;
 import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.interfaces.IUiManager;
-import com.home.giraffe.objects.*;
+import com.home.giraffe.objects.Actor;
+import com.home.giraffe.objects.BaseObject;
+import com.home.giraffe.objects.Comment;
+import com.home.giraffe.objects.Post;
 import com.home.giraffe.objects.socialnews.BaseSocialNewsItem;
 import com.home.giraffe.objects.socialnews.JoinedSocialNewsItem;
 import com.home.giraffe.objects.socialnews.LevelSocialNewsItem;
@@ -18,6 +21,7 @@ import com.home.giraffe.objects.socialnews.SocialNews;
 import com.home.giraffe.storages.ObjectsStorage;
 import roboguice.RoboGuice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
@@ -40,10 +44,10 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         BaseObject item = mItems.get(position);
-        if(item instanceof Post){
+        if (item instanceof Post) {
             return getPostView(item);
         }
-        if(item instanceof SocialNews){
+        if (item instanceof SocialNews) {
             return getSocialNewsView(item);
         }
 
@@ -53,34 +57,38 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
     private View getSocialNewsView(BaseObject activityItem) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.social_news_parent_preview, null);
 
-        RelativeLayout new_layout = (RelativeLayout)view.findViewById(R.id.news_layout);
+        RelativeLayout new_layout = (RelativeLayout) view.findViewById(R.id.news_layout);
 
-        SocialNews socialNews = (SocialNews)activityItem;
+        SocialNews socialNews = (SocialNews) activityItem;
 
         TextView postType = (TextView) view.findViewById(R.id.postType);
         postType.setText("social news".toUpperCase());
 
-        final LinearLayout news = (LinearLayout)view.findViewById(R.id.news);
-        final ImageView arrow = (ImageView)view.findViewById(R.id.imageArrow);
 
-        for (BaseSocialNewsItem newsItem : socialNews.getNews()){
-            LinearLayout newsItemView = (LinearLayout)LayoutInflater.from(getContext()).inflate(R.layout.social_news_preview, news, false);
+        final LinearLayout news = (LinearLayout) view.findViewById(R.id.news);
+        final ImageView arrow = (ImageView) view.findViewById(R.id.imageArrow);
+
+        List<String> avatars = new ArrayList<String>();
+        for (BaseSocialNewsItem newsItem : socialNews.getNews()) {
+            LinearLayout newsItemView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.social_news_preview, news, false);
 
             ImageView avatar = (ImageView) newsItemView.findViewById(R.id.avatar);
-            mImageLoader.DisplayImage(newsItem.getActor().getAvatarUrl(), avatar);
+            String avatarUrl = newsItem.getActor().getAvatarUrl();
+            avatars.add(avatarUrl);
+            mImageLoader.DisplayImage(avatarUrl, avatar);
 
-            TextView content = (TextView)newsItemView.findViewById(R.id.content);
+            TextView content = (TextView) newsItemView.findViewById(R.id.content);
 
 
-            if(newsItem instanceof LevelSocialNewsItem){
-                LevelSocialNewsItem levelNews = (LevelSocialNewsItem)newsItem;
+            if (newsItem instanceof LevelSocialNewsItem) {
+                LevelSocialNewsItem levelNews = (LevelSocialNewsItem) newsItem;
                 content.setText(Html.fromHtml("<b>" + levelNews.getActor().getDisplayName() + "</b>" + " " +
                         mUiManager.getString(R.string.achieved_level) + " " +
                         levelNews.getLevel()));
             }
 
-            if(newsItem instanceof JoinedSocialNewsItem){
-                JoinedSocialNewsItem joinedNews = (JoinedSocialNewsItem)newsItem;
+            if (newsItem instanceof JoinedSocialNewsItem) {
+                JoinedSocialNewsItem joinedNews = (JoinedSocialNewsItem) newsItem;
                 content.setText(Html.fromHtml("<b>" + joinedNews.getActor().getDisplayName() + "</b>" + " " +
                         mUiManager.getString(R.string.group_joined) + " " +
                         joinedNews.getGroup()));
@@ -88,6 +96,9 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
 
             news.addView(newsItemView);
         }
+
+        Gallery ga = (Gallery) view.findViewById(R.id.gallery);
+        ga.setAdapter(new ImageAdapter(getContext(), avatars));
 
         new_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +123,7 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
     private View getPostView(BaseObject activityItem) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.post_preview, null);
 
-        Post post = (Post)activityItem;
+        Post post = (Post) activityItem;
         Actor actor = post.getActor();
 
         TextView postType = (TextView) view.findViewById(R.id.postType);
@@ -136,23 +147,23 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
         TextView likes = (TextView) view.findViewById(R.id.likes);
         likes.setText(Integer.toString(post.getLikeCount()));
 
-        if(!post.getComments().isEmpty())
+        if (!post.getComments().isEmpty())
             addComments(post, view);
 
         return view;
     }
 
     private void addComments(Post post, View postView) {
-        RelativeLayout comments_layout = (RelativeLayout)postView.findViewById(R.id.comments_layout);
-        TextView newCommentsLabel = (TextView)postView.findViewById(R.id.new_comments_label);
-        final LinearLayout comments = (LinearLayout)postView.findViewById(R.id.comments);
-        final ImageView arrow = (ImageView)postView.findViewById(R.id.imageArrow);
+        RelativeLayout comments_layout = (RelativeLayout) postView.findViewById(R.id.comments_layout);
+        TextView newCommentsLabel = (TextView) postView.findViewById(R.id.new_comments_label);
+        final LinearLayout comments = (LinearLayout) postView.findViewById(R.id.comments);
+        final ImageView arrow = (ImageView) postView.findViewById(R.id.imageArrow);
 
-        for (Comment comment : post.getComments()){
+        for (Comment comment : post.getComments()) {
             Actor actor = comment.getActor();
-            LinearLayout commentView = (LinearLayout)LayoutInflater.from(getContext()).inflate(R.layout.comment_preview, comments, false);
+            LinearLayout commentView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.comment_preview, comments, false);
 
-            TextView content = (TextView)commentView.findViewById(R.id.content);
+            TextView content = (TextView) commentView.findViewById(R.id.content);
             content.setText(Html.fromHtml("<b>" + actor.getDisplayName() + "</b>" + " " + comment.getContent()));
 
             ImageView avatar = (ImageView) commentView.findViewById(R.id.avatar);
@@ -164,10 +175,10 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
         int commentsCount = post.getComments().size();
         newCommentsLabel.setText(
                 Integer.toString(commentsCount) +
-                " " +
-                mUiManager.getString(commentsCount == 1 ?
-                        R.string.new_comment_label :
-                        R.string.new_comments_label));
+                        " " +
+                        mUiManager.getString(commentsCount == 1 ?
+                                R.string.new_comment_label :
+                                R.string.new_comments_label));
 
         comments_layout.setVisibility(View.VISIBLE);
         comments_layout.setOnClickListener(new View.OnClickListener() {

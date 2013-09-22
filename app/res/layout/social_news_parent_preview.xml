@@ -23,6 +23,10 @@
                     android:textSize="14sp"
                     android:id="@+id/postType" android:textColor="@color/holo_blue_dark" android:textStyle="bold"/>
         </LinearLayout>
+        <Gallery
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:id="@+id/gallery" android:spacing="5dp"/>
     </LinearLayout>
     <RelativeLayout
             android:layout_width="match_parent"
