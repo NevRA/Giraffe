@@ -64,7 +64,6 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
         TextView postType = (TextView) view.findViewById(R.id.postType);
         postType.setText("social news".toUpperCase());
 
-
         final LinearLayout news = (LinearLayout) view.findViewById(R.id.news);
         final ImageView arrow = (ImageView) view.findViewById(R.id.imageArrow);
 
@@ -128,6 +127,9 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
 
         TextView postType = (TextView) view.findViewById(R.id.postType);
         postType.setText(post.getFriendlyName().toUpperCase());
+
+        TextView postUpdatedTime = (TextView) view.findViewById(R.id.time);
+        postUpdatedTime.setText(post.getUpdatedTime());
 
         TextView userDisplayName = (TextView) view.findViewById(R.id.userDisplayName);
         userDisplayName.setText(actor.getDisplayName());

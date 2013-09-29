@@ -6,6 +6,7 @@ public class JiveObject {
     private String displayName;
     private String objectType;
     private JiveImage image;
+    private String updated;
 
     public String getDisplayName() {
         return displayName;
@@ -21,6 +22,10 @@ public class JiveObject {
 
     public JiveImage getImage() {
         return image;
+    }
+
+    public String getUpdated() {
+        return updated;
     }
 
     public JiveTypes getType() {

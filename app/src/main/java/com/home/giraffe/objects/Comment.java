@@ -2,8 +2,10 @@ package com.home.giraffe.objects;
 
 import com.home.giraffe.objects.Jive.JiveContainer;
 
+import java.text.ParseException;
+
 public class Comment extends BaseObjectWithContent implements Comparable<Comment> {
-    public Comment(JiveContainer jiveContainer) {
+    public Comment(JiveContainer jiveContainer) throws ParseException {
         super(null);
         fromJiveContainer(jiveContainer);
     }

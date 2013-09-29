@@ -8,6 +8,7 @@ public class JiveContainer {
     JiveObject object;
     JiveActor actor;
     Jive jive;
+    String updated;
 
     public Jive getJive() {
         return jive;
@@ -31,6 +32,10 @@ public class JiveContainer {
 
     public String getPublished() {
         return published;
+    }
+
+    public String getUpdated() {
+        return updated;
     }
 
     public JiveVerbTypes getVerbType(){

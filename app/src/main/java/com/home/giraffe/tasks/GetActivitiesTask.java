@@ -9,6 +9,8 @@ import com.home.giraffe.objects.socialnews.JoinedSocialNewsItem;
 import com.home.giraffe.objects.socialnews.LevelSocialNewsItem;
 import com.home.giraffe.objects.socialnews.SocialNews;
 
+import java.text.ParseException;
+
 public class GetActivitiesTask extends BaseTask<Activities> {
     private Activities mActivities;
     private String mUrl;
@@ -113,7 +115,7 @@ public class GetActivitiesTask extends BaseTask<Activities> {
         addObjectToActivities(post);
     }
 
-    private void processJivePost(JiveContainer jiveContainer) {
+    private void processJivePost(JiveContainer jiveContainer) throws ParseException {
         Post post = mUtils.getPostFromObjectType(jiveContainer.getObject().getType());
         post.fromJiveContainer(jiveContainer);
         addObjectToActivities(post);

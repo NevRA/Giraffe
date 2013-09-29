@@ -2,6 +2,8 @@ package com.home.giraffe.objects;
 
 import com.home.giraffe.objects.Jive.JiveContainer;
 
+import java.text.ParseException;
+
 public class Discussion extends Post{
     public Discussion(String id) {
         super(id);
@@ -23,7 +25,7 @@ public class Discussion extends Post{
     }
 
     @Override
-    public void fromJiveContainer(JiveContainer jiveContainer) {
+    public void fromJiveContainer(JiveContainer jiveContainer) throws ParseException {
         super.fromJiveContainer(jiveContainer);
 
         setIsQuestion(jiveContainer.getJive().isQuestion());

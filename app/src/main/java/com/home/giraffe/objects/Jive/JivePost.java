@@ -9,6 +9,7 @@ public class JivePost {
     private JiveResources resources;
     private int replyCount;
     private int likeCount;
+    private String updated;
 
     public String getId() {
         return getResources().getSelf().getRef();
@@ -40,6 +41,10 @@ public class JivePost {
 
     public JiveResources getResources() {
         return resources;
+    }
+
+    public String getUpdated() {
+        return updated;
     }
 
     public JiveTypes getType() {

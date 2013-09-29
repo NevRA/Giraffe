@@ -14,7 +14,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content">
         <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" android:layout_marginBottom="10dp">
             <TextView
@@ -22,6 +22,11 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:id="@+id/postType" android:textColor="@color/holo_blue_dark" android:textStyle="bold"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/time" android:gravity="center_vertical|right"
+                    android:layout_gravity="center_vertical"/>
         </LinearLayout>
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                       android:orientation="horizontal"
@@ -34,7 +39,7 @@
                     android:layout_gravity="center" android:visibility="gone"/>
             <TextView
                     android:id="@+id/title"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     style="@style/TextView.Post.Title"
