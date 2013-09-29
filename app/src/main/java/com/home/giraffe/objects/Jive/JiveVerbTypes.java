@@ -2,6 +2,8 @@ package com.home.giraffe.objects.Jive;
 
 
 public enum JiveVerbTypes {
+    JiveUnsupported,
+
     JiveReplied,
     JiveCommented,
 

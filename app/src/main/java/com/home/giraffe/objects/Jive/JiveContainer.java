@@ -91,6 +91,6 @@ public class JiveContainer {
             return JiveVerbTypes.JiveProjectCompleted;
         }
 
-        throw new IllegalArgumentException("Unsupported jive verb type: " + verb);
+        return JiveVerbTypes.JiveUnsupported;
     }
 }

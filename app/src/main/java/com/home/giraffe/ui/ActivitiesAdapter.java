@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.home.giraffe.R;
-import com.home.giraffe.Utils;
+import com.home.giraffe.utils.Utils;
 import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.objects.Actor;

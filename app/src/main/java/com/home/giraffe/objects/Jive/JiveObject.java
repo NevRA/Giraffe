@@ -85,7 +85,7 @@ public class JiveObject {
             return JiveTypes.JivePost;
         }
 
-        return JiveTypes.Unknown;
+        return JiveTypes.Unsupported;
     }
 }
 

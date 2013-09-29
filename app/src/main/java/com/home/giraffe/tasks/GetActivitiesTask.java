@@ -8,6 +8,7 @@ import com.home.giraffe.objects.activity.Activities;
 import com.home.giraffe.objects.socialnews.JoinedSocialNewsItem;
 import com.home.giraffe.objects.socialnews.LevelSocialNewsItem;
 import com.home.giraffe.objects.socialnews.SocialNews;
+import com.home.giraffe.utils.Utils;
 
 import java.text.ParseException;
 
@@ -48,7 +49,9 @@ public class GetActivitiesTask extends BaseTask<Activities> {
         JiveVerbTypes jiveVerbTypes = jiveContainer.getVerbType();
         JiveObject jiveObject = jiveContainer.getObject();
 
-        if(jiveObject == null)
+        if(     jiveObject == null ||
+                jiveVerbTypes == JiveVerbTypes.JiveUnsupported ||
+                jiveObject.getType() == JiveTypes.Unsupported)
             return; // for some group updates etc.
 
         switch (jiveObject.getType()) {
@@ -73,7 +76,7 @@ public class GetActivitiesTask extends BaseTask<Activities> {
             case JiveProject:
                 break;
 
-            case Unknown:
+            case Unsupported:
             case JiveSpace:
             case JiveInstance:
             case JivePerson:
@@ -105,7 +108,7 @@ public class GetActivitiesTask extends BaseTask<Activities> {
 
         if (post == null) {
             JivePost jivePost = mRequestsManager.getPost(jiveParent.getId());
-            post = mUtils.getPostFromObjectType(jivePost.getType());
+            post = Utils.getPostFromObjectType(jivePost.getType());
             post.fromJivePost(jivePost);
         }
 
@@ -116,7 +119,7 @@ public class GetActivitiesTask extends BaseTask<Activities> {
     }
 
     private void processJivePost(JiveContainer jiveContainer) throws ParseException {
-        Post post = mUtils.getPostFromObjectType(jiveContainer.getObject().getType());
+        Post post = Utils.getPostFromObjectType(jiveContainer.getObject().getType());
         post.fromJiveContainer(jiveContainer);
         addObjectToActivities(post);
     }

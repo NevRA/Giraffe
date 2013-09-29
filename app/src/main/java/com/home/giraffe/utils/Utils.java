@@ -1,12 +1,10 @@
-package com.home.giraffe;
+package com.home.giraffe.utils;
 
 import com.home.giraffe.objects.*;
-import com.home.giraffe.objects.Jive.JiveContainer;
-import com.home.giraffe.objects.Jive.JivePost;
 import com.home.giraffe.objects.Jive.JiveTypes;
 
 public class Utils {
-    public Post getPostFromObjectType(JiveTypes jiveTypes) {
+    public static Post getPostFromObjectType(JiveTypes jiveTypes) {
         Post post;
         switch (jiveTypes) {
             case JiveDiscussion:

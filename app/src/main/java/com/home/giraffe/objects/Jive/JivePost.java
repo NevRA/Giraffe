@@ -100,6 +100,6 @@ public class JivePost {
             return JiveTypes.JiveTask;
         }
 
-        return JiveTypes.Unknown;
+        return JiveTypes.Unsupported;
     }
 }
