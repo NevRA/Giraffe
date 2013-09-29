@@ -8,15 +8,15 @@ import com.google.inject.Inject;
 import com.home.giraffe.Constants;
 import com.home.giraffe.base.BaseListFragment;
 import com.home.giraffe.interfaces.ISettingsManager;
-import com.home.giraffe.objects.activity.Activities;
+import com.home.giraffe.objects.activity.BaseObjectContainer;
 import com.home.giraffe.tasks.GetActivitiesTask;
 
-public class ActivityFragment extends BaseListFragment<Activities> {
+public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
 
     @Inject
     ISettingsManager mSettingsManager;
 
-    private Activities mActivities;
+    private BaseObjectContainer mBaseObjectContainer;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -33,16 +33,16 @@ public class ActivityFragment extends BaseListFragment<Activities> {
     }
 
     public void init() {
-        if (mActivities == null) {
+        if (mBaseObjectContainer == null) {
 
-            mActivities = new Activities();
+            mBaseObjectContainer = new BaseObjectContainer();
             String url = mSettingsManager.getCommunityUrl() + Constants.ACTIVITIES;
-            mActivities.setPrevious(url);
-            mActivities.setCurrent(url);
-            mActivities.setNext(url);
+            mBaseObjectContainer.setPrevious(url);
+            mBaseObjectContainer.setCurrent(url);
+            mBaseObjectContainer.setNext(url);
 
             addFooter();
-            ActivitiesAdapter adapter = new ActivitiesAdapter(getActivity(), android.R.layout.simple_list_item_1, mActivities.getActivities());
+            ActivitiesAdapter adapter = new ActivitiesAdapter(getActivity(), android.R.layout.simple_list_item_1, mBaseObjectContainer.getActivities());
             setListAdapter(adapter);
             removeFooter();
 
@@ -60,45 +60,45 @@ public class ActivityFragment extends BaseListFragment<Activities> {
 
     @Override
     public void loadPrevious() {
-        mActivities.setCurrent(mActivities.getPrevious());
+        mBaseObjectContainer.setCurrent(mBaseObjectContainer.getPrevious());
         restartLoader();
     }
 
     @Override
     public void loadNext() {
-        mActivities.setCurrent(mActivities.getNext());
+        mBaseObjectContainer.setCurrent(mBaseObjectContainer.getNext());
         restartLoader();
     }
 
     @Override
-    protected void onLoadFinished(Activities activities) {
-        if(!activities.getActivities().isEmpty())
-            updateView(activities);
+    protected void onLoadFinished(BaseObjectContainer baseObjectContainer) {
+        if(!baseObjectContainer.getActivities().isEmpty())
+            updateView(baseObjectContainer);
     }
 
     @Override
-    public Loader<Activities> onCreateLoader(int i, Bundle bundle) {
-        return new GetActivitiesTask(getActivity(), mActivities.getCurrent());
+    public Loader<BaseObjectContainer> onCreateLoader(int i, Bundle bundle) {
+        return new GetActivitiesTask(getActivity(), mBaseObjectContainer.getCurrent());
     }
 
     private void updateView() {
-        updateView(mActivities);
+        updateView(mBaseObjectContainer);
     }
 
-    private void updateView(Activities activities) {
-        if(activities.getCurrent().equals(mActivities.getNext()) &&
-            activities.getCurrent().equals(mActivities.getPrevious())){
-            mActivities.setPrevious(activities.getPrevious());
-            mActivities.setNext(activities.getNext());
-            mActivities.addActivities(activities.getActivities());
+    private void updateView(BaseObjectContainer baseObjectContainer) {
+        if(baseObjectContainer.getCurrent().equals(mBaseObjectContainer.getNext()) &&
+            baseObjectContainer.getCurrent().equals(mBaseObjectContainer.getPrevious())){
+            mBaseObjectContainer.setPrevious(baseObjectContainer.getPrevious());
+            mBaseObjectContainer.setNext(baseObjectContainer.getNext());
+            mBaseObjectContainer.addActivities(baseObjectContainer.getActivities());
         }
-        else if(activities.getCurrent().equals(mActivities.getPrevious())){
-            mActivities.setPrevious(activities.getPrevious());
-            mActivities.addActivities(0, activities.getActivities());
+        else if(baseObjectContainer.getCurrent().equals(mBaseObjectContainer.getPrevious())){
+            mBaseObjectContainer.setPrevious(baseObjectContainer.getPrevious());
+            mBaseObjectContainer.addActivities(0, baseObjectContainer.getActivities());
         }
-        else if(activities.getCurrent().equals(mActivities.getNext())){
-            mActivities.addActivities(activities.getActivities());
-            mActivities.setNext(activities.getNext());
+        else if(baseObjectContainer.getCurrent().equals(mBaseObjectContainer.getNext())){
+            mBaseObjectContainer.addActivities(baseObjectContainer.getActivities());
+            mBaseObjectContainer.setNext(baseObjectContainer.getNext());
         }
 
         ((ArrayAdapter) getListAdapter()).notifyDataSetChanged();

@@ -4,7 +4,7 @@ import android.support.v4.app.FragmentActivity;
 import com.home.giraffe.Constants;
 import com.home.giraffe.objects.*;
 import com.home.giraffe.objects.Jive.*;
-import com.home.giraffe.objects.activity.Activities;
+import com.home.giraffe.objects.activity.BaseObjectContainer;
 import com.home.giraffe.objects.socialnews.JoinedSocialNewsItem;
 import com.home.giraffe.objects.socialnews.LevelSocialNewsItem;
 import com.home.giraffe.objects.socialnews.SocialNews;
@@ -12,27 +12,27 @@ import com.home.giraffe.utils.Utils;
 
 import java.text.ParseException;
 
-public class GetActivitiesTask extends BaseTask<Activities> {
-    private Activities mActivities;
+public class GetActivitiesTask extends BaseTask<BaseObjectContainer> {
+    private BaseObjectContainer mBaseObjectContainer;
     private String mUrl;
 
 
     public GetActivitiesTask(FragmentActivity activity, String url) {
         super(activity);
         mUrl = url;
-        mActivities = new Activities();
-        mActivities.setCurrent(url);
+        mBaseObjectContainer = new BaseObjectContainer();
+        mBaseObjectContainer.setCurrent(url);
     }
 
     @Override
-    public Activities loadInBackground() {
+    public BaseObjectContainer loadInBackground() {
         try {
             JiveActivities jiveActivities = mRequestsManager.getActivities(mUrl);
             if(jiveActivities.getList().isEmpty()){
-                return mActivities;
+                return mBaseObjectContainer;
             }
-            mActivities.setNext(jiveActivities.getLinks().getNext());
-            mActivities.setPrevious(jiveActivities.getLinks().getPrevious());
+            mBaseObjectContainer.setNext(jiveActivities.getLinks().getNext());
+            mBaseObjectContainer.setPrevious(jiveActivities.getLinks().getPrevious());
 
             for (JiveContainer jiveContainer : jiveActivities.getList()) {
                 processJiveContainer(jiveContainer);
@@ -41,7 +41,7 @@ public class GetActivitiesTask extends BaseTask<Activities> {
             mUiManager.showError(getActivity(), e);
         }
 
-        return mActivities;
+        return mBaseObjectContainer;
     }
 
     private void processJiveContainer(JiveContainer jiveContainer) throws Exception {
@@ -131,9 +131,9 @@ public class GetActivitiesTask extends BaseTask<Activities> {
     private void addObjectToActivities(BaseObject object){
         addObjectToStorage(object);
 
-        BaseObject activityItem = mActivities.getActivity(object.getId());
+        BaseObject activityItem = mBaseObjectContainer.getActivity(object.getId());
         if (activityItem == null) {
-            mActivities.addActivity(object);
+            mBaseObjectContainer.addActivity(object);
         }
     }
 
@@ -148,10 +148,10 @@ public class GetActivitiesTask extends BaseTask<Activities> {
     private void processJiveJoined(JiveContainer jiveContainer) {
         JoinedSocialNewsItem joinedNews = new JoinedSocialNewsItem(jiveContainer);
 
-        SocialNews socialNews = (SocialNews)mActivities.getActivity(Constants.SocialNewsId);
+        SocialNews socialNews = (SocialNews) mBaseObjectContainer.getActivity(Constants.SocialNewsId);
         if(socialNews == null){
             socialNews = new SocialNews();
-            mActivities.addActivity(socialNews);
+            mBaseObjectContainer.addActivity(socialNews);
         }
 
         socialNews.addNews(joinedNews);
@@ -160,10 +160,10 @@ public class GetActivitiesTask extends BaseTask<Activities> {
     private void processJivePromotion(JiveContainer jiveContainer) {
         LevelSocialNewsItem levelNews = new LevelSocialNewsItem(jiveContainer);
 
-        SocialNews socialNews = (SocialNews)mActivities.getActivity(Constants.SocialNewsId);
+        SocialNews socialNews = (SocialNews) mBaseObjectContainer.getActivity(Constants.SocialNewsId);
         if(socialNews == null){
             socialNews = new SocialNews();
-            mActivities.addActivity(socialNews);
+            mBaseObjectContainer.addActivity(socialNews);
         }
 
         socialNews.addNews(levelNews);

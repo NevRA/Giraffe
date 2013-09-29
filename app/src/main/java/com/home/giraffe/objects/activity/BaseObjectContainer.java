@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Activities {
+public class BaseObjectContainer {
     private List<BaseObject> mActivityItems;
     private String mCurrent;
     private String mNext;
     private String mPrevious;
 
-    public Activities() {
+    public BaseObjectContainer() {
         mActivityItems = Collections.synchronizedList(new ArrayList<BaseObject>());
     }
 
