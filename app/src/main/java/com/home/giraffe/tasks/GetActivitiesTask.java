@@ -28,11 +28,15 @@ public class GetActivitiesTask extends BaseTask<BaseObjectContainer> {
     public BaseObjectContainer loadInBackground() {
         try {
             JiveActivities jiveActivities = mRequestsManager.getActivities(mUrl);
+
             if(jiveActivities.getList().isEmpty()){
                 return mBaseObjectContainer;
             }
-            mBaseObjectContainer.setNext(jiveActivities.getLinks().getNext());
-            mBaseObjectContainer.setPrevious(jiveActivities.getLinks().getPrevious());
+
+            if(jiveActivities.getLinks() != null){
+                mBaseObjectContainer.setNext(jiveActivities.getLinks().getNext());
+                mBaseObjectContainer.setPrevious(jiveActivities.getLinks().getPrevious());
+            }
 
             for (JiveContainer jiveContainer : jiveActivities.getList()) {
                 processJiveContainer(jiveContainer);

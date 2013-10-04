@@ -1,51 +1,73 @@
 package com.home.giraffe.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFragment;
+import android.widget.ArrayAdapter;
 import com.google.inject.Inject;
-import com.home.giraffe.events.InboxUnreadCountEvent;
-import com.home.giraffe.objects.Jive.JiveInbox;
-import com.home.giraffe.tasks.GetInboxTask;
-import de.greenrobot.event.EventBus;
+import com.home.giraffe.Constants;
+import com.home.giraffe.base.BaseListFragment;
+import com.home.giraffe.interfaces.ISettingsManager;
+import com.home.giraffe.objects.activity.BaseObjectContainer;
+import com.home.giraffe.tasks.GetActivitiesTask;
 
-public class InboxFragment extends RoboSherlockListFragment implements LoaderManager.LoaderCallbacks<JiveInbox>{
+public class InboxFragment extends BaseListFragment<BaseObjectContainer> {
+
     @Inject
-    EventBus mBus;
+    ISettingsManager mSettingsManager;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
+    private BaseObjectContainer mBaseObjectContainer;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getActivity().getSupportLoaderManager().restartLoader(2, null, this);
+        init();
     }
 
-    @Override
-    public Loader<JiveInbox> onCreateLoader(int i, Bundle bundle) {
-        return new GetInboxTask(getActivity());
-    }
+    public void init() {
+        if (mBaseObjectContainer == null) {
 
-    @Override
-    public void onLoadFinished(Loader<JiveInbox> inboxLoader, JiveInbox inbox) {
-        if(inbox != null){
-            updateView(inbox);
+            mBaseObjectContainer = new BaseObjectContainer();
+            mBaseObjectContainer.setCurrent(mSettingsManager.getCommunityUrl() + Constants.INBOX);
+
+            ActivitiesAdapter adapter = new ActivitiesAdapter(getActivity(), android.R.layout.simple_list_item_1, mBaseObjectContainer.getActivities());
+            setListAdapter(adapter);
+
+            setListShown(false);
+
+            update();
+        } else {
+            updateView();
         }
     }
 
-    private void updateView(JiveInbox inbox) {
-        mBus.post(new InboxUnreadCountEvent(inbox.getUnreadCount()));
+    private void restartLoader() {
+        getActivity().getSupportLoaderManager().restartLoader(4, null, this);
     }
 
     @Override
-    public void onLoaderReset(Loader<JiveInbox> inboxLoader) {
+    public void update() {
+        restartLoader();
+    }
+
+    @Override
+    protected void onLoadFinished(BaseObjectContainer baseObjectContainer) {
+        if (!baseObjectContainer.getActivities().isEmpty())
+            updateView(baseObjectContainer);
+    }
+
+    @Override
+    public Loader<BaseObjectContainer> onCreateLoader(int i, Bundle bundle) {
+        return new GetActivitiesTask(getActivity(), mBaseObjectContainer.getCurrent());
+    }
+
+    private void updateView() {
+        updateView(mBaseObjectContainer);
+    }
+
+    private void updateView(BaseObjectContainer baseObjectContainer) {
+        mBaseObjectContainer.setActivities(baseObjectContainer.getActivities());
+        ((ArrayAdapter) getListAdapter()).notifyDataSetChanged();
     }
 }

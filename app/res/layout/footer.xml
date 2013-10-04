@@ -3,9 +3,9 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:minHeight="45dp"
         android:background="@color/white"
         android:gravity="center"
-        android:minHeight="45dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:baselineAligned="true">
@@ -18,4 +18,4 @@
             android:layout_height="wrap_content"
             android:text="Loading..."
             android:textColor="#000" />
-</LinearLayout> 
+</LinearLayout>

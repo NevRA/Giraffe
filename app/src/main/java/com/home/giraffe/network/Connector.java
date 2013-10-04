@@ -76,7 +76,7 @@ public class Connector implements IConnector {
 
         CookieStore cookieStore = mHttpClient.getCookieStore();
         Cookie[] cookies = cookieStore.getCookies().toArray(new Cookie[cookieStore.getCookies().size()]);
-        String body = cutSecurityString(EntityUtils.toString(entity));
+        String body = cutSecurityString(EntityUtils.toString(entity, HTTP.UTF_8));
         return new com.home.giraffe.network.HttpResponse(cookies, body);
     }
 

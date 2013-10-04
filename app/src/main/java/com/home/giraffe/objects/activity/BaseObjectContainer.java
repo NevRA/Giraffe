@@ -48,6 +48,12 @@ public class BaseObjectContainer {
         mActivityItems.add(activityItem);
     }
 
+    public void setActivities(List<BaseObject> activityItems) {
+        List<BaseObject> items = new ArrayList<BaseObject>(activityItems);
+        mActivityItems.clear();
+        mActivityItems.addAll(items);
+    }
+
     public void addActivities(List<BaseObject> activityItems) {
         addActivities(mActivityItems.size(), activityItems);
     }

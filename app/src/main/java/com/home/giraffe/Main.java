@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -14,17 +16,18 @@ import android.widget.TextView;
 import com.google.inject.Inject;
 import com.home.giraffe.base.BaseFragmentActivity;
 import com.home.giraffe.events.InboxUnreadCountEvent;
+import com.home.giraffe.tasks.GetBadgesCount;
 import com.home.giraffe.ui.ActionsFragment;
 import com.home.giraffe.ui.ActivityFragment;
 import com.home.giraffe.ui.InboxFragment;
 import roboguice.inject.InjectView;
 
-public class Main extends BaseFragmentActivity {
-    @Inject
-    ActivityFragment mActivityFragment;
+public class Main extends BaseFragmentActivity implements LoaderManager.LoaderCallbacks<Object> {
+//    @Inject
+    ActivityFragment mActivityFragment = new ActivityFragment();
 
-    @Inject
-    InboxFragment mInboxFragment;
+    //@Inject
+    InboxFragment mInboxFragment = new InboxFragment();
 
     @Inject
     ActionsFragment mActionsFragment;
@@ -122,6 +125,8 @@ public class Main extends BaseFragmentActivity {
                 selectItem(mActionsFragment, "Actions");
             }
         });
+
+        getSupportLoaderManager().restartLoader(0, null, this);
     }
 
     private void selectItem(Fragment fragment, String title) {
@@ -153,7 +158,20 @@ public class Main extends BaseFragmentActivity {
         getActionBar().setTitle(mTitle);
     }
 
-    public void onEvent(final InboxUnreadCountEvent event) {
+    public void onEventMainThread(final InboxUnreadCountEvent event) {
         mInboxBadge.setText(String.valueOf(event.getCount()));
+    }
+
+    @Override
+    public Loader<Object> onCreateLoader(int i, Bundle bundle) {
+        return new GetBadgesCount(this);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Object> objectLoader, Object o) {
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Object> objectLoader) {
     }
 }

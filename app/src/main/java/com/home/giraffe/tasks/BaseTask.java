@@ -6,6 +6,7 @@ import com.home.giraffe.interfaces.IRequestsManager;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.storages.ObjectsStorage;
+import de.greenrobot.event.EventBus;
 import roboguice.content.RoboAsyncTaskLoader;
 
 import java.lang.ref.WeakReference;
@@ -19,6 +20,9 @@ public abstract class BaseTask<T> extends RoboAsyncTaskLoader<T> {
 
     @Inject
     IUiManager mUiManager;
+
+    @Inject
+    EventBus mBus;
 
     @Inject
     ISettingsManager mSettingsManager;

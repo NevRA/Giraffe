@@ -48,7 +48,7 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
         mSignIn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportLoaderManager().restartLoader(0, null, SignInActivity.this);
+                getSupportLoaderManager().restartLoader(1, null, SignInActivity.this);
             }
         });
     }

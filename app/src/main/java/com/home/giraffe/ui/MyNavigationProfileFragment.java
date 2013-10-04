@@ -59,7 +59,7 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
 
         updateView();
 
-        getActivity().getSupportLoaderManager().restartLoader(0, null, this);
+        getActivity().getSupportLoaderManager().restartLoader(3, null, this);
 
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override

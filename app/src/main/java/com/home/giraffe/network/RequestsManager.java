@@ -57,6 +57,17 @@ public class RequestsManager implements IRequestsManager {
     }
 
     @Override
+    public int getInboxBadgeCount() throws Exception {
+        String inbox = mSettingsManager.getCommunityUrl() + Constants.INBOX_ZERO_RECORDS;
+        return mGson.fromJson(mConnector.getRequest(inbox).getBody(), JiveInbox.class).getUnreadCount();
+    }
+
+    @Override
+    public int getActionsBadgeCount() throws Exception {
+        throw new UnsupportedOperationException(); // TODO
+    }
+
+    @Override
     public JivePost getPost(String url) throws Exception {
         return mGson.fromJson(mConnector.getRequest(url).getBody(), JivePost.class);
     }

@@ -19,13 +19,6 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
     private BaseObjectContainer mBaseObjectContainer;
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        addPullToRefresh();
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -33,18 +26,18 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
     }
 
     public void init() {
+        enableOnScrollUpdates();
+
         if (mBaseObjectContainer == null) {
+            String url = mSettingsManager.getCommunityUrl() + Constants.ACTIVITIES;
 
             mBaseObjectContainer = new BaseObjectContainer();
-            String url = mSettingsManager.getCommunityUrl() + Constants.ACTIVITIES;
             mBaseObjectContainer.setPrevious(url);
             mBaseObjectContainer.setCurrent(url);
             mBaseObjectContainer.setNext(url);
 
-            addFooter();
             ActivitiesAdapter adapter = new ActivitiesAdapter(getActivity(), android.R.layout.simple_list_item_1, mBaseObjectContainer.getActivities());
             setListAdapter(adapter);
-            removeFooter();
 
             setListShown(false);
 
@@ -55,11 +48,11 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
     }
 
     private void restartLoader() {
-        getActivity().getSupportLoaderManager().restartLoader(1, null, this);
+        getActivity().getSupportLoaderManager().restartLoader(2, null, this);
     }
 
     @Override
-    public void loadPrevious() {
+    public void update() {
         mBaseObjectContainer.setCurrent(mBaseObjectContainer.getPrevious());
         restartLoader();
     }

@@ -10,12 +10,6 @@ public class GetInboxTask extends BaseTask<JiveInbox> {
 
     @Override
     public JiveInbox loadInBackground() {
-        try {
-            return mRequestsManager.getInbox();
-        } catch (Exception e) {
-            mUiManager.showError(getActivity(), e);
-        }
-
         return null;
     }
 }
