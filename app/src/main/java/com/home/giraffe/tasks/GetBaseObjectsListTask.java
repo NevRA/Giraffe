@@ -12,12 +12,12 @@ import com.home.giraffe.utils.Utils;
 
 import java.text.ParseException;
 
-public class GetActivitiesTask extends BaseTask<BaseObjectContainer> {
+public class GetBaseObjectsListTask extends BaseTask<BaseObjectContainer> {
     private BaseObjectContainer mBaseObjectContainer;
     private String mUrl;
 
 
-    public GetActivitiesTask(FragmentActivity activity, String url) {
+    public GetBaseObjectsListTask(FragmentActivity activity, String url) {
         super(activity);
         mUrl = url;
         mBaseObjectContainer = new BaseObjectContainer();
@@ -26,6 +26,8 @@ public class GetActivitiesTask extends BaseTask<BaseObjectContainer> {
 
     @Override
     public BaseObjectContainer loadInBackground() {
+        Utils.d("Started GetBaseObjectsListTask");
+
         try {
             JiveActivities jiveActivities = mRequestsManager.getActivities(mUrl);
 
@@ -44,8 +46,10 @@ public class GetActivitiesTask extends BaseTask<BaseObjectContainer> {
         } catch (Exception e) {
             mUiManager.showError(getActivity(), e);
         }
-
-        return mBaseObjectContainer;
+        finally {
+            Utils.d("Finished GetBaseObjectsListTask");
+            return mBaseObjectContainer;
+        }
     }
 
     private void processJiveContainer(JiveContainer jiveContainer) throws Exception {

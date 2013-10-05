@@ -5,6 +5,7 @@ import com.home.giraffe.Constants;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.objects.Jive.JiveAuthor;
 import com.home.giraffe.objects.Jive.JiveInbox;
+import com.home.giraffe.utils.Utils;
 
 public class SignInTask extends BaseTask {
 
@@ -21,6 +22,8 @@ public class SignInTask extends BaseTask {
 
     @Override
     public Object loadInBackground() {
+        Utils.d("Started SignInTask");
+
         try {
             String communityUrl  = mUrl.contains("http") || mUrl.contains("https") ? mUrl : "https://" + mUrl;
             String token = mRequestsManager.signIn(communityUrl, mUserName, mUserPassword);
@@ -36,7 +39,9 @@ public class SignInTask extends BaseTask {
         } catch (Exception e) {
             mUiManager.showError(getActivity(), e);
         }
-
-        return null;
+        finally {
+            Utils.d("Finished SignInTask");
+            return null;
+        }
     }
 }

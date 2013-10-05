@@ -2,14 +2,13 @@ package com.home.giraffe.ui;
 
 import android.os.Bundle;
 import android.support.v4.content.Loader;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import com.google.inject.Inject;
 import com.home.giraffe.Constants;
 import com.home.giraffe.base.BaseListFragment;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.objects.activity.BaseObjectContainer;
-import com.home.giraffe.tasks.GetActivitiesTask;
+import com.home.giraffe.tasks.GetBaseObjectsListTask;
 
 public class InboxFragment extends BaseListFragment<BaseObjectContainer> {
 
@@ -17,7 +16,7 @@ public class InboxFragment extends BaseListFragment<BaseObjectContainer> {
     ISettingsManager mSettingsManager;
 
     private BaseObjectContainer mBaseObjectContainer;
-    private ActivitiesAdapter mAdapter;
+    private BaseObjectsAdapter mAdapter;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public class InboxFragment extends BaseListFragment<BaseObjectContainer> {
 
     public void init() {
         if(mAdapter == null){
-            mAdapter = new ActivitiesAdapter(getActivity(), mBaseObjectContainer.getActivities());
+            mAdapter = new BaseObjectsAdapter(getActivity(), mBaseObjectContainer.getActivities());
         }
 
         setListAdapter(mAdapter);
@@ -66,7 +65,7 @@ public class InboxFragment extends BaseListFragment<BaseObjectContainer> {
 
     @Override
     public Loader<BaseObjectContainer> onCreateLoader(int i, Bundle bundle) {
-        return new GetActivitiesTask(getActivity(), mBaseObjectContainer.getCurrent());
+        return new GetBaseObjectsListTask(getActivity(), mBaseObjectContainer.getCurrent());
     }
 
     private void updateView() {

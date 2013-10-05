@@ -2,6 +2,7 @@ package com.home.giraffe;
 
 public class Constants {
 
+    public static final String APP_TAG = "giraffe";
     public static final String LOGIN = "/cs_login";
     public static final String API = "/api/core/v3/";
     public static final String PEOPLE = API + "people/";

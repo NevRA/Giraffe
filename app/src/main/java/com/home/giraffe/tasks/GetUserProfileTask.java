@@ -2,6 +2,7 @@ package com.home.giraffe.tasks;
 
 import android.support.v4.app.FragmentActivity;
 import com.home.giraffe.objects.Jive.JiveAuthor;
+import com.home.giraffe.utils.Utils;
 
 public class GetUserProfileTask extends BaseTask<JiveAuthor> {
 
@@ -14,12 +15,16 @@ public class GetUserProfileTask extends BaseTask<JiveAuthor> {
 
     @Override
     public JiveAuthor loadInBackground() {
+        Utils.d("Started GetUserProfileTask");
+
         try {
             return mRequestsManager.getUserInfo(mUserId);
         } catch (Exception e) {
             mUiManager.showError(getActivity(), e);
         }
-
-        return null;
+        finally {
+            Utils.d("Finished GetUserProfileTask");
+            return null;
+        }
     }
 }

@@ -36,13 +36,12 @@ public abstract class BaseListFragment<T> extends RoboSherlockListFragment imple
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        addFooter();
-        hideFooter();
-
-        setRetainInstance(true);
+        showFooter();
 
         getListView().setDividerHeight(0);
         getListView().setDivider(null);
+
+        setRetainInstance(true);
     }
 
     public void enableOnScrollUpdates(){
@@ -58,7 +57,7 @@ public abstract class BaseListFragment<T> extends RoboSherlockListFragment imple
 
                 int lastItem = firstVisibleItem + visibleItemCount;
                 if (firstVisibleItem > 3 && lastItem == totalItemCount) {
-                    if (!isFooterVisible()) {
+                    if (!getActivity().getSupportLoaderManager().hasRunningLoaders()) {
                         showFooter();
                         loadNext();
                     }
@@ -68,18 +67,15 @@ public abstract class BaseListFragment<T> extends RoboSherlockListFragment imple
     }
 
     public void hideFooter(){
-        mFooter.setVisibility(View.GONE);
-    }
-
-    public void showFooter(){
-        mFooter.setVisibility(View.VISIBLE);
+        if(isFooterVisible())
+            getListView().removeFooterView(mFooter);
     }
 
     public boolean isFooterVisible() {
-        return mFooter.getVisibility() == View.VISIBLE;
+        return getListView().getFooterViewsCount() != 0;
     }
 
-    public void addFooter() {
+    public void showFooter() {
         if(getListView().getFooterViewsCount() == 0){
             mFooter = (LinearLayout) getLayoutInflater(null).inflate(R.layout.footer, null);
             getListView().addFooterView(mFooter);

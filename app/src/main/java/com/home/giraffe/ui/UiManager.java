@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import com.google.inject.Inject;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IUiManager;
+import com.home.giraffe.utils.Utils;
 
 public class UiManager implements IUiManager {
     private Context mContext;
@@ -38,5 +39,7 @@ public class UiManager implements IUiManager {
 
         MessageDialogFragment dialog = new MessageDialogFragment(getString(R.string.message_dialog_error_title), e.getMessage());
         dialog.show(activity.getSupportFragmentManager(), null);
+
+        Utils.e(e);
     }
 }

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.google.inject.Inject;
 import com.home.giraffe.base.BaseFragmentActivity;
 import com.home.giraffe.events.InboxUnreadCountEvent;
-import com.home.giraffe.tasks.GetBadgesCount;
+import com.home.giraffe.tasks.GetBadgesCountTask;
 import com.home.giraffe.ui.ActionsFragment;
 import com.home.giraffe.ui.ActivityFragment;
 import com.home.giraffe.ui.InboxFragment;
@@ -166,7 +166,7 @@ public class Main extends BaseFragmentActivity implements LoaderManager.LoaderCa
 
     @Override
     public Loader<Object> onCreateLoader(int i, Bundle bundle) {
-        return new GetBadgesCount(this);
+        return new GetBadgesCountTask(this);
     }
 
     @Override

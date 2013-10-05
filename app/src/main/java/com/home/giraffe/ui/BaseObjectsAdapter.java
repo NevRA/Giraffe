@@ -24,7 +24,7 @@ import roboguice.RoboGuice;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
+public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
     IUiManager mUiManager;
     IImageLoader mImageLoader;
     Utils mUtils;
@@ -32,7 +32,7 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
 
     private List<BaseObject> mItems;
 
-    public ActivitiesAdapter(Context context, List<BaseObject> objects) {
+    public BaseObjectsAdapter(Context context, List<BaseObject> objects) {
         super(context, 0, objects);
         mItems = objects;
         mImageLoader = RoboGuice.getInjector(context).getProvider(IImageLoader.class).get();
