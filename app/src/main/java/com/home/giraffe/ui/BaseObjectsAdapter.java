@@ -62,10 +62,16 @@ public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
         SocialNews socialNews = (SocialNews) activityItem;
 
         TextView postType = (TextView) view.findViewById(R.id.postType);
-        postType.setText("social news".toUpperCase());
+        postType.setText(mUiManager.getString(R.string.social_news_label).toUpperCase());
 
         final LinearLayout news = (LinearLayout) view.findViewById(R.id.news);
         final ImageView arrow = (ImageView) view.findViewById(R.id.imageArrow);
+
+        TextView newsUpdatesLabel = (TextView)view.findViewById(R.id.new_news_label);
+        newsUpdatesLabel.setText(
+                Integer.toString(socialNews.getNews().size()) +
+                        " " +
+                        mUiManager.getString(R.string.news_updates_label));
 
         List<String> avatars = new ArrayList<String>();
         for (BaseSocialNewsItem newsItem : socialNews.getNews()) {
@@ -77,7 +83,6 @@ public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
             mImageLoader.DisplayImage(avatarUrl, avatar);
 
             TextView content = (TextView) newsItemView.findViewById(R.id.content);
-
 
             if (newsItem instanceof LevelSocialNewsItem) {
                 LevelSocialNewsItem levelNews = (LevelSocialNewsItem) newsItem;
