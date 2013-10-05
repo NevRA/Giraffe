@@ -13,6 +13,7 @@ import com.home.giraffe.objects.Jive.JiveActivities;
 import com.home.giraffe.objects.Jive.JiveAuthor;
 import com.home.giraffe.objects.Jive.JiveInbox;
 import com.home.giraffe.objects.Jive.JivePost;
+import com.home.giraffe.utils.Utils;
 
 public class RequestsManager implements IRequestsManager {
     @Inject
@@ -32,6 +33,8 @@ public class RequestsManager implements IRequestsManager {
 
     @Override
     public String signIn(String url, String userName, String userPassword) throws Exception {
+        Utils.d("Started signIn");
+
         String loginUrl = url + Constants.LOGIN;
         String credentialsBody = String.format("username=%s&password=%s&autoLogin=true", Uri.encode(userName), Uri.encode(userPassword));
 
@@ -47,17 +50,23 @@ public class RequestsManager implements IRequestsManager {
 
     @Override
     public JiveAuthor getUserInfo(String userId) throws Exception {
+        Utils.d("Started getUserInfo");
+
         return mGson.fromJson(mConnector.getRequest(userId).getBody(), JiveAuthor.class);
     }
 
     @Override
     public JiveInbox getInbox() throws Exception {
+        Utils.d("Started getInbox");
+
         String inbox = mSettingsManager.getCommunityUrl() + Constants.INBOX;
         return mGson.fromJson(mConnector.getRequest(inbox).getBody(), JiveInbox.class);
     }
 
     @Override
     public int getInboxBadgeCount() throws Exception {
+        Utils.d("Started getInboxBadgeCount");
+
         String inbox = mSettingsManager.getCommunityUrl() + Constants.INBOX_ZERO_RECORDS;
         return mGson.fromJson(mConnector.getRequest(inbox).getBody(), JiveInbox.class).getUnreadCount();
     }
@@ -69,11 +78,15 @@ public class RequestsManager implements IRequestsManager {
 
     @Override
     public JivePost getPost(String url) throws Exception {
+        Utils.d("Started getPost for: " + url);
+
         return mGson.fromJson(mConnector.getRequest(url).getBody(), JivePost.class);
     }
 
     @Override
     public JiveActivities getActivities(String url) throws Exception {
+        Utils.d("Started getActivities for: " + url);
+
         return mGson.fromJson(mConnector.getRequest(url).getBody(), JiveActivities.class);
     }
 }

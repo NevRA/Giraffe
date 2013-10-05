@@ -64,7 +64,7 @@ public class BaseObjectContainer {
 
     public BaseObject getActivity(String id) {
         for (BaseObject activity : getActivities()) {
-            if (activity.getId().equalsIgnoreCase(id)){
+            if (activity.getId().equals(id)){
                 return activity;
             }
         }

@@ -26,10 +26,11 @@ public class GetBaseObjectsListTask extends BaseTask<BaseObjectContainer> {
 
     @Override
     public BaseObjectContainer loadInBackground() {
-        Utils.d("Started GetBaseObjectsListTask");
+        Utils.d("Started GetBaseObjectsListTask for: " + mUrl);
 
         try {
             JiveActivities jiveActivities = mRequestsManager.getActivities(mUrl);
+            Utils.d("Received " + jiveActivities.getList().size() + " jive records");
 
             if(jiveActivities.getList().isEmpty()){
                 return mBaseObjectContainer;

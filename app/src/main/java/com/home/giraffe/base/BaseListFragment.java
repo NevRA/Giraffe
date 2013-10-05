@@ -38,6 +38,7 @@ public abstract class BaseListFragment<T> extends RoboSherlockListFragment imple
 
         showFooter();
 
+        getListView().setFastScrollEnabled(true);
         getListView().setDividerHeight(0);
         getListView().setDivider(null);
 

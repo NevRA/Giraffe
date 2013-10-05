@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.home.giraffe.Constants;
 import com.home.giraffe.interfaces.IConnector;
 import com.home.giraffe.interfaces.ISettingsManager;
+import com.home.giraffe.utils.Utils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -41,6 +42,8 @@ public class Connector implements IConnector {
     DefaultHttpClient mHttpClient;
 
     public Connector() {
+        Utils.d("Connector created");
+
         mHttpClient = getHttpClient();
     }
 
@@ -54,7 +57,9 @@ public class Connector implements IConnector {
         params.setParameter(HttpProtocolParams.USE_EXPECT_CONTINUE, false);
         params.setBooleanParameter(HttpConnectionParams.STALE_CONNECTION_CHECK, false);
         HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+
         HttpProtocolParams.setContentCharset(params, "utf8");
+        HttpConnectionParams.setTcpNoDelay(params, true);
         HttpConnectionParams.setConnectionTimeout(params, 15 * 1000);
         HttpConnectionParams.setSoTimeout(params, 3 * 60 * 1000);
 
@@ -63,7 +68,7 @@ public class Connector implements IConnector {
     }
 
     private String cutSecurityString(String response) {
-        return response.replaceAll("throw.*;\\s*", "");
+        return response.replaceFirst("throw.*;\\s*", "");
     }
 
     private com.home.giraffe.network.HttpResponse proceedResponse(HttpResponse response) throws Exception {
@@ -84,6 +89,7 @@ public class Connector implements IConnector {
     {
         Header[] contentEncodings = response.getHeaders("Content-Encoding");
         if (contentEncodings != null)
+        {
             for (Header header : contentEncodings)
             {
                 if (header.getValue().equalsIgnoreCase("gzip"))
@@ -91,6 +97,7 @@ public class Connector implements IConnector {
                     return new NetworkUtils.GzipDecompressingEntity(response.getEntity());
                 }
             }
+        }
 
         return response.getEntity();
     }
