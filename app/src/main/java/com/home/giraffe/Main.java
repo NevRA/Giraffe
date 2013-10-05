@@ -159,7 +159,9 @@ public class Main extends BaseFragmentActivity implements LoaderManager.LoaderCa
     }
 
     public void onEventMainThread(final InboxUnreadCountEvent event) {
-        mInboxBadge.setText(String.valueOf(event.getCount()));
+        int badge = event.getCount();
+        mInboxBadge.setVisibility(badge == 0 ? View.GONE : View.VISIBLE);
+        mInboxBadge.setText(String.valueOf(badge));
     }
 
     @Override
