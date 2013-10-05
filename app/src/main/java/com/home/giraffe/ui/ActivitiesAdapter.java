@@ -32,8 +32,8 @@ public class ActivitiesAdapter extends ArrayAdapter<BaseObject> {
 
     private List<BaseObject> mItems;
 
-    public ActivitiesAdapter(Context context, int textViewResourceId, List<BaseObject> objects) {
-        super(context, textViewResourceId, objects);
+    public ActivitiesAdapter(Context context, List<BaseObject> objects) {
+        super(context, 0, objects);
         mItems = objects;
         mImageLoader = RoboGuice.getInjector(context).getProvider(IImageLoader.class).get();
         mObjectsStorage = RoboGuice.getInjector(context).getProvider(ObjectsStorage.class).get();

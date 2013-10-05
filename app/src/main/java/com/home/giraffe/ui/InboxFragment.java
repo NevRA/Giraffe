@@ -17,6 +17,7 @@ public class InboxFragment extends BaseListFragment<BaseObjectContainer> {
     ISettingsManager mSettingsManager;
 
     private BaseObjectContainer mBaseObjectContainer;
+    private ActivitiesAdapter mAdapter;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -25,20 +26,26 @@ public class InboxFragment extends BaseListFragment<BaseObjectContainer> {
         init();
     }
 
-    public void init() {
-        if (mBaseObjectContainer == null) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+        if(mBaseObjectContainer == null){
             mBaseObjectContainer = new BaseObjectContainer();
             mBaseObjectContainer.setCurrent(mSettingsManager.getCommunityUrl() + Constants.INBOX);
+        }
+    }
 
-            ActivitiesAdapter adapter = new ActivitiesAdapter(getActivity(), android.R.layout.simple_list_item_1, mBaseObjectContainer.getActivities());
-            setListAdapter(adapter);
+    public void init() {
+        if(mAdapter == null){
+            mAdapter = new ActivitiesAdapter(getActivity(), mBaseObjectContainer.getActivities());
+        }
 
+        setListAdapter(mAdapter);
+
+        if (getItemsCount() == 0) {
             setListShown(false);
-
             update();
-        } else {
-            updateView();
         }
     }
 

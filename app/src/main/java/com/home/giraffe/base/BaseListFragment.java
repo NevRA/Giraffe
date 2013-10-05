@@ -5,6 +5,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFragment;
 import com.home.giraffe.R;
@@ -27,13 +28,18 @@ public abstract class BaseListFragment<T> extends RoboSherlockListFragment imple
         return getView() == null;
     }
 
+    public int getItemsCount(){
+        return getListView().getCount() - getListView().getFooterViewsCount();
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setRetainInstance(true);
-
         addFooter();
+        hideFooter();
+
+        setRetainInstance(true);
 
         getListView().setDividerHeight(0);
         getListView().setDivider(null);
@@ -73,12 +79,11 @@ public abstract class BaseListFragment<T> extends RoboSherlockListFragment imple
         return mFooter.getVisibility() == View.VISIBLE;
     }
 
-    private void addFooter() {
-        if(mFooter == null){
-            mFooter = (LinearLayout) getLayoutInflater(null).inflate(R.layout.footer, getListView(), false);
+    public void addFooter() {
+        if(getListView().getFooterViewsCount() == 0){
+            mFooter = (LinearLayout) getLayoutInflater(null).inflate(R.layout.footer, null);
             getListView().addFooterView(mFooter);
         }
-        hideFooter();
     }
 
     public void update() {

@@ -17,6 +17,7 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
     ISettingsManager mSettingsManager;
 
     private BaseObjectContainer mBaseObjectContainer;
+    private ActivitiesAdapter mAdapter;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -25,25 +26,30 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
         init();
     }
 
-    public void init() {
-        enableOnScrollUpdates();
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        if (mBaseObjectContainer == null) {
-            String url = mSettingsManager.getCommunityUrl() + Constants.ACTIVITIES;
+        String url = mSettingsManager.getCommunityUrl() + Constants.ACTIVITIES;
 
+        if(mBaseObjectContainer == null){
             mBaseObjectContainer = new BaseObjectContainer();
             mBaseObjectContainer.setPrevious(url);
             mBaseObjectContainer.setCurrent(url);
             mBaseObjectContainer.setNext(url);
+        }
+    }
 
-            ActivitiesAdapter adapter = new ActivitiesAdapter(getActivity(), android.R.layout.simple_list_item_1, mBaseObjectContainer.getActivities());
-            setListAdapter(adapter);
+    public void init() {
+        if(mAdapter == null)
+            mAdapter = new ActivitiesAdapter(getActivity(),  mBaseObjectContainer.getActivities());
 
+        setListAdapter(mAdapter);
+        enableOnScrollUpdates();
+
+        if (getItemsCount() == 0) {
             setListShown(false);
-
             loadNext();
-        } else {
-            updateView();
         }
     }
 
@@ -74,10 +80,6 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
         return new GetActivitiesTask(getActivity(), mBaseObjectContainer.getCurrent());
     }
 
-    private void updateView() {
-        updateView(mBaseObjectContainer);
-    }
-
     private void updateView(BaseObjectContainer baseObjectContainer) {
         if(baseObjectContainer.getCurrent().equals(mBaseObjectContainer.getNext()) &&
             baseObjectContainer.getCurrent().equals(mBaseObjectContainer.getPrevious())){
@@ -94,6 +96,6 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
             mBaseObjectContainer.setNext(baseObjectContainer.getNext());
         }
 
-        ((ArrayAdapter) getListAdapter()).notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 }
