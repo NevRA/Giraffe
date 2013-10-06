@@ -23,6 +23,8 @@
                   android:label="@string/app_name"/>
         <activity android:name=".Main"
                   android:label="@string/app_name"/>
+        <activity android:name=".ui.PostFragment"/>
+
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

@@ -21,4 +21,8 @@ public class Constants {
     public static final String UserNamePref = "UserNamePref";
     public static final String UserJobTitlePref = "UserJobTitlePref";
     public static final String UserTokenPref = "UserTokenPref";
+
+    // Extras
+
+    public static final String ID_EXTRA = "id_extra";
 }

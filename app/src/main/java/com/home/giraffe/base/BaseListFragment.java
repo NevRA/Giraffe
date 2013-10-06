@@ -5,10 +5,12 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFragment;
 import com.home.giraffe.R;
+import com.home.giraffe.ui.PostFragment;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public abstract class BaseListFragment<T> extends RoboSherlockListFragment implements LoaderManager.LoaderCallbacks<T>, PullToRefreshAttacher.OnRefreshListener {
@@ -42,8 +44,18 @@ public abstract class BaseListFragment<T> extends RoboSherlockListFragment imple
         getListView().setDividerHeight(0);
         getListView().setDivider(null);
 
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Object item = getListAdapter().getItem(i);
+                itemSelected(item);
+            }
+        });
+
         setRetainInstance(true);
     }
+
+    protected abstract void itemSelected(Object item);
 
     public void enableOnScrollUpdates(){
         getListView().setOnScrollListener(new AbsListView.OnScrollListener() {

@@ -87,7 +87,7 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        mUiManager.startActivityFromIntent(intent);
+        mUiManager.startActivity(getActivity(), intent);
     }
 
     private void updateView() {

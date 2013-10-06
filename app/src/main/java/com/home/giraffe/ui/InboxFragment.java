@@ -26,6 +26,11 @@ public class InboxFragment extends BaseListFragment<BaseObjectContainer> {
     }
 
     @Override
+    protected void itemSelected(Object item) {
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

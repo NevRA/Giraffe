@@ -12,20 +12,13 @@ public class UiManager implements IUiManager {
     private Context mContext;
 
     @Inject
-    public UiManager(Context context){
+    public UiManager(Context context) {
         mContext = context;
     }
 
     @Override
-    public <T> void startActivity(final Class<T> type) {
-        Intent intent = new Intent(mContext, type);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(intent);
-    }
-
-    @Override
-    public void startActivityFromIntent(Intent intent) {
-        mContext.startActivity(intent);
+    public void startActivity(Context context, Intent intent) {
+        context.startActivity(intent);
     }
 
     @Override
@@ -35,7 +28,7 @@ public class UiManager implements IUiManager {
 
     @Override
     public void showError(final FragmentActivity activity, final Exception e) {
-        if(activity == null) return;
+        if (activity == null) return;
 
         MessageDialogFragment dialog = new MessageDialogFragment(getString(R.string.message_dialog_error_title), e.getMessage());
         dialog.show(activity.getSupportFragmentManager(), null);
