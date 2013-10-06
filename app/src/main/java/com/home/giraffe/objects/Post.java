@@ -44,7 +44,7 @@ public class Post extends BaseObjectWithContent {
         setReplyCount(jivePost.getReplyCount());
         setLikeCount(jivePost.getLikeCount());
         setTitle(jivePost.getSubject());
-        setContent(jiveContent.getText());
+        setRawContent(jiveContent.getText());
         setActor(new Actor(jiveAuthor));
 
         Date date = ISO8601DateFormatter.toDate(jivePost.getUpdated());

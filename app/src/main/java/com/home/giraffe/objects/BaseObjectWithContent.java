@@ -7,6 +7,9 @@ import com.home.giraffe.objects.Jive.JiveContainer;
 import com.home.giraffe.objects.Jive.JiveObject;
 import com.home.giraffe.utils.ISO8601DateFormatter;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -20,6 +23,7 @@ public abstract class BaseObjectWithContent extends BaseObject {
     private int mLikeCount;
     private String mTitle;
     private String mContent;
+    private String mRawContent;
     private Actor mActor;
     private String mUpdatedTime;
 
@@ -47,12 +51,26 @@ public abstract class BaseObjectWithContent extends BaseObject {
         mActor = actor;
     }
 
-    public String getContent() {
-        return mContent;
+    public String getRawContent() {
+        Document doc = Jsoup.parse(mRawContent);
+        Elements elements = doc.getElementsByTag("p");
+        for(int i = elements.size() - 1; i >= 0; i --){
+            Element el = elements.get(i);
+            if(el.html().equals("&nbsp;")){
+                el.remove();
+            }
+        }
+
+        return doc.html();
     }
 
-    public void setContent(String content) {
+    public void setRawContent(String content) {
         mContent = Jsoup.parse(content).text();
+        mRawContent = content;
+    }
+
+    public String getContent() {
+        return mContent;
     }
 
     public String getTitle() {
@@ -76,11 +94,10 @@ public abstract class BaseObjectWithContent extends BaseObject {
         JiveObject jiveObject = jiveContainer.getObject();
         Jive jive = jiveContainer.getJive();
 
-
         setId(jiveObject.getId());
         setReplyCount(jive.getReplyCount());
         setTitle(jiveContainer.getTitle());
-        setContent(jiveObject.getSummary());
+        setRawContent(jiveObject.getSummary());
         setActor(new Actor(jiveActor));
 
         Date date = ISO8601DateFormatter.toDate(jiveObject.getUpdated());

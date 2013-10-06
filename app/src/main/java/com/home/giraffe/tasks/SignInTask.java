@@ -41,7 +41,8 @@ public class SignInTask extends BaseTask {
         }
         finally {
             Utils.d("Finished SignInTask");
-            return null;
         }
+
+        return null;
     }
 }

@@ -1,33 +1,64 @@
 package com.home.giraffe.ui;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.view.View;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.webkit.WebView;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.google.inject.Inject;
 import com.home.giraffe.Constants;
+import com.home.giraffe.R;
 import com.home.giraffe.objects.Post;
 import com.home.giraffe.storages.ObjectsStorage;
+import com.home.giraffe.tasks.GetPostTask;
+import roboguice.inject.InjectView;
 
-public class PostFragment extends RoboSherlockFragmentActivity {
+public class PostFragment extends RoboSherlockFragmentActivity implements LoaderManager.LoaderCallbacks<Post> {
+    private String mId;
     private Post mPost;
 
     @Inject
     ObjectsStorage mObjectsStorage;
 
+    @InjectView(R.id.post)
+    WebView mPostView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String id = getIntent().getStringExtra(Constants.ID_EXTRA);
-        mPost = (Post) mObjectsStorage.get(id);
+        setContentView(R.layout.post);
 
-        setTitle(mPost.getFriendlyName());
+        mId = getIntent().getStringExtra(Constants.ID_EXTRA);
+
+        if (mPost == null)
+            loadPost();
+        else
+            showPost();
+    }
+
+    private void loadPost() {
+        getSupportLoaderManager().restartLoader(0, null, this);
+    }
+
+    private void showPost() {
+        mPostView.loadDataWithBaseURL("", mPost.getRawContent(), "text/html", "UTF-8", null);
     }
 
     @Override
-    public View onCreateView(String name, Context context, AttributeSet attrs) {
-        return super.onCreateView(name, context, attrs);
+    public Loader<Post> onCreateLoader(int i, Bundle bundle) {
+        return new GetPostTask(this, mId);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Post> postLoader, Post post) {
+        mPost = post;
+        if (post != null) {
+            showPost();
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Post> postLoader) {
     }
 }

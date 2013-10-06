@@ -21,7 +21,8 @@ public class GetBadgesCountTask extends BaseTask{
         }
         finally {
             Utils.d("Finished GetBadgesCountTask");
-            return null;
         }
+
+        return null;
     }
 }

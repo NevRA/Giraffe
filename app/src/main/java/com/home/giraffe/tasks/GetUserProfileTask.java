@@ -24,7 +24,8 @@ public class GetUserProfileTask extends BaseTask<JiveAuthor> {
         }
         finally {
             Utils.d("Finished GetUserProfileTask");
-            return null;
         }
+
+        return null;
     }
 }
