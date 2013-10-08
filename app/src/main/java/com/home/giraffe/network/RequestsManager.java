@@ -9,10 +9,7 @@ import com.home.giraffe.interfaces.IConnector;
 import com.home.giraffe.interfaces.IRequestsManager;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
-import com.home.giraffe.objects.Jive.JiveActivities;
-import com.home.giraffe.objects.Jive.JiveAuthor;
-import com.home.giraffe.objects.Jive.JiveInbox;
-import com.home.giraffe.objects.Jive.JivePost;
+import com.home.giraffe.objects.Jive.*;
 import com.home.giraffe.utils.Utils;
 
 public class RequestsManager implements IRequestsManager {
@@ -81,9 +78,9 @@ public class RequestsManager implements IRequestsManager {
     }
 
     @Override
-    public JiveActivities getActivities(String url) throws Exception {
-        Utils.d("Started getActivities for: " + url);
+    public JiveObjects getJiveObjects(String url) throws Exception {
+        Utils.d("Started getJiveObjects for: " + url);
 
-        return mGson.fromJson(mConnector.getRequest(url).getBody(), JiveActivities.class);
+        return mGson.fromJson(mConnector.getRequest(url).getBody(), JiveObjects.class);
     }
 }

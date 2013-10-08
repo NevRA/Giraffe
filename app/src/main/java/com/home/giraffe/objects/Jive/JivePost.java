@@ -15,6 +15,10 @@ public class JivePost {
         return getResources().getSelf().getRef();
     }
 
+    public String getCommentsId() {
+        return getResources().getCommentsId().getRef();
+    }
+
     public JiveAuthor getAuthor() {
         return author;
     }

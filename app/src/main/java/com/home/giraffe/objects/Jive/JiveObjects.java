@@ -2,7 +2,7 @@ package com.home.giraffe.objects.Jive;
 
 import java.util.ArrayList;
 
-public class JiveActivities {
+public class JiveObjects {
     private ArrayList<JiveContainer> list;
     private JiveLinks links;
 

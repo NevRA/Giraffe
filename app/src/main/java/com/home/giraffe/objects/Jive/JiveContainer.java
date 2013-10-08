@@ -1,12 +1,14 @@
 package com.home.giraffe.objects.Jive;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 public class JiveContainer {
     String verb;
     String title;
-    String content;
     String published;
     JiveObject object;
     JiveActor actor;
+    Object content;
     Jive jive;
     String updated;
 
@@ -14,12 +16,20 @@ public class JiveContainer {
         return jive;
     }
 
-    public String getTitle() {
-        return title;
+    public String getContent() {
+        if(content instanceof String){
+            return (String) content;
+        }
+
+        if(content instanceof LinkedTreeMap){
+            return ((LinkedTreeMap<String, String>) content).get("text");
+        }
+
+        return null;
     }
 
-    public String getContent() {
-        return content;
+    public String getTitle() {
+        return title;
     }
 
     public JiveObject getObject() {

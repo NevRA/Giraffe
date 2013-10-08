@@ -5,7 +5,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.ProgressBar;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.google.inject.Inject;
 import com.home.giraffe.Constants;
@@ -28,6 +27,9 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
     @InjectView(R.id.post)
     WebView mPostView;
 
+    @InjectView(R.id.comments)
+    View mCommentsView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +46,18 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
 
     private void loadPost() {
         mProgressBar.setVisibility(View.VISIBLE);
+        mPostView.setVisibility(View.GONE);
         getSupportLoaderManager().restartLoader(0, null, this);
     }
 
     private void showPost() {
         mPostView.loadDataWithBaseURL("", mPost.getRawContent(), "text/html", "UTF-8", null);
+
+        addComments();
+    }
+
+    private void addComments() {
+
     }
 
     @Override
@@ -64,6 +73,7 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
         }
 
         mProgressBar.setVisibility(View.GONE);
+        mPostView.setVisibility(View.VISIBLE);
     }
 
     @Override

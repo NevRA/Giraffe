@@ -29,7 +29,7 @@ public class GetBaseObjectsListTask extends BaseTask<BaseObjectContainer> {
         Utils.d("Started GetBaseObjectsListTask for: " + mUrl);
 
         try {
-            JiveActivities jiveActivities = mRequestsManager.getActivities(mUrl);
+            JiveObjects jiveActivities = mRequestsManager.getJiveObjects(mUrl);
             Utils.d("Received " + jiveActivities.getList().size() + " jive records");
 
             if(jiveActivities.getList().isEmpty()){

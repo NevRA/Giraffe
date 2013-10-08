@@ -1,5 +1,6 @@
 package com.home.giraffe.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.widget.ArrayAdapter;
@@ -7,6 +8,8 @@ import com.google.inject.Inject;
 import com.home.giraffe.Constants;
 import com.home.giraffe.base.BaseListFragment;
 import com.home.giraffe.interfaces.ISettingsManager;
+import com.home.giraffe.interfaces.IUiManager;
+import com.home.giraffe.objects.Post;
 import com.home.giraffe.objects.activity.BaseObjectContainer;
 import com.home.giraffe.tasks.GetBaseObjectsListTask;
 
@@ -14,6 +17,9 @@ public class InboxFragment extends BaseListFragment<BaseObjectContainer> {
 
     @Inject
     ISettingsManager mSettingsManager;
+
+    @Inject
+    IUiManager mUiManager;
 
     private BaseObjectContainer mBaseObjectContainer;
     private BaseObjectsAdapter mAdapter;
@@ -27,7 +33,13 @@ public class InboxFragment extends BaseListFragment<BaseObjectContainer> {
 
     @Override
     protected void itemSelected(Object item) {
+        if (item instanceof Post) {
+            Post post = (Post) item;
 
+            Intent intent = new Intent(getActivity(), PostFragment.class);
+            intent.putExtra(Constants.ID_EXTRA, post.getId());
+            mUiManager.startActivity(getActivity(), intent);
+        }
     }
 
     @Override
