@@ -21,7 +21,6 @@ public class Configurator extends AbstractModule {
         bind(IUiManager.class).to(UiManager.class).in(Scopes.SINGLETON);
         bind(IImageLoader.class).to(ImageLoader.class).in(Scopes.SINGLETON);
         bind(EventBus.class).in(Scopes.SINGLETON);
-        bind(NetworkUtils.class).in(Scopes.SINGLETON);
         bind(ObjectsStorage.class).in(Scopes.SINGLETON);
         bind(IConnector.class).to(Connector.class);
     }

@@ -33,9 +33,6 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
     @Inject
     IUiManager mUiManager;
 
-    @Inject
-    NetworkUtils mNetworkUtils;
-
     @InjectView(R.id.userDisplayName)
     TextView userDisplayName;
 
@@ -93,7 +90,7 @@ public class MyNavigationProfileFragment extends RoboSherlockFragment implements
     private void updateView() {
         userDisplayName.setText(mSettingsManager.getUserDisplayName());
         userJobTitle.setText(mSettingsManager.getUserJobTitle());
-        mImageLoader.DisplayImage(mNetworkUtils.getMyAvatarUrl(), userPic);
+        mImageLoader.DisplayImage(mSettingsManager.getUserId() + "/" + "avatar", userPic);
     }
 
     private void updateView(JiveAuthor jiveAuthor) {

@@ -1,6 +1,7 @@
 package com.home.giraffe.objects;
 
 import android.text.format.DateUtils;
+import com.home.giraffe.network.NetworkUtils;
 import com.home.giraffe.objects.Jive.Jive;
 import com.home.giraffe.objects.Jive.JiveActor;
 import com.home.giraffe.objects.Jive.JiveContainer;
@@ -52,16 +53,7 @@ public abstract class BaseObjectWithContent extends BaseObject {
     }
 
     public String getRawContent() {
-        Document doc = Jsoup.parse(mRawContent);
-        Elements elements = doc.getElementsByTag("p");
-        for(int i = elements.size() - 1; i >= 0; i --){
-            Element el = elements.get(i);
-            if(el.html().equals("&nbsp;")){
-                el.remove();
-            }
-        }
-
-        return doc.html();
+        return NetworkUtils.cleanTags(mRawContent);
     }
 
     public void setRawContent(String content) {

@@ -20,9 +20,6 @@ public class RequestsManager implements IRequestsManager {
     Gson mGson;
 
     @Inject
-    NetworkUtils mNetworkUtils;
-
-    @Inject
     IUiManager mUiManager;
 
     @Inject
@@ -40,7 +37,7 @@ public class RequestsManager implements IRequestsManager {
 
         HttpResponse loginResponse = mConnector.postRequest(loginUrl, credentialsBody, false);
 
-        String token = mNetworkUtils.getTokenFromCookies(loginResponse.getCookies());
+        String token = NetworkUtils.getTokenFromCookies(loginResponse.getCookies());
         if (token == null) {
             throw new Exception(mUiManager.getString(R.string.signin_access_denied_error_message));
         }

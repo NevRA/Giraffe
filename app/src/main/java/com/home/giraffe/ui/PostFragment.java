@@ -3,7 +3,9 @@ package com.home.giraffe.ui;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.google.inject.Inject;
 import com.home.giraffe.Constants;
@@ -19,6 +21,9 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
 
     @Inject
     ObjectsStorage mObjectsStorage;
+
+    @InjectView(R.id.progress)
+    View mProgressBar;
 
     @InjectView(R.id.post)
     WebView mPostView;
@@ -38,6 +43,7 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
     }
 
     private void loadPost() {
+        mProgressBar.setVisibility(View.VISIBLE);
         getSupportLoaderManager().restartLoader(0, null, this);
     }
 
@@ -56,6 +62,8 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
         if (post != null) {
             showPost();
         }
+
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
