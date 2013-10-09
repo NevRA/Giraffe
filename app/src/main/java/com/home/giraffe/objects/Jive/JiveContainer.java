@@ -5,6 +5,7 @@ import com.google.gson.internal.LinkedTreeMap;
 public class JiveContainer {
     String verb;
     String title;
+    String parent;
     String published;
     JiveObject object;
     JiveActor actor;
@@ -26,6 +27,10 @@ public class JiveContainer {
         }
 
         return null;
+    }
+
+    public String getParent() {
+        return parent;
     }
 
     public String getTitle() {

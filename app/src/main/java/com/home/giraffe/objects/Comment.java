@@ -5,6 +5,8 @@ import com.home.giraffe.objects.Jive.JiveContainer;
 import java.text.ParseException;
 
 public class Comment extends BaseObjectWithContent implements Comparable<Comment> {
+    private int mLevel;
+
     public Comment(JiveContainer jiveContainer) throws ParseException {
         super(null);
         fromJiveContainer(jiveContainer);
@@ -17,6 +19,15 @@ public class Comment extends BaseObjectWithContent implements Comparable<Comment
         }
 
         return super.equals(another);
+    }
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+
+        result.append(" Id: " + getId() + "\n");
+        result.append(" Parent Id: " + getParentId());
+
+        return result.toString();
     }
 
     @Override

@@ -28,6 +28,16 @@ public class Post extends BaseObjectWithContent {
         mComments.add(comment);
     }
 
+    public Comment getCommentById(String id){
+        for (Comment comment : mComments){
+            if(comment.getId().equals(id)){
+                return comment;
+            }
+        }
+
+        return null;
+    }
+
     public void clearCommentIds() {
         mComments.clear();
     }

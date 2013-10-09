@@ -87,6 +87,7 @@ public abstract class BaseObjectWithContent extends BaseObject {
         Jive jive = jiveContainer.getJive();
 
         setId(jiveObject.getId());
+        setParentId(jiveContainer.getParent());
         setReplyCount(jive.getReplyCount());
         setTitle(jiveContainer.getTitle());
         setRawContent(jiveObject.getSummary());
