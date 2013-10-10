@@ -1,6 +1,7 @@
 package com.home.giraffe.objects;
 
 import com.home.giraffe.objects.Jive.JiveContainer;
+import com.home.giraffe.objects.Jive.JivePost;
 
 import java.text.ParseException;
 
@@ -9,7 +10,20 @@ public class Comment extends BaseObjectWithContent implements Comparable<Comment
 
     public Comment(JiveContainer jiveContainer) throws ParseException {
         super(null);
-        fromJiveContainer(jiveContainer);
+        fromJiveActivityContainer(jiveContainer);
+    }
+
+    public Comment(JivePost jivePost) throws ParseException {
+        super(null);
+        fromJivePost(jivePost);
+    }
+
+    public int getLevel(){
+        return mLevel;
+    }
+
+    public void setLevel(int level){
+        mLevel = level;
     }
 
     @Override
@@ -24,8 +38,10 @@ public class Comment extends BaseObjectWithContent implements Comparable<Comment
     public String toString() {
         StringBuilder result = new StringBuilder();
 
+        result.append("\n");
         result.append(" Id: " + getId() + "\n");
-        result.append(" Parent Id: " + getParentId());
+        result.append(" Parent Id: " + getParentId() + "\n");
+        result.append(" Level: " + getLevel());
 
         return result.toString();
     }

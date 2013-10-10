@@ -1,6 +1,7 @@
 package com.home.giraffe.objects.Jive;
 
 public class JivePost {
+    private String parent;
     private String subject;
     private JiveAuthor author;
     private JiveContent content;
@@ -10,6 +11,10 @@ public class JivePost {
     private int replyCount;
     private int likeCount;
     private String updated;
+
+    public String getParent(){
+        return parent;
+    }
 
     public String getId() {
         return getResources().getSelf().getRef();

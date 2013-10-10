@@ -3,9 +3,7 @@ package com.home.giraffe.tasks;
 
 import android.support.v4.app.FragmentActivity;
 import com.home.giraffe.objects.Comment;
-import com.home.giraffe.objects.Jive.JiveContainer;
-import com.home.giraffe.objects.Jive.JiveObjects;
-import com.home.giraffe.objects.Jive.JivePost;
+import com.home.giraffe.objects.Jive.*;
 import com.home.giraffe.objects.Post;
 import com.home.giraffe.utils.Utils;
 
@@ -28,11 +26,9 @@ public class GetPostTask extends BaseTask<Post> {
             Post post = new Post(mUrl);
             post.fromJivePost(jivePost);
 
-            JiveObjects jiveObjects = mRequestsManager.getJiveObjects(jivePost.getCommentsId());
-            for(JiveContainer container : jiveObjects.getList()){
+            JivePosts jiveComments = mRequestsManager.getJivePosts(jivePost.getCommentsId());
+            for(JivePost container : jiveComments.getList()){
                 Comment comment = new Comment(container);
-                // TODO
-                Utils.d("Added comment " + comment);
                 post.addComment(comment);
             }
 

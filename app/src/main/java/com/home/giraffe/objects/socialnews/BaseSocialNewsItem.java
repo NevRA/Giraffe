@@ -3,7 +3,6 @@ package com.home.giraffe.objects.socialnews;
 import com.home.giraffe.objects.Actor;
 import com.home.giraffe.objects.Jive.JiveActor;
 import com.home.giraffe.objects.Jive.JiveContainer;
-import com.home.giraffe.objects.Jive.JiveObject;
 
 public abstract class BaseSocialNewsItem {
     private Actor mActor;

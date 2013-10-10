@@ -2,11 +2,11 @@ package com.home.giraffe.objects.Jive;
 
 import java.util.ArrayList;
 
-public class JiveObjects {
-    private ArrayList<JiveContainer> list;
+public class JiveObjects<T> {
+    private ArrayList<T> list;
     private JiveLinks links;
 
-    public ArrayList<JiveContainer> getList() {
+    public ArrayList<T> getList() {
         return list;
     }
 

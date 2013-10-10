@@ -78,9 +78,16 @@ public class RequestsManager implements IRequestsManager {
     }
 
     @Override
-    public JiveObjects getJiveObjects(String url) throws Exception {
-        Utils.d("Started getJiveObjects for: " + url);
+    public JiveContainers getJiveContainers(String url) throws Exception {
+        Utils.d("Started getJiveContainers for: " + url);
 
-        return mGson.fromJson(mConnector.getRequest(url).getBody(), JiveObjects.class);
+        return mGson.fromJson(mConnector.getRequest(url).getBody(), JiveContainers.class);
+    }
+
+    @Override
+    public JivePosts getJivePosts(String url) throws Exception {
+        Utils.d("Started getJivePosts for: " + url);
+
+        return mGson.fromJson(mConnector.getRequest(url).getBody(), JivePosts.class);
     }
 }

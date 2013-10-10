@@ -1,44 +1,29 @@
 package com.home.giraffe.objects.Jive;
 
-import com.google.gson.internal.LinkedTreeMap;
-
 public class JiveContainer {
     String verb;
     String title;
-    String parent;
     String published;
-    JiveObject object;
     JiveActor actor;
-    Object content;
     Jive jive;
     String updated;
+    JiveObject object;
+    String content;
+
+    public JiveObject getObject() {
+        return object;
+    }
+
+    public String getContent() {
+        return content;
+    }
 
     public Jive getJive() {
         return jive;
     }
 
-    public String getContent() {
-        if(content instanceof String){
-            return (String) content;
-        }
-
-        if(content instanceof LinkedTreeMap){
-            return ((LinkedTreeMap<String, String>) content).get("text");
-        }
-
-        return null;
-    }
-
-    public String getParent() {
-        return parent;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public JiveObject getObject() {
-        return object;
     }
 
     public JiveActor getActor() {

@@ -25,8 +25,8 @@ public class Discussion extends Post{
     }
 
     @Override
-    public void fromJiveContainer(JiveContainer jiveContainer) throws ParseException {
-        super.fromJiveContainer(jiveContainer);
+    public void fromJiveActivityContainer(JiveContainer jiveContainer) throws ParseException {
+        super.fromJiveActivityContainer(jiveContainer);
 
         setIsQuestion(jiveContainer.getJive().isQuestion());
     }

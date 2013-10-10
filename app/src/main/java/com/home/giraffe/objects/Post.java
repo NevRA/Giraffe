@@ -5,6 +5,7 @@ import com.home.giraffe.objects.Jive.JiveAuthor;
 import com.home.giraffe.objects.Jive.JiveContent;
 import com.home.giraffe.objects.Jive.JivePost;
 import com.home.giraffe.utils.ISO8601DateFormatter;
+import com.home.giraffe.utils.Utils;
 
 import java.text.ParseException;
 import java.util.Collections;
@@ -25,7 +26,14 @@ public class Post extends BaseObjectWithContent {
     }
 
     public void addComment(Comment comment) {
+        Comment parent = getCommentById(comment.getParentId());
+        if(parent != null){
+            comment.setLevel(parent.getLevel() + 1);
+        }
+
         mComments.add(comment);
+
+        Utils.d(String.format("To post %s added comment %s", getId(), comment));
     }
 
     public Comment getCommentById(String id){

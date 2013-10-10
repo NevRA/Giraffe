@@ -29,19 +29,19 @@ public class GetBaseObjectsListTask extends BaseTask<BaseObjectContainer> {
         Utils.d("Started GetBaseObjectsListTask for: " + mUrl);
 
         try {
-            JiveObjects jiveActivities = mRequestsManager.getJiveObjects(mUrl);
-            Utils.d("Received " + jiveActivities.getList().size() + " jive records");
+            JiveContainers jiveContainers = mRequestsManager.getJiveContainers(mUrl);
+            Utils.d("Received " + jiveContainers.getList().size() + " jive records");
 
-            if(jiveActivities.getList().isEmpty()){
+            if(jiveContainers.getList().isEmpty()){
                 return mBaseObjectContainer;
             }
 
-            if(jiveActivities.getLinks() != null){
-                mBaseObjectContainer.setNext(jiveActivities.getLinks().getNext());
-                mBaseObjectContainer.setPrevious(jiveActivities.getLinks().getPrevious());
+            if(jiveContainers.getLinks() != null){
+                mBaseObjectContainer.setNext(jiveContainers.getLinks().getNext());
+                mBaseObjectContainer.setPrevious(jiveContainers.getLinks().getPrevious());
             }
 
-            for (JiveContainer jiveContainer : jiveActivities.getList()) {
+            for (JiveContainer jiveContainer : jiveContainers.getList()) {
                 processJiveContainer(jiveContainer);
             }
         } catch (Exception e) {
@@ -129,7 +129,7 @@ public class GetBaseObjectsListTask extends BaseTask<BaseObjectContainer> {
 
     private void processJivePost(JiveContainer jiveContainer) throws ParseException {
         Post post = Utils.getPostFromObjectType(jiveContainer.getObject().getType());
-        post.fromJiveContainer(jiveContainer);
+        post.fromJiveActivityContainer(jiveContainer);
         addObjectToActivities(post);
     }
 
