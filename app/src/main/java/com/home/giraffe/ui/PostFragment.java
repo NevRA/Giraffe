@@ -13,6 +13,7 @@ import com.google.inject.Inject;
 import com.home.giraffe.Constants;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
+import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.objects.Actor;
 import com.home.giraffe.objects.Comment;
 import com.home.giraffe.objects.Post;
@@ -29,6 +30,9 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
 
     @Inject
     ObjectsStorage mObjectsStorage;
+
+    @Inject
+    IUiManager mUiManager;
 
     @InjectView(R.id.progress)
     View mProgressBar;
@@ -76,6 +80,9 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
 
              TextView userDisplayName = (TextView) commentView.findViewById(R.id.userDisplayName);
              userDisplayName.setText(actor.getDisplayName());
+
+             CommentRootLayout contentLayout = (CommentRootLayout) commentView.findViewById(R.id.content_layout);
+             contentLayout.setLevel(comment.getLevel(), mUiManager.dpToPx(5));
 
              WebView content = (WebView) commentView.findViewById(R.id.content);
              content.loadDataWithBaseURL("", "<body style=\"margin: 0; padding: 0\">" + comment.getRawContent(), "text/html", "UTF-8", null);

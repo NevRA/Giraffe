@@ -11,4 +11,6 @@ public interface IUiManager {
     String getString(int resourceId);
 
     void showError(FragmentActivity activity, Exception e);
+
+    int dpToPx(int dp);
 }

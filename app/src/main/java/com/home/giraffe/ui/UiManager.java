@@ -2,7 +2,9 @@ package com.home.giraffe.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
+import android.util.TypedValue;
 import com.google.inject.Inject;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IUiManager;
@@ -34,5 +36,11 @@ public class UiManager implements IUiManager {
         dialog.show(activity.getSupportFragmentManager(), null);
 
         Utils.e(e);
+    }
+
+    @Override
+    public int dpToPx(int dp){
+        Resources r = mContext.getResources();
+        return  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
 }

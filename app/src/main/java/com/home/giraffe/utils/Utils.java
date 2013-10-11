@@ -1,9 +1,13 @@
 package com.home.giraffe.utils;
 
+import android.content.res.Resources;
 import android.util.Log;
+import android.util.TypedValue;
 import com.home.giraffe.Constants;
+import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.objects.*;
 import com.home.giraffe.objects.Jive.JiveTypes;
+import roboguice.RoboGuice;
 
 public class Utils {
     public static Post getPostFromObjectType(JiveTypes jiveTypes) {
