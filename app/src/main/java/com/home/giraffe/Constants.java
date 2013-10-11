@@ -6,6 +6,7 @@ public class Constants {
     public static final String LOGIN = "/cs_login";
     public static final String API = "/api/core/v3/";
     public static final String PEOPLE = API + "people/";
+    public static final String ACTIONS = API + "actions";
     public static final String INBOX = API + "inbox?count=40";
     public static final String INBOX_ZERO_RECORDS = API + "inbox?filter=author(/people/-1)";
     public static final String ACTIVITIES = API + "activities?count=40";

@@ -15,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.google.inject.Inject;
 import com.home.giraffe.base.BaseFragmentActivity;
+import com.home.giraffe.events.ActionsUnreadCountEvent;
 import com.home.giraffe.events.InboxUnreadCountEvent;
 import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.tasks.GetBadgesCountTask;
@@ -41,6 +42,9 @@ public class Main extends BaseFragmentActivity implements LoaderManager.LoaderCa
 
     @InjectView(R.id.inboxBadge)
     TextView mInboxBadge;
+
+    @InjectView(R.id.actionsBadge)
+    TextView mActionsBadge;
 
     @InjectView(R.id.activityLayout)
     RelativeLayout mActivityLayout;
@@ -154,6 +158,12 @@ public class Main extends BaseFragmentActivity implements LoaderManager.LoaderCa
         int badge = event.getCount();
         mInboxBadge.setVisibility(badge == 0 ? View.GONE : View.VISIBLE);
         mInboxBadge.setText(String.valueOf(badge));
+    }
+
+    public void onEventMainThread(final ActionsUnreadCountEvent event) {
+        int badge = event.getCount();
+        mActionsBadge.setVisibility(badge == 0 ? View.GONE : View.VISIBLE);
+        mActionsBadge.setText(String.valueOf(badge));
     }
 
     @Override
