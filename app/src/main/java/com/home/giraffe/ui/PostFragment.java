@@ -3,6 +3,7 @@ package com.home.giraffe.ui;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -49,6 +50,8 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
 
         setContentView(R.layout.post);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mId = getIntent().getStringExtra(Constants.ID_EXTRA);
 
         if (mPost == null)
@@ -61,6 +64,15 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
         mProgressBar.setVisibility(View.VISIBLE);
         mPostView.setVisibility(View.GONE);
         getSupportLoaderManager().restartLoader(0, null, this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void showPost() {

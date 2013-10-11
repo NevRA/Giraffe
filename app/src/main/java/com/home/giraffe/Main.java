@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.google.inject.Inject;
 import com.home.giraffe.base.BaseFragmentActivity;
 import com.home.giraffe.events.InboxUnreadCountEvent;
+import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.tasks.GetBadgesCountTask;
 import com.home.giraffe.ui.ActionsFragment;
 import com.home.giraffe.ui.ActivityFragment;
@@ -23,11 +24,11 @@ import com.home.giraffe.ui.InboxFragment;
 import roboguice.inject.InjectView;
 
 public class Main extends BaseFragmentActivity implements LoaderManager.LoaderCallbacks<Object> {
-//    @Inject
     ActivityFragment mActivityFragment = new ActivityFragment();
-
-    //@Inject
     InboxFragment mInboxFragment = new InboxFragment();
+
+    @Inject
+    IUiManager mUiManager;
 
     @Inject
     ActionsFragment mActionsFragment;
@@ -88,41 +89,32 @@ public class Main extends BaseFragmentActivity implements LoaderManager.LoaderCa
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.drawable.ic_drawer, R.string.drawer_open,
                 R.string.drawer_close) {
-
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                getSupportActionBar().setTitle("Navigation");
-                super.onDrawerOpened(drawerView);
-            }
         };
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(mActivityFragment, "Activity");
+            selectItem(mActivityFragment, mUiManager.getString(R.string.main_drawer_activity_label));
         }
 
         mActivityLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectItem(mActivityFragment, "Activity");
+                selectItem(mActivityFragment, mUiManager.getString(R.string.main_drawer_activity_label));
             }
         });
 
         mInboxLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectItem(mInboxFragment, "Inbox");
+                selectItem(mInboxFragment, mUiManager.getString(R.string.main_drawer_inbox_label));
             }
         });
 
         mActionsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectItem(mActionsFragment, "Actions");
+                selectItem(mActionsFragment, mUiManager.getString(R.string.main_drawer_actions_label));
             }
         });
 
