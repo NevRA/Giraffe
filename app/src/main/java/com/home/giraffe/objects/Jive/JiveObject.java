@@ -29,6 +29,10 @@ public class JiveObject {
     }
 
     public JiveTypes getType() {
+        if(objectType == null){
+            return JiveTypes.Unknown;
+        }
+
         if (objectType.equals("jive:message")){
             return JiveTypes.JiveMessage;
         }

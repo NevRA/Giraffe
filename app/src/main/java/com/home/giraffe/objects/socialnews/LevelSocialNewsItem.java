@@ -33,6 +33,7 @@ public class LevelSocialNewsItem extends BaseSocialNewsItem {
 
         JiveObject jiveObject = jiveContainer.getObject();
         setLevel(jiveObject.getDisplayName());
-        setLevelImageUrl(jiveObject.getImage().getUrl());
+        if(jiveObject.getImage() != null)
+            setLevelImageUrl(jiveObject.getImage().getUrl());
     }
 }

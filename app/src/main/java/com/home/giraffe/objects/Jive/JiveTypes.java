@@ -1,6 +1,7 @@
 package com.home.giraffe.objects.Jive;
 
 public enum JiveTypes {
+    Unknown,
     Unsupported,
     JiveMessage,
     JiveComment,
