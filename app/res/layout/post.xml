@@ -13,7 +13,7 @@
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/progress">
+                        android:id="@+id/progress" android:visibility="gone">
             <ProgressBar
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="wrap_content"
@@ -25,7 +25,6 @@
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                       android:id="@+id/post_layout"
                       android:layout_below="@+id/progress"
-                      android:layout_marginBottom="15dp"
                       android:background="@color/white"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content">
@@ -38,41 +37,33 @@
         </LinearLayout>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:id="@+id/new_comment"
+                        android:layout_below="@+id/post_layout"
+                        android:layout_height="wrap_content" android:orientation="vertical"
+                        android:background="@color/white" android:layout_marginBottom="5dp" android:paddingLeft="10dp"
+                        android:paddingRight="10dp" android:paddingTop="10dp">
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/newComment" style="@style/TextBoxStyled"
+                    android:hint="Leave a comment..."
+                    android:layout_marginBottom="10dp"/>
+        </LinearLayout>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                       android:id="@+id/comments_layout"
-                      android:layout_below="@+id/post_layout"
+                      android:layout_below="@+id/new_comment"
                       android:padding="10dp"
                       android:orientation="vertical"
-                      android:background="@color/white"
                       android:layout_width="match_parent"
-                      android:layout_height="wrap_content">
+                      android:layout_height="wrap_content" android:background="@color/white">
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" android:orientation="vertical">
-                <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/label_layout" android:layout_marginBottom="10dp">
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/comments_label"
-                            android:layout_centerVertical="true"
-                            android:textSize="14sp"
-                            android:text="@string/comments_label"/>
-                </RelativeLayout>
-                <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/newComment" style="@style/TextBoxStyled" android:hint="Leave a comment..."
-                        android:layout_marginBottom="10dp"/>
-            </LinearLayout>
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                           android:id="@+id/comments"
                           android:orientation="vertical"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                    />
+                          android:layout_marginTop="5dp"/>
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>
