@@ -22,6 +22,7 @@
     <string name="social_news_label">SOCIAL NEWS</string>
     <string name="achieved_level">achieved a new status level:</string>
     <string name="group_joined">joined:</string>
+    <string name="author_label">by Roman Abdulmanov</string>
 
     <string-array name="builtin_communities">
         <item>commons.quest.com</item>

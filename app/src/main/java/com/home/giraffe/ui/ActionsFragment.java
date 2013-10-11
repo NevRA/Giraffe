@@ -1,14 +1,16 @@
 package com.home.giraffe.ui;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFragment;
+import android.view.ViewGroup;
+import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
+import com.home.giraffe.R;
 
-public class ActionsFragment extends RoboSherlockListFragment {
+public class ActionsFragment extends RoboSherlockFragment {
+
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        setListShown(true);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.not_implemented, null);
     }
 }

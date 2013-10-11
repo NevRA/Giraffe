@@ -107,6 +107,12 @@
                     android:layout_height="match_parent"
                     android:id="@+id/appVersion" android:layout_gravity="right" android:gravity="bottom|right"
                     android:layout_alignParentRight="true" android:textColor="@color/white" android:textSize="11sp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/author_label"
+                    android:id="@+id/author" android:phoneNumber="false" android:textSize="11sp"
+                    android:textColor="@color/white" android:gravity="bottom|left"/>
         </RelativeLayout>
 
     </LinearLayout>
