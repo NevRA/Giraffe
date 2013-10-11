@@ -53,4 +53,13 @@
         <item name="android:textColor">@drawable/button_text_colors_dark</item>
     </style>
 
+    <style name="TextBoxStyled">
+        <item name="android:background">@drawable/textbox_white_enabled</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/light_gray</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>
