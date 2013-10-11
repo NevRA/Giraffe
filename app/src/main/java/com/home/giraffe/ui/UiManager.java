@@ -29,6 +29,11 @@ public class UiManager implements IUiManager {
     }
 
     @Override
+    public String[] getStringArray(int resourceId) {
+        return mContext.getResources().getStringArray(resourceId);
+    }
+
+    @Override
     public void showError(final FragmentActivity activity, final Exception e) {
         if (activity == null) return;
 

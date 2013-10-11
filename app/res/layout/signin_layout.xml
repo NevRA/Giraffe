@@ -38,11 +38,12 @@
                 android:paddingRight="20dp" android:paddingLeft="20dp" android:layout_margin="20dp"
                 android:stretchColumns="0">
 
-            <EditText
+            <AutoCompleteTextView
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/communityUrl"
+                    android:imeOptions="actionNext"
                     android:hint="@string/community_url_hint"
                     android:singleLine="true"
                     android:layout_gravity="center_vertical"
@@ -58,10 +59,11 @@
             <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="60dp" android:layout_weight="45">
-                <EditText
+                <AutoCompleteTextView
                         android:id="@+id/userName"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:imeOptions="actionNext"
                         android:hint="@string/username_hint"
                         android:background="@android:color/transparent"
                         android:singleLine="true"
@@ -76,10 +78,11 @@
             <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="60dp" android:layout_weight="45">
-                <EditText
+                <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:hint="@string/password_hint"
+                        android:imeOptions="actionDone"
                         android:background="@android:color/transparent"
                         android:singleLine="true"
                         android:layout_gravity="center_vertical"

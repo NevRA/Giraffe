@@ -23,4 +23,9 @@
     <string name="achieved_level">achieved a new status level:</string>
     <string name="group_joined">joined:</string>
 
+    <string-array name="builtin_communities">
+        <item>commons.quest.com</item>
+        <item>community.jivesoftware.com</item>
+    </string-array>
+
 </resources>

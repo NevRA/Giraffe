@@ -14,13 +14,14 @@ import android.widget.*;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.google.inject.Inject;
 import com.home.giraffe.interfaces.ISettingsManager;
+import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.tasks.SignInTask;
 import com.home.giraffe.ui.ProgressDialogFragment;
 import roboguice.inject.InjectView;
 
 public class SignInActivity extends RoboSherlockFragmentActivity implements LoaderManager.LoaderCallbacks {
     @InjectView(R.id.signin) Button mSignIn;
-    @InjectView(R.id.communityUrl) EditText mCommunityUrl;
+    @InjectView(R.id.communityUrl) AutoCompleteTextView mCommunityUrl;
     @InjectView(R.id.userName) EditText mUserName;
     @InjectView(R.id.userPassword) EditText mUserPassword;
     @InjectView(R.id.appVersion) TextView mAppVersion;
@@ -30,6 +31,9 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
 
     @Inject
     ISettingsManager mSettingsManager;
+
+    @Inject
+    IUiManager mUiManager;
 
     ProgressDialogFragment mWaiter;
 
@@ -45,6 +49,13 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
     private void Init() {
         showAppVersion();
         resetSettings();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.select_dialog_item, mUiManager.getStringArray(R.array.builtin_communities));
+
+        mCommunityUrl.setThreshold(1);
+        mCommunityUrl.setAdapter(adapter);
+
         mSignIn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
