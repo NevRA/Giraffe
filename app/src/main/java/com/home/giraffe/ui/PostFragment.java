@@ -81,6 +81,9 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
              TextView userDisplayName = (TextView) commentView.findViewById(R.id.userDisplayName);
              userDisplayName.setText(actor.getDisplayName());
 
+             TextView updated = (TextView) commentView.findViewById(R.id.time);
+             updated.setText(comment.getUpdatedTime());
+
              LinearLayout contentLayout = (LinearLayout) commentView.findViewById(R.id.root);
              LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                      LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
