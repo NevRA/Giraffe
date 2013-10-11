@@ -81,8 +81,12 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
              TextView userDisplayName = (TextView) commentView.findViewById(R.id.userDisplayName);
              userDisplayName.setText(actor.getDisplayName());
 
-             CommentRootLayout contentLayout = (CommentRootLayout) commentView.findViewById(R.id.content_layout);
-             contentLayout.setLevel(comment.getLevel(), mUiManager.dpToPx(5));
+             LinearLayout contentLayout = (LinearLayout) commentView.findViewById(R.id.root);
+             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+             layoutParams.setMargins(comment.getLevel() * mUiManager.dpToPx(10), 0, 0, mUiManager.dpToPx(5));
+             contentLayout.setLayoutParams(layoutParams);
 
              WebView content = (WebView) commentView.findViewById(R.id.content);
              content.loadDataWithBaseURL("", "<body style=\"margin: 0; padding: 0\">" + comment.getRawContent(), "text/html", "UTF-8", null);
