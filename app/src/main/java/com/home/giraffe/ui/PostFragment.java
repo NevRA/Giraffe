@@ -3,16 +3,9 @@ package com.home.giraffe.ui;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import com.actionbarsherlock.view.Menu;
+import android.widget.*;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.google.inject.Inject;
 import com.home.giraffe.Constants;
@@ -34,8 +27,6 @@ import roboguice.inject.InjectView;
 public class PostFragment extends RoboSherlockFragmentActivity implements LoaderManager.LoaderCallbacks<Post> {
     private String mId;
     private Post mPost;
-
-    public static final int NEW_COMMENT_ACTION_ID = 0;
 
     @Inject
     IImageLoader mImageLoader;
@@ -61,6 +52,9 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
     @InjectView(R.id.comments)
     LinearLayout mCommentsView;
 
+    @InjectView(R.id.post_comment)
+    Button mPostComment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +62,17 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
         setContentView(R.layout.post);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mId = getIntent().getStringExtra(Constants.ID_EXTRA);
 
-        addNewCommentListener();
+        mPostComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!mNewComment.getText().toString().isEmpty())
+                    getSupportLoaderManager().restartLoader(1, null, PostFragment.this);
+            }
+        });
 
         if (mPost == null)
             loadPost();
@@ -79,62 +80,14 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
             showPost();
     }
 
-    private void addNewCommentListener() {
-        mNewComment.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                invalidateOptionsMenu();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                invalidateOptionsMenu();
-            }
-        });
-    }
-
     private void loadPost() {
         getSupportLoaderManager().restartLoader(0, null, this);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu)
-    {
-        boolean hasCommentDraft = !mNewComment.getText().toString().isEmpty();
-        getSupportActionBar().setDisplayShowHomeEnabled(!hasCommentDraft);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(!hasCommentDraft);
-
-        setTitle(mUiManager.getString(hasCommentDraft ?
-                R.string.post_new_comment_label :
-                R.string.app_name));
-
-        if (hasCommentDraft)
-        {
-            menu.add(
-                    Menu.NONE,
-                    0,
-                    Menu.NONE,
-                    mUiManager.getString(R.string.post_new_comment_label))
-                        .setIcon(R.drawable.ic_reply)
-                            .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-        }
-
-        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
-            return true;
-        }
-        else if (item.getItemId() == NEW_COMMENT_ACTION_ID) {
-            getSupportLoaderManager().restartLoader(1, null, this);
             return true;
         }
 

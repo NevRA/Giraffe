@@ -86,10 +86,6 @@ public class InboxFragment extends BaseListFragment<BaseObjectContainer> {
         return new GetBaseObjectsListTask(getActivity(), mBaseObjectContainer.getCurrent());
     }
 
-    private void updateView() {
-        updateView(mBaseObjectContainer);
-    }
-
     private void updateView(BaseObjectContainer baseObjectContainer) {
         mBaseObjectContainer.setActivities(baseObjectContainer.getActivities());
         ((ArrayAdapter) getListAdapter()).notifyDataSetChanged();
