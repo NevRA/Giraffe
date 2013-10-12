@@ -79,6 +79,11 @@ public abstract class BaseListFragment<T> extends RoboSherlockListFragment imple
         });
     }
 
+    public void disableOnScrollUpdates(){
+        getListView().setOnScrollListener(null);
+        hideFooter();
+    }
+
     public void hideFooter(){
         if(isFooterVisible())
             getListView().removeFooterView(mFooter);

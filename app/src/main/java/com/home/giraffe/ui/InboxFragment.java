@@ -58,6 +58,7 @@ public class InboxFragment extends BaseListFragment<BaseObjectContainer> {
         }
 
         setListAdapter(mAdapter);
+        disableOnScrollUpdates();
 
         if (getItemsCount() == 0) {
             setListShown(false);
