@@ -49,6 +49,9 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
     @InjectView(R.id.progress)
     View mProgressBar;
 
+    @InjectView(R.id.content_layout)
+    View mContentView;
+
     @InjectView(R.id.new_comment)
     EditText mNewComment;
 
@@ -179,6 +182,8 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
     public Loader<Post> onCreateLoader(int i, Bundle bundle) {
 
         mProgressBar.setVisibility(View.VISIBLE);
+        mContentView.setVisibility(View.GONE);
+        mUiManager.hideKeyboard(mNewComment);
 
         if(i == 0)
             return new GetPostTask(this, mId);
@@ -206,6 +211,7 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
         }
 
         mProgressBar.setVisibility(View.GONE);
+        mContentView.setVisibility(View.VISIBLE);
     }
 
     @Override

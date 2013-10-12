@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import com.google.inject.Inject;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IUiManager;
@@ -47,5 +49,13 @@ public class UiManager implements IUiManager {
     public int dpToPx(int dp){
         Resources r = mContext.getResources();
         return  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
+    }
+
+    @Override
+    public void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }
