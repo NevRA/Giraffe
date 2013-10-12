@@ -58,7 +58,6 @@ public class Connector implements IConnector {
         params.setBooleanParameter(HttpConnectionParams.STALE_CONNECTION_CHECK, false);
         HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 
-        HttpProtocolParams.setContentCharset(params, "utf8");
         HttpConnectionParams.setTcpNoDelay(params, true);
         HttpConnectionParams.setConnectionTimeout(params, 15 * 1000);
         HttpConnectionParams.setSoTimeout(params, 3 * 60 * 1000);
@@ -73,7 +72,8 @@ public class Connector implements IConnector {
 
     private com.home.giraffe.network.HttpResponse proceedResponse(HttpResponse response) throws Exception {
         if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK &&
-                response.getStatusLine().getStatusCode() != 302) {
+            response.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED &&
+            response.getStatusLine().getStatusCode() != HttpStatus.SC_MOVED_TEMPORARILY) {
             throw new Exception(response.getStatusLine().getReasonPhrase());
         }
 
@@ -132,7 +132,11 @@ public class Connector implements IConnector {
         HttpPost httpPost = new HttpPost(url);
         httpPost.setEntity(entity);
         httpPost.addHeader("Accept-Encoding", "gzip");
-        httpPost.addHeader(new BasicHeader("Content-Type", "application/x-www-form-urlencoded"));
+        httpPost.addHeader("Accept", "*/*");
+        httpPost.addHeader(new BasicHeader("Content-Type",
+                mSettingsManager.isLoggedOn() ?
+                        "application/json; charset=UTF-8" :
+                        "application/x-www-form-urlencoded"));
         httpPost.addHeader("Cookie", Constants.RememberMeCookie + "=" + mSettingsManager.getUserToken());
 
         HttpResponse response = mHttpClient.execute(httpPost);

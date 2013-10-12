@@ -14,6 +14,8 @@ public abstract class BaseObjectWithContent extends BaseObject {
         super(id);
     }
 
+    private String mJiveId;
+    private String mCommentsId;
     private int mReplyCount;
     private int mLikeCount;
     private String mTitle;
@@ -21,6 +23,14 @@ public abstract class BaseObjectWithContent extends BaseObject {
     private String mRawContent;
     private Actor mActor;
     private String mUpdatedTime;
+
+    public void setJiveId(String id){
+        mJiveId = id;
+    }
+
+    public String getJiveId(){
+        return mJiveId;
+    }
 
     public int getReplyCount() {
         return mReplyCount;
@@ -75,6 +85,15 @@ public abstract class BaseObjectWithContent extends BaseObject {
         mUpdatedTime = updated;
     }
 
+
+    public String getCommentsId() {
+        return mCommentsId;
+    }
+
+    public void setCommentsId(String commentsId) {
+        mCommentsId = commentsId;
+    }
+
     public void fromJiveActivityContainer(JiveContainer jiveContainer) throws ParseException {
         JiveActor jiveActor = jiveContainer.getActor();
         JiveObject jiveObject = jiveContainer.getObject();
@@ -96,8 +115,11 @@ public abstract class BaseObjectWithContent extends BaseObject {
         JiveAuthor jiveAuthor = jivePost.getAuthor();
 
         setId(jivePost.getId());
+        setJiveId(jivePost.getJiveId());
         setParentId(jivePost.getParent());
+        setCommentsId(jivePost.getCommentsId());
         setReplyCount(jivePost.getReplyCount());
+        setLikeCount(jivePost.getLikeCount());
         setTitle(jivePost.getSubject());
         setRawContent(jivePost.getContent().getText());
         setActor(new Actor(jiveAuthor));

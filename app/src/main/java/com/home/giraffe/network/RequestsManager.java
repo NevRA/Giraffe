@@ -90,4 +90,11 @@ public class RequestsManager implements IRequestsManager {
 
         return mGson.fromJson(mConnector.getRequest(url).getBody(), JivePosts.class);
     }
+
+    @Override
+    public void postMessage(String url, JivePost post) throws Exception {
+        Utils.d("Started postMessage for: " + url);
+
+        mConnector.postRequest(url, mGson.toJson(post, JivePost.class));
+    }
 }

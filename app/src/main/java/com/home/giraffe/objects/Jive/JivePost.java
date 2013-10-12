@@ -1,6 +1,7 @@
 package com.home.giraffe.objects.Jive;
 
 public class JivePost {
+    private String id;
     private String parent;
     private String subject;
     private JiveAuthor author;
@@ -20,12 +21,20 @@ public class JivePost {
         return getResources().getSelf().getRef();
     }
 
+    public String getJiveId() {
+        return id;
+    }
+
     public String getCommentsId() {
         return getResources().getCommentsId().getRef();
     }
 
     public JiveAuthor getAuthor() {
         return author;
+    }
+
+    public void setContent(JiveContent content) {
+        this.content = content;
     }
 
     public JiveContent getContent() {
@@ -54,6 +63,46 @@ public class JivePost {
 
     public String getUpdated() {
         return updated;
+    }
+
+    public void setType(JiveTypes jiveType){
+        switch (jiveType) {
+
+            case Unknown:
+                break;
+            case Unsupported:
+                break;
+            case JiveMessage:
+                type = "message";
+                break;
+            case JiveComment:
+                type = "comment";
+                break;
+            case JiveInstance:
+                break;
+            case JiveGroup:
+                break;
+            case JivePerson:
+                break;
+            case JiveDiscussion:
+                break;
+            case JiveDocument:
+                break;
+            case JiveFile:
+                break;
+            case JiveSpace:
+                break;
+            case JiveProject:
+                break;
+            case JivePoll:
+                break;
+            case JiveTask:
+                break;
+            case JiveLevel:
+                break;
+            case JivePost:
+                break;
+        }
     }
 
     public JiveTypes getType() {

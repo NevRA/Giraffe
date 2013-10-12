@@ -23,7 +23,7 @@ public class GetPostTask extends BaseTask<Post> {
         try {
             JivePost jivePost = mRequestsManager.getPost(mUrl);
 
-            Post post = new Post(mUrl);
+            Post post = Utils.getPostFromObjectType(jivePost.getType());
             post.fromJivePost(jivePost);
 
             JivePosts jiveComments = mRequestsManager.getJivePosts(jivePost.getCommentsId());

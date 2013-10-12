@@ -38,7 +38,7 @@
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
-                        android:id="@+id/new_comment"
+                        android:id="@+id/new_comment_layout"
                         android:layout_below="@+id/post_layout"
                         android:layout_height="wrap_content" android:orientation="vertical"
                         android:background="@color/white" android:layout_marginBottom="5dp" android:paddingLeft="10dp"
@@ -46,13 +46,14 @@
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/newComment" style="@style/TextBoxStyled"
+                    android:id="@+id/new_comment"
+                    style="@style/TextBoxStyled"
                     android:hint="Leave a comment..."
                     android:layout_marginBottom="10dp"/>
         </LinearLayout>
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                       android:id="@+id/comments_layout"
-                      android:layout_below="@+id/new_comment"
+                      android:layout_below="@+id/new_comment_layout"
                       android:orientation="vertical"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content" android:background="@color/ultra_light_gray">
