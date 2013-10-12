@@ -95,8 +95,6 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
     }
 
     private void loadPost() {
-        mProgressBar.setVisibility(View.VISIBLE);
-        mPostView.setVisibility(View.GONE);
         getSupportLoaderManager().restartLoader(0, null, this);
     }
 
@@ -136,7 +134,6 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
             getSupportLoaderManager().restartLoader(1, null, this);
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -180,6 +177,9 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
 
     @Override
     public Loader<Post> onCreateLoader(int i, Bundle bundle) {
+
+        mProgressBar.setVisibility(View.VISIBLE);
+
         if(i == 0)
             return new GetPostTask(this, mId);
         else
@@ -206,7 +206,6 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
         }
 
         mProgressBar.setVisibility(View.GONE);
-        mPostView.setVisibility(View.VISIBLE);
     }
 
     @Override
