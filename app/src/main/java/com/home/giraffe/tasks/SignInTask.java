@@ -2,12 +2,10 @@ package com.home.giraffe.tasks;
 
 import android.support.v4.app.FragmentActivity;
 import com.home.giraffe.Constants;
-import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.objects.Jive.JiveAuthor;
-import com.home.giraffe.objects.Jive.JiveInbox;
 import com.home.giraffe.utils.Utils;
 
-public class SignInTask extends BaseTask {
+public class SignInTask extends BaseTaskLoader {
 
     private String mUrl;
     private String mUserName;

@@ -1,6 +1,8 @@
 package com.home.giraffe;
 
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -17,11 +19,13 @@ import com.google.inject.Inject;
 import com.home.giraffe.base.BaseFragmentActivity;
 import com.home.giraffe.events.ActionsUnreadCountEvent;
 import com.home.giraffe.events.InboxUnreadCountEvent;
+import com.home.giraffe.events.OpenFileEvent;
 import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.tasks.GetBadgesCountTask;
 import com.home.giraffe.ui.ActionsFragment;
 import com.home.giraffe.ui.ActivityFragment;
 import com.home.giraffe.ui.InboxFragment;
+import com.home.giraffe.utils.Utils;
 import roboguice.inject.InjectView;
 
 public class Main extends BaseFragmentActivity implements LoaderManager.LoaderCallbacks<Object> {
@@ -164,6 +168,15 @@ public class Main extends BaseFragmentActivity implements LoaderManager.LoaderCa
         int badge = event.getCount();
         mActionsBadge.setVisibility(badge == 0 ? View.GONE : View.VISIBLE);
         mActionsBadge.setText(String.valueOf(badge));
+    }
+
+    public void onEventMainThread(final OpenFileEvent event) {
+        Utils.d("Opening file: " + event.getFile().getAbsolutePath());
+
+        Intent intent = new Intent();
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(event.getFile()), event.getType());
+        startActivity(intent);
     }
 
     @Override

@@ -24,6 +24,7 @@
     <string name="group_joined">joined:</string>
     <string name="author_label">by Roman Abdulmanov</string>
     <string name="post_new_comment_label">Post new comment</string>
+    <string name="trying_to_open_file_message">Trying to open file. It may take some time..</string>
 
     <string-array name="builtin_communities">
         <item>commons.quest.com</item>

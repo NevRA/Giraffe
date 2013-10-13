@@ -9,6 +9,7 @@ import com.home.giraffe.base.BaseListFragment;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.objects.BaseObject;
+import com.home.giraffe.objects.File;
 import com.home.giraffe.objects.Post;
 import com.home.giraffe.objects.activity.BaseObjectContainer;
 import com.home.giraffe.tasks.GetBaseObjectsListTask;
@@ -36,7 +37,10 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
         if (item instanceof Post) {
             Post post = (Post) item;
 
-            Intent intent = new Intent(getActivity(), PostFragment.class);
+            Intent intent = new Intent(getActivity(),
+                    post instanceof File ?
+                            FileFragment.class :
+                            PostFragment.class);
             intent.putExtra(Constants.ID_EXTRA, post.getId());
             mUiManager.startActivity(getActivity(), intent);
         }

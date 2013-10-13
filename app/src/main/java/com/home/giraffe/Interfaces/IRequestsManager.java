@@ -13,4 +13,5 @@ public interface IRequestsManager {
     JiveContainers getJiveContainers(String url) throws Exception;
     JivePosts getJivePosts(String url) throws Exception;
     void postMessage(String url, JivePost post) throws Exception;
+    byte[] getData(String url) throws Exception;
 }

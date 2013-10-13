@@ -1,30 +1,39 @@
 package com.fedorvlasov.lazylist;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import android.content.Context;
 
 public class FileCache {
     
     private File cacheDir;
-    
-    public FileCache(Context context){
-        //Find the dir to save cached images
-        if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
-            cacheDir=new File(android.os.Environment.getExternalStorageDirectory(),"LazyList");
+
+    public FileCache(Context context)
+    {
+        if (android.os.Environment.getExternalStorageState().equals(
+                android.os.Environment.MEDIA_MOUNTED))
+            cacheDir = context.getExternalCacheDir();
         else
-            cacheDir=context.getCacheDir();
-        if(!cacheDir.exists())
+            cacheDir = context.getCacheDir();
+        if (!cacheDir.exists())
             cacheDir.mkdirs();
     }
-    
+
     public File getFile(String url){
-        //I identify images by hashcode. Not a perfect solution, good for the demo.
         String filename=String.valueOf(url.hashCode());
-        //Another possible solution (thanks to grantland)
-        //String filename = URLEncoder.encode(url);
         File f = new File(cacheDir, filename);
         return f;
-        
+    }
+
+    public File saveToCache(String url, InputStream is) throws Exception{
+        File f = getFile(url);
+        OutputStream os = new FileOutputStream(f);
+        Utils.CopyStream(is, os);
+        os.close();
+        return f;
     }
     
     public void clear(){

@@ -1,5 +1,8 @@
 package com.fedorvlasov.lazylist;
 
+import android.content.Context;
+
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 

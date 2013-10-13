@@ -7,7 +7,7 @@ import com.home.giraffe.objects.Jive.*;
 import com.home.giraffe.objects.Post;
 import com.home.giraffe.utils.Utils;
 
-public class GetPostTask extends BaseTask<Post> {
+public class GetPostTask extends BaseTaskLoader<Post> {
 
     private String mUrl;
 

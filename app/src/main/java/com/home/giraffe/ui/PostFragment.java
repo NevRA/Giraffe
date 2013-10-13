@@ -15,10 +15,7 @@ import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.objects.*;
 import com.home.giraffe.objects.Jive.JiveTypes;
 import com.home.giraffe.storages.ObjectsStorage;
-import com.home.giraffe.tasks.BaseTask;
-import com.home.giraffe.tasks.GetPostTask;
-import com.home.giraffe.tasks.NewComment;
-import com.home.giraffe.tasks.PostCommentTask;
+import com.home.giraffe.tasks.*;
 import roboguice.inject.InjectView;
 
 public class PostFragment extends RoboSherlockFragmentActivity implements LoaderManager.LoaderCallbacks<Post> {
@@ -39,15 +36,6 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
 
     @InjectView(R.id.content_layout)
     View mContentView;
-
-    @InjectView(R.id.file_layout)
-    View mFileView;
-
-    @InjectView(R.id.file_link)
-    View mFileLink;
-
-    @InjectView(R.id.file_name)
-    TextView mFileName;
 
     @InjectView(R.id.new_comment)
     EditText mNewComment;
@@ -148,7 +136,7 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
             return new GetPostTask(this, mId);
         else
         {
-            BaseTask<Post> task = new PostCommentTask(
+            BaseTaskLoader<Post> task = new PostCommentTask(
                     this,
                     mPost,
                     new NewComment(
@@ -166,25 +154,11 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
     public void onLoadFinished(Loader<Post> postLoader, Post post) {
         mPost = post;
         if (post != null) {
-            if(post instanceof File){
-                File file = (File)post;  
-                mFileView.setVisibility(View.VISIBLE);
-                mFileName.setText(file.getTitle());
-                mFileLink.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        openFile();
-                    }
-                });
-            }
             showPost();
         }
 
         mProgressBar.setVisibility(View.GONE);
         mContentView.setVisibility(View.VISIBLE);
-    }
-
-    private void openFile() {
     }
 
     @Override

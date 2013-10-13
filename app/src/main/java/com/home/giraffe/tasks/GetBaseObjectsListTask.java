@@ -12,7 +12,7 @@ import com.home.giraffe.utils.Utils;
 
 import java.text.ParseException;
 
-public class GetBaseObjectsListTask extends BaseTask<BaseObjectContainer> {
+public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> {
     private BaseObjectContainer mBaseObjectContainer;
     private String mUrl;
 

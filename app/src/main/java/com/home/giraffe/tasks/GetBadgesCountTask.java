@@ -4,10 +4,9 @@ import android.support.v4.app.FragmentActivity;
 import com.home.giraffe.Constants;
 import com.home.giraffe.events.ActionsUnreadCountEvent;
 import com.home.giraffe.events.InboxUnreadCountEvent;
-import com.home.giraffe.objects.Jive.JiveContainers;
 import com.home.giraffe.utils.Utils;
 
-public class GetBadgesCountTask extends BaseTask{
+public class GetBadgesCountTask extends BaseTaskLoader {
     public GetBadgesCountTask(FragmentActivity activity) {
         super(activity);
     }

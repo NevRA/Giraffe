@@ -5,14 +5,12 @@ import com.home.giraffe.Constants;
 import com.home.giraffe.interfaces.IConnector;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.utils.Utils;
-import org.apache.http.HttpEntity;
+import org.apache.http.*;
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.HttpVersion;
-import org.apache.http.Header;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerPNames;
 import org.apache.http.conn.params.ConnPerRouteBean;
@@ -25,7 +23,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultRedirectHandler;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -47,7 +44,7 @@ public class Connector implements IConnector {
         mHttpClient = getHttpClient();
     }
 
-    private DefaultHttpClient getHttpClient(){
+    private DefaultHttpClient getHttpClient() {
         SchemeRegistry schemeRegistry = new SchemeRegistry();
         schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
         schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
@@ -70,10 +67,21 @@ public class Connector implements IConnector {
         return response.replaceFirst("throw.*;\\s*", "");
     }
 
+    private byte[] proceedBytesResponse(HttpResponse response) throws Exception {
+        if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK &&
+                response.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED &&
+                response.getStatusLine().getStatusCode() != HttpStatus.SC_MOVED_TEMPORARILY) {
+            throw new Exception(response.getStatusLine().getReasonPhrase());
+        }
+
+        HttpEntity entity = getEntityFromResponse(response);
+        return EntityUtils.toByteArray(entity);
+    }
+
     private com.home.giraffe.network.HttpResponse proceedResponse(HttpResponse response) throws Exception {
         if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK &&
-            response.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED &&
-            response.getStatusLine().getStatusCode() != HttpStatus.SC_MOVED_TEMPORARILY) {
+                response.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED &&
+                response.getStatusLine().getStatusCode() != HttpStatus.SC_MOVED_TEMPORARILY) {
             throw new Exception(response.getStatusLine().getReasonPhrase());
         }
 
@@ -85,15 +93,11 @@ public class Connector implements IConnector {
         return new com.home.giraffe.network.HttpResponse(cookies, body);
     }
 
-    private HttpEntity getEntityFromResponse(HttpResponse response)
-    {
+    private HttpEntity getEntityFromResponse(HttpResponse response) {
         Header[] contentEncodings = response.getHeaders("Content-Encoding");
-        if (contentEncodings != null)
-        {
-            for (Header header : contentEncodings)
-            {
-                if (header.getValue().equalsIgnoreCase("gzip"))
-                {
+        if (contentEncodings != null) {
+            for (Header header : contentEncodings) {
+                if (header.getValue().equalsIgnoreCase("gzip")) {
                     return new NetworkUtils.GzipDecompressingEntity(response.getEntity());
                 }
             }
@@ -105,9 +109,7 @@ public class Connector implements IConnector {
     @Override
     public com.home.giraffe.network.HttpResponse getRequest(String url) throws Exception {
         HttpGet httpGet = new HttpGet(url);
-        httpGet.addHeader("Accept-Encoding", "gzip");
-        httpGet.addHeader("Accept", "*/*");
-        httpGet.addHeader("Cookie", Constants.RememberMeCookie + "=" + mSettingsManager.getUserToken());
+        addCommonHeaders(httpGet);
         HttpResponse response = mHttpClient.execute(httpGet);
         return proceedResponse(response);
     }
@@ -131,15 +133,31 @@ public class Connector implements IConnector {
         StringEntity entity = new StringEntity(body, HTTP.UTF_8);
         HttpPost httpPost = new HttpPost(url);
         httpPost.setEntity(entity);
-        httpPost.addHeader("Accept-Encoding", "gzip");
-        httpPost.addHeader("Accept", "*/*");
-        httpPost.addHeader(new BasicHeader("Content-Type",
+        addCommonHeaders(httpPost);
+
+        httpPost.addHeader("Content-Type",
                 mSettingsManager.isLoggedOn() ?
                         "application/json; charset=UTF-8" :
-                        "application/x-www-form-urlencoded"));
-        httpPost.addHeader("Cookie", Constants.RememberMeCookie + "=" + mSettingsManager.getUserToken());
+                        "application/x-www-form-urlencoded");
 
         HttpResponse response = mHttpClient.execute(httpPost);
         return proceedResponse(response);
+    }
+
+    @Override
+    public byte[] getData(String url) throws Exception {
+        HttpGet httpGet = new HttpGet(url);
+        addCommonHeaders(httpGet);
+
+        httpGet.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        HttpResponse response = mHttpClient.execute(httpGet);
+        return proceedBytesResponse(response);
+    }
+
+    private void addCommonHeaders(HttpRequestBase requestBase) {
+        requestBase.addHeader("Accept-Encoding", "gzip");
+        requestBase.addHeader("Accept", "*/*");
+        requestBase.addHeader("Cookie", Constants.RememberMeCookie + "=" + mSettingsManager.getUserToken());
     }
 }

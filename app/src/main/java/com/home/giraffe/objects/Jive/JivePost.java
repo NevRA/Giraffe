@@ -4,6 +4,8 @@ public class JivePost {
     private String id;
     private String parent;
     private String subject;
+    private String name;
+    private String contentType;
     private String binaryURL;
     private JiveAuthor author;
     private JiveContent content;
@@ -26,8 +28,17 @@ public class JivePost {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String getBinaryURL() {
         return binaryURL;
+    }
+
+
+    public String getContentType() {
+        return contentType;
     }
 
     public String getCommentsId() {

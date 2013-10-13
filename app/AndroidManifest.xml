@@ -25,6 +25,8 @@
                   android:label="@string/app_name"/>
         <activity android:name=".ui.PostFragment"
                   android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ui.FileFragment"
+                  android:windowSoftInputMode="stateHidden"/>
 
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

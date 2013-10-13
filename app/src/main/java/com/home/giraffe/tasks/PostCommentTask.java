@@ -7,7 +7,7 @@ import com.home.giraffe.objects.Jive.JivePost;
 import com.home.giraffe.objects.Post;
 import com.home.giraffe.utils.Utils;
 
-public class PostCommentTask extends BaseTask<Post> {
+public class PostCommentTask extends BaseTaskLoader<Post> {
     private Post mPost;
     private NewComment mComment;
 

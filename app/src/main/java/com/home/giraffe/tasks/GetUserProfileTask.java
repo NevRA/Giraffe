@@ -4,7 +4,7 @@ import android.support.v4.app.FragmentActivity;
 import com.home.giraffe.objects.Jive.JiveAuthor;
 import com.home.giraffe.utils.Utils;
 
-public class GetUserProfileTask extends BaseTask<JiveAuthor> {
+public class GetUserProfileTask extends BaseTaskLoader<JiveAuthor> {
 
     private String mUserId;
 

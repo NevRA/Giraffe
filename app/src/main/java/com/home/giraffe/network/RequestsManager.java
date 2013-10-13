@@ -97,4 +97,11 @@ public class RequestsManager implements IRequestsManager {
 
         mConnector.postRequest(url, mGson.toJson(post, JivePost.class));
     }
+
+    @Override
+    public byte[] getData(String url) throws Exception {
+        Utils.d("Started getData for: " + url);
+
+        return mConnector.getData(url);
+    }
 }

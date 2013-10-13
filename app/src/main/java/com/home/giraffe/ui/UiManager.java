@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 import com.google.inject.Inject;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IUiManager;
@@ -26,6 +27,11 @@ public class UiManager implements IUiManager {
     }
 
     @Override
+    public Context getContext() {
+        return mContext;
+    }
+
+    @Override
     public String getString(int resourceId) {
         return mContext.getString(resourceId);
     }
@@ -33,6 +39,11 @@ public class UiManager implements IUiManager {
     @Override
     public String[] getStringArray(int resourceId) {
         return mContext.getResources().getStringArray(resourceId);
+    }
+
+    @Override
+    public void showToast(FragmentActivity activity, String message) {
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
