@@ -27,7 +27,7 @@ public class LoadFileTask extends BaseTask {
             File file = fileCache.getFile(mUrl);
             if(!file.isFile()){
                 byte[] data = mRequestsManager.getData(mUrl);
-                Utils.d("Data loaded from network. Size: " + data.length);
+                Utils.d("Data loaded from network. Size: " + Utils.readableFileSize(data.length));
 
                 file = fileCache.saveToCache(mUrl, new ByteArrayInputStream(data));
             }

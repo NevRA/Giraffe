@@ -149,7 +149,7 @@ public class Connector implements IConnector {
         HttpGet httpGet = new HttpGet(url);
         addCommonHeaders(httpGet);
 
-        httpGet.addHeader("Content-Type", "application/x-www-form-urlencoded");
+        httpGet.addHeader("Content-Type", "binary/octet-stream");
 
         HttpResponse response = mHttpClient.execute(httpGet);
         return proceedBytesResponse(response);
