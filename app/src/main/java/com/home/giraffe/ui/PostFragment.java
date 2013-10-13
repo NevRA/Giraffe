@@ -12,11 +12,8 @@ import com.home.giraffe.Constants;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.interfaces.IUiManager;
-import com.home.giraffe.objects.Actor;
-import com.home.giraffe.objects.Comment;
-import com.home.giraffe.objects.Discussion;
+import com.home.giraffe.objects.*;
 import com.home.giraffe.objects.Jive.JiveTypes;
-import com.home.giraffe.objects.Post;
 import com.home.giraffe.storages.ObjectsStorage;
 import com.home.giraffe.tasks.BaseTask;
 import com.home.giraffe.tasks.GetPostTask;
@@ -42,6 +39,15 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
 
     @InjectView(R.id.content_layout)
     View mContentView;
+
+    @InjectView(R.id.file_layout)
+    View mFileView;
+
+    @InjectView(R.id.file_link)
+    View mFileLink;
+
+    @InjectView(R.id.file_name)
+    TextView mFileName;
 
     @InjectView(R.id.new_comment)
     EditText mNewComment;
@@ -160,11 +166,25 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
     public void onLoadFinished(Loader<Post> postLoader, Post post) {
         mPost = post;
         if (post != null) {
+            if(post instanceof File){
+                File file = (File)post;  
+                mFileView.setVisibility(View.VISIBLE);
+                mFileName.setText(file.getTitle());
+                mFileLink.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openFile();
+                    }
+                });
+            }
             showPost();
         }
 
         mProgressBar.setVisibility(View.GONE);
         mContentView.setVisibility(View.VISIBLE);
+    }
+
+    private void openFile() {
     }
 
     @Override

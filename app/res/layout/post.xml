@@ -22,34 +22,53 @@
                     />
         </RelativeLayout>
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                      android:id="@+id/content_layout"
-                      android:layout_width="match_parent"
-                      android:layout_height="match_parent">
+                        android:id="@+id/content_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                           android:id="@+id/post_layout"
                           android:background="@color/white"
                           android:layout_width="match_parent"
-                          android:layout_height="wrap_content">
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
                 <WebView xmlns:android="http://schemas.android.com/apk/res/android"
                          android:id="@+id/post"
                          android:layout_width="match_parent"
                          android:layout_height="wrap_content"
                         />
-
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                              android:id="@+id/file_layout"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:layout_marginBottom="10dp"
+                              android:visibility="gone">
+                    <ImageView
+                            android:layout_width="56dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/file_link"
+                            android:src="@drawable/ic_file_download"
+                            android:layout_gravity="center_horizontal"/>
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/file_name"
+                            android:gravity="center_horizontal"/>
+                </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:id="@+id/new_comment_layout"
-                          android:layout_below="@+id/post_layout"
-                          android:minHeight="48dp"
-                          android:orientation="horizontal"
-                          android:background="@color/white"
-                          android:layout_marginBottom="5dp"
-                          android:paddingLeft="10dp"
-                          android:paddingRight="10dp"
-                          android:paddingTop="10dp">
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/new_comment_layout"
+                            android:layout_below="@+id/post_layout"
+                            android:minHeight="48dp"
+                            android:orientation="horizontal"
+                            android:background="@color/white"
+                            android:layout_marginBottom="5dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp">
                 <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
