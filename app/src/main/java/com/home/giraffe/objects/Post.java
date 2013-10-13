@@ -26,7 +26,7 @@ public class Post extends BaseObjectWithContent {
 
         mComments.add(comment);
 
-        Utils.d(String.format("To post %s added comment %s", getId(), comment));
+        Utils.v(String.format("To post %s added comment %s", getId(), comment));
     }
 
     public Comment getCommentById(String id){

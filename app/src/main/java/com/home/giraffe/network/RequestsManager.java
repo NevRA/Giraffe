@@ -27,7 +27,7 @@ public class RequestsManager implements IRequestsManager {
 
     @Override
     public String signIn(String url, String userName, String userPassword) throws Exception {
-        Utils.d("Started signIn");
+        Utils.d("Started signIn...");
 
         String loginUrl = url + Constants.LOGIN;
         String credentialsBody = String.format("username=%s&password=%s&autoLogin=true", Uri.encode(userName), Uri.encode(userPassword));
@@ -44,14 +44,14 @@ public class RequestsManager implements IRequestsManager {
 
     @Override
     public JiveAuthor getUserInfo(String userId) throws Exception {
-        Utils.d("Started getUserInfo");
+        Utils.d("Started getUserInfo...");
 
         return mGson.fromJson(mConnector.getRequest(userId).getBody(), JiveAuthor.class);
     }
 
     @Override
     public JiveInbox getInbox() throws Exception {
-        Utils.d("Started getInbox");
+        Utils.d("Started getInbox...");
 
         String inbox = mSettingsManager.getCommunityUrl() + Constants.INBOX;
         return mGson.fromJson(mConnector.getRequest(inbox).getBody(), JiveInbox.class);
@@ -59,7 +59,7 @@ public class RequestsManager implements IRequestsManager {
 
     @Override
     public int getInboxBadgeCount() throws Exception {
-        Utils.d("Started getInboxBadgeCount");
+        Utils.d("Started getInboxBadgeCount...");
 
         String inbox = mSettingsManager.getCommunityUrl() + Constants.INBOX_ZERO_RECORDS;
         return mGson.fromJson(mConnector.getRequest(inbox).getBody(), JiveInbox.class).getUnreadCount();
@@ -72,35 +72,35 @@ public class RequestsManager implements IRequestsManager {
 
     @Override
     public JivePost getPost(String url) throws Exception {
-        Utils.d("Started getPost for: " + url);
+        Utils.d("Started getPost...");
 
         return mGson.fromJson(mConnector.getRequest(url).getBody(), JivePost.class);
     }
 
     @Override
     public JiveContainers getJiveContainers(String url) throws Exception {
-        Utils.d("Started getJiveContainers for: " + url);
+        Utils.d("Started getJiveContainers...");
 
         return mGson.fromJson(mConnector.getRequest(url).getBody(), JiveContainers.class);
     }
 
     @Override
     public JivePosts getJivePosts(String url) throws Exception {
-        Utils.d("Started getJivePosts for: " + url);
+        Utils.d("Started getJivePosts...");
 
         return mGson.fromJson(mConnector.getRequest(url).getBody(), JivePosts.class);
     }
 
     @Override
     public void postMessage(String url, JivePost post) throws Exception {
-        Utils.d("Started postMessage for: " + url);
+       Utils.d("Started postMessage...");
 
         mConnector.postRequest(url, mGson.toJson(post, JivePost.class));
     }
 
     @Override
     public byte[] getData(String url) throws Exception {
-        Utils.d("Started getData for: " + url);
+        Utils.d("Started getData...");
 
         return mConnector.getData(url);
     }

@@ -108,6 +108,8 @@ public class Connector implements IConnector {
 
     @Override
     public com.home.giraffe.network.HttpResponse getRequest(String url) throws Exception {
+        Utils.d("Trying to make get request to url: " + url);
+
         HttpGet httpGet = new HttpGet(url);
         addCommonHeaders(httpGet);
         HttpResponse response = mHttpClient.execute(httpGet);
@@ -121,6 +123,8 @@ public class Connector implements IConnector {
 
     @Override
     public com.home.giraffe.network.HttpResponse postRequest(String url, String body, boolean allowRedirect) throws Exception {
+        Utils.d("Trying to make post request to url: " + url);
+
         if (!allowRedirect) {
             mHttpClient.setRedirectHandler(new DefaultRedirectHandler() {
                 @Override
@@ -146,6 +150,8 @@ public class Connector implements IConnector {
 
     @Override
     public byte[] getData(String url) throws Exception {
+        Utils.d("Trying to get binary data from url: " + url);
+
         HttpGet httpGet = new HttpGet(url);
         addCommonHeaders(httpGet);
 

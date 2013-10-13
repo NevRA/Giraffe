@@ -1,17 +1,16 @@
 package com.home.giraffe.utils;
 
-import android.content.res.Resources;
+import android.text.TextUtils;
 import android.util.Log;
-import android.util.TypedValue;
 import com.home.giraffe.Constants;
-import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.objects.*;
 import com.home.giraffe.objects.Jive.JiveTypes;
-import roboguice.RoboGuice;
 
 import java.text.DecimalFormat;
 
 public class Utils {
+    static final String className = Utils.class.getName().toLowerCase();
+
     public static Post getPostFromObjectType(JiveTypes jiveTypes) {
         Post post;
         switch (jiveTypes) {
@@ -35,22 +34,64 @@ public class Utils {
         return post;
     }
 
-    public static void v(String message){
-        Log.v(Constants.APP_TAG, message);
+    public static void v(String message) {
+        Log.v(Constants.APP_TAG, getLocation() + message);
     }
 
-    public static void d(String message){
-        Log.d(Constants.APP_TAG, message);
+    public static void d(String message) {
+        Log.d(Constants.APP_TAG, getLocation() + message);
     }
 
-    public static void e(Throwable t){
-        Log.e(Constants.APP_TAG, t.getMessage() + "\n" + Log.getStackTraceString(t));
+    public static void e(Throwable t) {
+        Log.e(Constants.APP_TAG, getLocation() + t.getMessage() + "\n" + Log.getStackTraceString(t));
     }
 
     public static String readableFileSize(long size) {
-        if(size <= 0) return "0";
-        final String[] units = new String[] { "B", "KB", "MB", "GB", "TB" };
-        int digitGroups = (int) (Math.log10(size)/Math.log10(1024));
-        return new DecimalFormat("#,##0.#").format(size/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+        if (size <= 0) return "0";
+        final String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
+        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+    }
+
+    private static String getLocation() {
+        final Long threadId = Thread.currentThread().getId();
+        final StackTraceElement[] traces = Thread.currentThread()
+                .getStackTrace();
+        boolean found = false;
+
+        for (StackTraceElement trace : traces) {
+            try {
+                if (found) {
+                    if (!trace.getClassName().toLowerCase().startsWith(className)) {
+                        Class<?> clazz = Class.forName(trace.getClassName());
+                        return "[" + threadId.toString() + "] : [" + getClassName(clazz) + ":"
+                                + trace.getMethodName() + ":"
+                                + trace.getLineNumber() + "]: ";
+                    } else
+                        found = false;
+
+                }
+                if (trace.getClassName().toLowerCase().startsWith(className)) {
+                    found = true;
+                }
+            } catch (ClassNotFoundException e) {
+                Log.e(Constants.APP_TAG, e.getMessage());
+            }
+        }
+
+        return "[]: ";
+    }
+
+    private static String getClassName(Class<?> clazz) {
+        if (clazz != null) {
+            String className = clazz.getSimpleName();
+            if (!TextUtils.isEmpty(className)) {
+                return className;
+            }
+
+            return getClassName(clazz.getEnclosingClass());
+        }
+
+        return "";
     }
 }
