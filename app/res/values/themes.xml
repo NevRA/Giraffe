@@ -19,6 +19,7 @@
     <color name="blue">#0000FF</color>
     <color name="navy">#000080</color>
     <color name="black">#000000</color>
+    <color name="main_theme">#ff965030</color>
     <color name="holo_blue_bright">#ff00ddff</color>
     <color name="holo_blue_dark">#ff0099cc</color>
     <color name="drawer_separator_color">@color/light_gray</color>

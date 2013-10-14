@@ -26,8 +26,6 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
     @InjectView(R.id.userPassword) EditText mUserPassword;
     @InjectView(R.id.appVersion) TextView mAppVersion;
     @InjectView(R.id.logo_layout) LinearLayout mLogoLayout;
-    @InjectView(R.id.logo_animation1) ImageView mLogoAnimation1;
-    @InjectView(R.id.logo_animation2) ImageView mLogoAnimation2;
 
     @Inject
     ISettingsManager mSettingsManager;
@@ -43,7 +41,7 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
         setContentView(R.layout.signin_layout);
 
         Init();
-        ShowStartupAnimation();
+        //ShowStartupAnimation();
     }
 
     private void Init() {
@@ -78,28 +76,7 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
         mSettingsManager.clear();
     }
 
-    private void ShowStartupAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.layout.logo_animation);
-        animation.setFillAfter(true);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mLogoAnimation1.setVisibility(View.GONE);
-                mLogoAnimation2.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        mLogoLayout.setAnimation(animation);
-        animation.startNow();
-        mLogoLayout.invalidate();
-    }
 
     @Override
     public Loader onCreateLoader(int i, Bundle bundle) {
