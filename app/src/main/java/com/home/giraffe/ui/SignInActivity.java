@@ -1,4 +1,4 @@
-package com.home.giraffe;
+package com.home.giraffe.ui;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -8,15 +8,14 @@ import android.os.Handler;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.google.inject.Inject;
+import com.home.giraffe.Main;
+import com.home.giraffe.R;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.tasks.SignInTask;
-import com.home.giraffe.ui.ProgressDialogFragment;
 import roboguice.inject.InjectView;
 
 public class SignInActivity extends RoboSherlockFragmentActivity implements LoaderManager.LoaderCallbacks {
@@ -25,7 +24,6 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
     @InjectView(R.id.userName) EditText mUserName;
     @InjectView(R.id.userPassword) EditText mUserPassword;
     @InjectView(R.id.appVersion) TextView mAppVersion;
-    @InjectView(R.id.logo_layout) LinearLayout mLogoLayout;
 
     @Inject
     ISettingsManager mSettingsManager;
@@ -41,7 +39,6 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
         setContentView(R.layout.signin_layout);
 
         Init();
-        //ShowStartupAnimation();
     }
 
     private void Init() {
@@ -75,7 +72,6 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
     private void resetSettings() {
         mSettingsManager.clear();
     }
-
 
 
     @Override
