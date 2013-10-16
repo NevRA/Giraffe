@@ -14,5 +14,5 @@ public interface IUiManager {
     void showToast(FragmentActivity activity, String message);
     void showError(FragmentActivity activity, Exception e);
     int dpToPx(int dp);
-    void hideKeyboard(View view);
+    void hideKeyboard();
 }

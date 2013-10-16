@@ -130,7 +130,7 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
 
         mProgressBar.setVisibility(View.VISIBLE);
         mContentView.setVisibility(View.GONE);
-        mUiManager.hideKeyboard(mNewComment);
+        mUiManager.hideKeyboard();
 
         if(i == 0)
             return new GetPostTask(this, mId);

@@ -63,10 +63,10 @@ public class UiManager implements IUiManager {
     }
 
     @Override
-    public void hideKeyboard(View view) {
+    public void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         }
     }
 }
