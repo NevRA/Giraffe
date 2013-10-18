@@ -58,9 +58,7 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
         JiveVerbTypes jiveVerbTypes = jiveContainer.getVerbType();
         JiveObject jiveObject = jiveContainer.getObject();
 
-        if(     jiveObject == null ||
-                jiveVerbTypes == JiveVerbTypes.JiveUnsupported ||
-                jiveObject.getType() == JiveTypes.Unsupported)
+        if(jiveObject == null)
             return; // for some group updates etc.
 
         switch (jiveObject.getType()) {
@@ -82,10 +80,9 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
                 break;
             case JiveGroup:
                 break;
-            case JiveProject:
-                break;
 
             case Unsupported:
+            case JiveProject:
             case JiveSpace:
             case JiveInstance:
             case JivePerson:

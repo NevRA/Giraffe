@@ -42,7 +42,9 @@ public class JivePost {
     }
 
     public String getCommentsId() {
-        return getResources().getCommentsId().getRef();
+        if(getResources().getCommentsId() != null)
+            return getResources().getCommentsId().getRef();
+        return null;
     }
 
     public JiveAuthor getAuthor() {
