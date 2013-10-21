@@ -40,7 +40,6 @@
 
     <modules>
         <module>app</module>
-        <module>tests</module>
     </modules>
 
     <properties>

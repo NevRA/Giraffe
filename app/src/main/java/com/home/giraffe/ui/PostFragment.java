@@ -115,7 +115,7 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                  LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-            layoutParams.setMargins(comment.getLevel() * mUiManager.dpToPx(10), 0, 0, mUiManager.dpToPx(5));
+            layoutParams.setMargins(comment.getLevel() * mUiManager.dpToPx(7), 0, 0, mUiManager.dpToPx(5));
             contentLayout.setLayoutParams(layoutParams);
 
             WebView content = (WebView) commentView.findViewById(R.id.content);
@@ -130,7 +130,7 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
 
         mProgressBar.setVisibility(View.VISIBLE);
         mContentView.setVisibility(View.GONE);
-        mUiManager.hideKeyboard();
+        mUiManager.hideKeyboard(mNewComment);
 
         if(i == 0)
             return new GetPostTask(this, mId);

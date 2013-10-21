@@ -54,7 +54,7 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
         mSignIn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mUiManager.hideKeyboard();
+                mUiManager.hideKeyboard(view);
                 getSupportLoaderManager().restartLoader(1, null, SignInActivity.this);
             }
         });

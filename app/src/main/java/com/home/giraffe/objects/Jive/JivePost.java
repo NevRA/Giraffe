@@ -43,7 +43,7 @@ public class JivePost {
 
     public String getCommentsId() {
         if(getResources().getCommentsId() != null)
-            return getResources().getCommentsId().getRef();
+            return getResources().getCommentsId().getRef() + "?count=100"; // max comments limit
         return null;
     }
 

@@ -4,15 +4,9 @@ import android.text.TextUtils;
 import com.google.inject.Inject;
 import com.home.giraffe.Constants;
 import com.home.giraffe.interfaces.ISettingsManager;
-import com.home.giraffe.utils.Utils;
 import org.apache.http.HttpEntity;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.HttpEntityWrapper;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import roboguice.RoboGuice;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,19 +28,6 @@ public class NetworkUtils {
         }
 
         return null;
-    }
-
-    public static String cleanTags(String html){
-        Document doc = Jsoup.parse(html);
-        Elements elements = doc.getElementsByTag("p");
-        for(int i = elements.size() - 1; i >= 0; i --){
-            Element el = elements.get(i);
-            if(el.html().equals("&nbsp;")){
-                el.remove();
-            }
-        }
-
-        return doc.html();
     }
 
     public static class GzipDecompressingEntity extends HttpEntityWrapper

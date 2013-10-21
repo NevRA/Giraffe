@@ -4,7 +4,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import com.home.giraffe.Constants;
 import com.home.giraffe.objects.*;
+import com.home.giraffe.objects.Document;
 import com.home.giraffe.objects.Jive.JiveTypes;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.*;
+import org.jsoup.select.Elements;
 
 import java.text.DecimalFormat;
 
@@ -32,6 +36,25 @@ public class Utils {
         }
 
         return post;
+    }
+
+    public static String addHtmlTags(String text){
+        String html = text.replace("\n", "<br/>");
+
+        return html;
+    }
+
+    public static String cleanTags(String html){
+        org.jsoup.nodes.Document doc = Jsoup.parse(html);
+        Elements elements = doc.getElementsByTag("p");
+        for(int i = elements.size() - 1; i >= 0; i --){
+            Element el = elements.get(i);
+            if(el.html().equals("&nbsp;")){
+                el.remove();
+            }
+        }
+
+        return doc.html();
     }
 
     public static void v(String message) {

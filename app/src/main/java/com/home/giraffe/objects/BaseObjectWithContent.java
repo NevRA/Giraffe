@@ -1,9 +1,9 @@
 package com.home.giraffe.objects;
 
 import android.text.format.DateUtils;
-import com.home.giraffe.network.NetworkUtils;
 import com.home.giraffe.objects.Jive.*;
 import com.home.giraffe.utils.ISO8601DateFormatter;
+import com.home.giraffe.utils.Utils;
 import org.jsoup.Jsoup;
 
 import java.text.ParseException;
@@ -57,7 +57,7 @@ public abstract class BaseObjectWithContent extends BaseObject {
     }
 
     public String getRawContent() {
-        return NetworkUtils.cleanTags(mRawContent);
+        return Utils.cleanTags(mRawContent);
     }
 
     public void setRawContent(String content) {
