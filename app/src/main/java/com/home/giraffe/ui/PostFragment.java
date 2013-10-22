@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.widget.*;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
@@ -11,16 +12,21 @@ import com.google.inject.Inject;
 import com.home.giraffe.Constants;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
+import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.objects.*;
 import com.home.giraffe.objects.Jive.JiveTypes;
 import com.home.giraffe.storages.ObjectsStorage;
 import com.home.giraffe.tasks.*;
+import com.home.giraffe.utils.Utils;
 import roboguice.inject.InjectView;
 
 public class PostFragment extends RoboSherlockFragmentActivity implements LoaderManager.LoaderCallbacks<Post> {
     private String mId;
     private Post mPost;
+
+    @Inject
+    ISettingsManager mSettingsManager;
 
     @Inject
     IImageLoader mImageLoader;
@@ -92,6 +98,11 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
         mPostView.loadDataWithBaseURL("", mPost.getRawContent(), "text/html", "UTF-8", null);
 
         addComments();
+
+        // Add cookie for webviews
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.setCookie(mSettingsManager.getCommunityUrl(), Utils.getAuthorizationCookie());
     }
 
     private void addComments() {
@@ -115,7 +126,7 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                  LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-            layoutParams.setMargins(comment.getLevel() * mUiManager.dpToPx(7), 0, 0, mUiManager.dpToPx(5));
+            layoutParams.setMargins(comment.getLevel() * Utils.dpToPx(7), 0, 0, Utils.dpToPx(5));
             contentLayout.setLayoutParams(layoutParams);
 
             WebView content = (WebView) commentView.findViewById(R.id.content);

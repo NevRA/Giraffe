@@ -164,6 +164,6 @@ public class Connector implements IConnector {
     private void addCommonHeaders(HttpRequestBase requestBase) {
         requestBase.addHeader("Accept-Encoding", "gzip");
         requestBase.addHeader("Accept", "*/*");
-        requestBase.addHeader("Cookie", Constants.RememberMeCookie + "=" + mSettingsManager.getUserToken());
+        requestBase.addHeader("Cookie", Utils.getAuthorizationCookie());
     }
 }

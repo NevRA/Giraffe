@@ -57,12 +57,6 @@ public class UiManager implements IUiManager {
     }
 
     @Override
-    public int dpToPx(int dp){
-        Resources r = mContext.getResources();
-        return  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
-    }
-
-    @Override
     public void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager)mContext.getSystemService(
                 Context.INPUT_METHOD_SERVICE);

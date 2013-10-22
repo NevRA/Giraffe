@@ -79,7 +79,7 @@ public class ImageLoader implements IImageLoader {
             conn.setConnectTimeout(30000);
             conn.setReadTimeout(30000);
             conn.setInstanceFollowRedirects(true);
-            conn.setRequestProperty("Cookie", Constants.RememberMeCookie + "=" + mSettingsManager.getUserToken());
+            conn.setRequestProperty("Cookie", com.home.giraffe.utils.Utils.getAuthorizationCookie());
             InputStream is = conn.getInputStream();
             OutputStream os = new FileOutputStream(f);
             Utils.CopyStream(is, os);

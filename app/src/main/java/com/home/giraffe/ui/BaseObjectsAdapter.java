@@ -27,7 +27,6 @@ import java.util.List;
 public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
     IUiManager mUiManager;
     IImageLoader mImageLoader;
-    Utils mUtils;
     ObjectsStorage mObjectsStorage;
 
     private List<BaseObject> mItems;
@@ -38,7 +37,6 @@ public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
         mImageLoader = RoboGuice.getInjector(context).getProvider(IImageLoader.class).get();
         mObjectsStorage = RoboGuice.getInjector(context).getProvider(ObjectsStorage.class).get();
         mUiManager = RoboGuice.getInjector(context).getProvider(IUiManager.class).get();
-        mUtils = RoboGuice.getInjector(context).getProvider(Utils.class).get();
     }
 
     @Override

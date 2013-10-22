@@ -1,14 +1,20 @@
 package com.home.giraffe.utils;
 
+import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import com.home.giraffe.Constants;
+import com.home.giraffe.MainApplication;
+import com.home.giraffe.interfaces.IImageLoader;
+import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.objects.*;
 import com.home.giraffe.objects.Document;
 import com.home.giraffe.objects.Jive.JiveTypes;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
+import roboguice.RoboGuice;
 
 import java.text.DecimalFormat;
 
@@ -55,6 +61,17 @@ public class Utils {
         }
 
         return doc.html();
+    }
+
+    public static String getAuthorizationCookie(){
+        ISettingsManager settingsManager = RoboGuice.getInjector(MainApplication.getInstance()).getProvider(ISettingsManager.class).get();
+
+        return Constants.RememberMeCookie + "=" + settingsManager.getUserToken();
+    }
+
+    public static int dpToPx(int dp){
+        Resources r = MainApplication.getInstance().getResources();
+        return  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
 
     public static void v(String message) {
