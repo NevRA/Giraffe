@@ -1,6 +1,5 @@
 package com.home.giraffe.objects;
 
-import android.text.format.DateUtils;
 import com.home.giraffe.objects.Jive.*;
 import com.home.giraffe.utils.ISO8601DateFormatter;
 import com.home.giraffe.utils.Utils;
@@ -22,7 +21,8 @@ public abstract class BaseObjectWithContent extends BaseObject {
     private String mContent;
     private String mRawContent;
     private Actor mActor;
-    private String mUpdatedTime;
+    private Long mUpdatedTime;
+    private Long mPublishedTime;
 
     public void setJiveId(String id){
         mJiveId = id;
@@ -77,14 +77,21 @@ public abstract class BaseObjectWithContent extends BaseObject {
         mTitle = Jsoup.parse(title).text();
     }
 
-    public String getUpdatedTime() {
+    public Long getPublishedTime() {
+        return mPublishedTime;
+    }
+
+    public void setPublishedTime(long published) {
+        mPublishedTime = published;
+    }
+
+    public Long getUpdatedTime() {
         return mUpdatedTime;
     }
 
-    public void setUpdatedTime(String updated) {
+    public void setUpdatedTime(long updated) {
         mUpdatedTime = updated;
     }
-
 
     public String getCommentsId() {
         return mCommentsId;
@@ -107,8 +114,11 @@ public abstract class BaseObjectWithContent extends BaseObject {
         setRawContent(jiveObject.getSummary());
         setActor(new Actor(jiveActor));
 
-        Date date = ISO8601DateFormatter.toDate(jiveObject.getUpdated());
-        setUpdatedTime(DateUtils.getRelativeTimeSpanString(date.getTime()).toString());
+        Date publishedDate = ISO8601DateFormatter.toDate(jiveObject.getPublished());
+        setPublishedTime(publishedDate.getTime());
+
+        Date updatedDate = ISO8601DateFormatter.toDate(jiveObject.getUpdated());
+        setUpdatedTime(updatedDate.getTime());
     }
 
     public void fromJivePost(JivePost jivePost) throws ParseException {
@@ -124,7 +134,10 @@ public abstract class BaseObjectWithContent extends BaseObject {
         setRawContent(jivePost.getContent().getText());
         setActor(new Actor(jiveAuthor));
 
-        Date date = ISO8601DateFormatter.toDate(jivePost.getUpdated());
-        setUpdatedTime(DateUtils.getRelativeTimeSpanString(date.getTime()).toString());
+        Date publishedDate = ISO8601DateFormatter.toDate(jivePost.getPublished());
+        setPublishedTime(publishedDate.getTime());
+
+        Date updatedDate = ISO8601DateFormatter.toDate(jivePost.getUpdated());
+        setUpdatedTime(updatedDate.getTime());
     }
 }

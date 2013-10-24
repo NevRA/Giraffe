@@ -3,13 +3,13 @@ package com.home.giraffe.objects;
 import com.home.giraffe.utils.Utils;
 
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Post extends BaseObjectWithContent {
     public Post(String id) {
         super(id);
-        mComments = Collections.synchronizedSet(new LinkedHashSet<Comment>());
+        mComments = Collections.synchronizedSet(new TreeSet<Comment>());
     }
 
     private Set<Comment> mComments;

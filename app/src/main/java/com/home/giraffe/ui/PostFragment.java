@@ -3,6 +3,7 @@ package com.home.giraffe.ui;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
@@ -120,7 +121,7 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
             userDisplayName.setText(actor.getDisplayName());
 
             TextView updated = (TextView) commentView.findViewById(R.id.time);
-            updated.setText(comment.getUpdatedTime());
+            updated.setText(DateUtils.getRelativeTimeSpanString(comment.getUpdatedTime()).toString());
 
             LinearLayout contentLayout = (LinearLayout) commentView.findViewById(R.id.root);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(

@@ -14,6 +14,7 @@ public class JivePost {
     private JiveResources resources;
     private int replyCount;
     private int likeCount;
+    private String published;
     private String updated;
 
     public String getParent(){
@@ -77,6 +78,10 @@ public class JivePost {
 
     public JiveResources getResources() {
         return resources;
+    }
+
+    public String getPublished() {
+        return published;
     }
 
     public String getUpdated() {

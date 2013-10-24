@@ -2,12 +2,12 @@ package com.home.giraffe.ui;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.home.giraffe.R;
-import com.home.giraffe.utils.Utils;
 import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.objects.Actor;
@@ -132,7 +132,7 @@ public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
         postType.setText(post.getFriendlyName().toUpperCase());
 
         TextView postUpdatedTime = (TextView) view.findViewById(R.id.time);
-        postUpdatedTime.setText(post.getUpdatedTime());
+        postUpdatedTime.setText(DateUtils.getRelativeTimeSpanString(post.getUpdatedTime()).toString());
 
         TextView userDisplayName = (TextView) view.findViewById(R.id.userDisplayName);
         userDisplayName.setText(actor.getDisplayName());

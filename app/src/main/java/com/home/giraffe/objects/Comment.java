@@ -53,6 +53,10 @@ public class Comment extends BaseObjectWithContent implements Comparable<Comment
 
     @Override
     public int compareTo(Comment another) {
-        return getId().compareTo(another.getId());
+        if(getId().equals(another.getId())){
+            return 0;
+        }
+
+        return another.getPublishedTime().compareTo(getPublishedTime()); // newer first
     }
 }
