@@ -3,7 +3,8 @@ package com.home.giraffe.tasks;
 
 import android.support.v4.app.FragmentActivity;
 import com.home.giraffe.objects.Comment;
-import com.home.giraffe.objects.Jive.*;
+import com.home.giraffe.objects.Jive.JivePost;
+import com.home.giraffe.objects.Jive.JivePosts;
 import com.home.giraffe.objects.Post;
 import com.home.giraffe.utils.Utils;
 
@@ -31,6 +32,10 @@ public class GetPostTask extends BaseTaskLoader<Post> {
                 Comment comment = new Comment(container);
                 post.addComment(comment);
             }
+
+            FragmentActivity activity = getActivity();
+            if(activity != null)
+                new GetBadgesCountTask(activity).execute();
 
             return post;
         } catch (Exception e) {

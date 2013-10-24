@@ -3,6 +3,7 @@ package com.home.giraffe.tasks;
 import android.support.v4.app.FragmentActivity;
 import com.google.inject.Inject;
 import com.home.giraffe.interfaces.IRequestsManager;
+import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
 import de.greenrobot.event.EventBus;
 import roboguice.util.RoboAsyncTask;
@@ -15,6 +16,9 @@ public abstract class BaseTask<T> extends RoboAsyncTask<T> {
 
     @Inject
     IUiManager mUiManager;
+
+    @Inject
+    ISettingsManager mSettingsManager;
 
     @Inject
     EventBus mBus;

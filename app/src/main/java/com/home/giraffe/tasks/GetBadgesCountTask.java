@@ -6,13 +6,13 @@ import com.home.giraffe.events.ActionsUnreadCountEvent;
 import com.home.giraffe.events.InboxUnreadCountEvent;
 import com.home.giraffe.utils.Utils;
 
-public class GetBadgesCountTask extends BaseTaskLoader {
+public class GetBadgesCountTask extends BaseTask {
     public GetBadgesCountTask(FragmentActivity activity) {
         super(activity);
     }
 
     @Override
-    public Object loadInBackground() {
+    public Object call() {
         Utils.d("Started GetBadgesCountTask");
 
         try {

@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -28,7 +26,7 @@ import com.home.giraffe.ui.InboxFragment;
 import com.home.giraffe.utils.Utils;
 import roboguice.inject.InjectView;
 
-public class Main extends BaseFragmentActivity implements LoaderManager.LoaderCallbacks<Object> {
+public class Main extends BaseFragmentActivity{
     ActivityFragment mActivityFragment = new ActivityFragment();
     InboxFragment mInboxFragment = new InboxFragment();
 
@@ -126,7 +124,7 @@ public class Main extends BaseFragmentActivity implements LoaderManager.LoaderCa
             }
         });
 
-        getSupportLoaderManager().restartLoader(0, null, this);
+        new GetBadgesCountTask(this).execute();
     }
 
     private void selectItem(Fragment fragment, String title) {
@@ -177,18 +175,5 @@ public class Main extends BaseFragmentActivity implements LoaderManager.LoaderCa
         intent.setAction(android.content.Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.fromFile(event.getFile()), event.getType());
         startActivity(intent);
-    }
-
-    @Override
-    public Loader<Object> onCreateLoader(int i, Bundle bundle) {
-        return new GetBadgesCountTask(this);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Object> objectLoader, Object o) {
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Object> objectLoader) {
     }
 }
