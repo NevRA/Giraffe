@@ -57,6 +57,6 @@ public class Comment extends BaseObjectWithContent implements Comparable<Comment
             return 0;
         }
 
-        return another.getPublishedTime().compareTo(getPublishedTime()); // newer first
+        return getPublishedTime().compareTo(another.getPublishedTime()); // newer last
     }
 }
