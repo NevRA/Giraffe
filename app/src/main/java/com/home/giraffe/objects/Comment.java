@@ -40,7 +40,7 @@ public class Comment extends BaseObjectWithContent implements Comparable<Comment
 
         result.append("\n");
         result.append(" Id: " + getId() + "\n");
-        result.append(" Parent Id: " + getParentId() + "\n");
+        result.append(" Parent id: " + getParentId() + "\n");
         result.append(" Level: " + getLevel());
 
         return result.toString();

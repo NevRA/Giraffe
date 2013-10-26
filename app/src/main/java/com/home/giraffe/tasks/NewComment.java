@@ -5,10 +5,12 @@ import com.home.giraffe.objects.Jive.JiveTypes;
 public class NewComment {
     private JiveTypes mType;
     private String mMessage;
+    private String mParentId;
 
-    public NewComment(JiveTypes type, String message){
+    public NewComment(JiveTypes type, String message, String parentId){
         mType = type;
         mMessage = message;
+        mParentId = parentId;
     }
 
     public JiveTypes getType() {
@@ -25,5 +27,13 @@ public class NewComment {
 
     public void setMessage(String message) {
         mMessage = message;
+    }
+
+    public String getParentId() {
+        return mParentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.mParentId = parentId;
     }
 }

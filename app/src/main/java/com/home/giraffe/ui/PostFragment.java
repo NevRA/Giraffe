@@ -25,6 +25,8 @@ import roboguice.inject.InjectView;
 public class PostFragment extends RoboSherlockFragmentActivity implements LoaderManager.LoaderCallbacks<Post> {
     private String mId;
     private Post mPost;
+    private String mCommentText;
+    private String mCommentParent;
 
     @Inject
     ISettingsManager mSettingsManager;
@@ -70,8 +72,12 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
         mPostComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!mNewComment.getText().toString().isEmpty())
+                if(!mNewComment.getText().toString().isEmpty()){
+                    mCommentText = mNewComment.getText().toString();
+                    mNewComment.setText("");
+
                     getSupportLoaderManager().restartLoader(1, null, PostFragment.this);
+                }
             }
         });
 
@@ -109,7 +115,7 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
     private void addComments() {
         mCommentsView.removeAllViews();
 
-        for (Comment comment : mPost.getComments()){
+        for (final Comment comment : mPost.getComments()){
             View commentView = getLayoutInflater().inflate(R.layout.comment, mCommentsView, false);
 
             Actor actor = comment.getActor();
@@ -149,6 +155,21 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
                     }
                 }
             });
+            final TextView newComment = (TextView) commentView.findViewById(R.id.new_comment);
+
+            View postComment = commentView.findViewById(R.id.post_comment);
+            postComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(!newComment.getText().toString().isEmpty()){
+                        mCommentText = newComment.getText().toString();
+                        mCommentParent = comment.getCommentsId();
+                        newComment.setText("");
+
+                        getSupportLoaderManager().restartLoader(1, null, PostFragment.this);
+                    }
+                }
+            });
 
             mCommentsView.addView(commentView);
         }
@@ -172,9 +193,12 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
                             (mPost instanceof Discussion) ?
                                     JiveTypes.JiveMessage :
                                     JiveTypes.JiveComment,
-                            mNewComment.getText().toString()));
+                            mCommentText,
+                            mCommentParent));
 
-            mNewComment.setText("");
+            mCommentText = null;
+            mCommentParent = null;
+
             return task;
         }
     }

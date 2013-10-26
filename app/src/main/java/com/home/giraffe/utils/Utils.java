@@ -46,7 +46,6 @@ public class Utils {
 
     public static String addHtmlTags(String text){
         String html = text.replace("\n", "<br/>");
-
         return html;
     }
 
