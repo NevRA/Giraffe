@@ -133,6 +133,23 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
             WebView content = (WebView) commentView.findViewById(R.id.content);
             content.loadDataWithBaseURL("", "<body style=\"margin: 0; padding: 0\">" + comment.getRawContent(), "text/html", "UTF-8", null);
 
+            final View newCommentsView = commentView.findViewById(R.id.new_comment_layout);
+            final ImageView arrow = (ImageView) commentView.findViewById(R.id.imageArrow);
+            View actionsView = commentView.findViewById(R.id.actions_layout);
+            actionsView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(newCommentsView.getVisibility() == View.VISIBLE){
+                        newCommentsView.setVisibility(View.GONE);
+                        arrow.setBackgroundResource(R.drawable.ic_arrow_down);
+                    }
+                    else{
+                        newCommentsView.setVisibility(View.VISIBLE);
+                        arrow.setBackgroundResource(R.drawable.ic_arrow_up);
+                    }
+                }
+            });
+
             mCommentsView.addView(commentView);
         }
     }
