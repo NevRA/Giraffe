@@ -57,43 +57,26 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/new_comment_layout"
-                            android:layout_below="@+id/post_layout"
-                            android:minHeight="48dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_marginBottom="5dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingTop="10dp">
-                <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/post_comment"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        android:id="@+id/new_comment"
-                        style="@style/TextBoxStyled"
-                        android:hint="Leave a comment..."/>
-                <Button
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:focusable="true"
-                        android:clickable="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/ic_reply"
-                        android:layout_alignParentRight="true"
-                        android:id="@+id/post_comment"/>
-            </RelativeLayout>
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:id="@+id/new_comment_layout"
+                          android:background="@color/white"
+                          android:layout_marginBottom="5dp"
+                          android:paddingLeft="10dp"
+                          android:paddingRight="10dp"
+                          android:paddingTop="10dp"
+                          android:layout_below="@+id/post_layout">
+                <include layout="@layout/new_comment"/>
+            </LinearLayout>
+
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                           android:id="@+id/comments_layout"
                           android:layout_below="@+id/new_comment_layout"
                           android:orientation="vertical"
                           android:layout_width="match_parent"
-                          android:layout_height="wrap_content" android:background="@color/ultra_light_gray">
+                          android:layout_height="wrap_content"
+                          android:background="@color/ultra_light_gray">
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                               android:id="@+id/comments"

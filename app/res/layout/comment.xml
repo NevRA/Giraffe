@@ -6,7 +6,9 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@color/white"
-              android:padding="10dp">
+              android:paddingTop="10dp"
+              android:paddingRight="10dp"
+              android:paddingLeft="10dp">
 
     <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -49,5 +51,37 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:id="@+id/content"/>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp" android:background="@color/drawer_separator_color" android:clickable="true"
+                android:layout_marginTop="1dp" android:layout_marginBottom="10dp"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:id="@+id/actions_layout">
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/label_layout">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/new_comments_label"
+                        android:layout_centerVertical="true"
+                        android:textSize="13sp"
+                        android:text="@string/comment_actions_label"/>
+                <ImageView
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/imageArrow"
+                        android:background="@drawable/ic_arrow_down"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <include android:id="@+id/new_comment_layout" layout="@layout/new_comment" android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>
