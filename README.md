@@ -16,7 +16,7 @@ Compatibility
 
 This application is compatible from API 10 (Android 2.3.3).
 
-Developed By
+Developed by
 ------------
 
 * Roman Abdulmanov - <roman.abdulmanov@gmail.com>
