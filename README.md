@@ -5,10 +5,10 @@ Unofficial client for Jive-based communities.
 
 Application is available on Google Play:
 
-<a href="https://play.google.com/store/apps/details?id=com.home.giraffe">;
+<a href="https://play.google.com/store/apps/details?id=com.home.giraffe">
   <img alt="Get it on Google Play"
-       src="http://www.android.com/images/brand/get_it_on_play_logo_small.png" />;
-</a>;
+       src="http://www.android.com/images/brand/get_it_on_play_logo_small.png" />
+</a>
 
 
 Compatibility
