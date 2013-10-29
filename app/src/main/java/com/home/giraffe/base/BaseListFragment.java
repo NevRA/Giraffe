@@ -6,11 +6,9 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFragment;
 import com.home.giraffe.R;
-import com.home.giraffe.ui.PostFragment;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public abstract class BaseListFragment<T> extends RoboSherlockListFragment implements LoaderManager.LoaderCallbacks<T>, PullToRefreshAttacher.OnRefreshListener {
@@ -69,7 +67,7 @@ public abstract class BaseListFragment<T> extends RoboSherlockListFragment imple
                                  int visibleItemCount, int totalItemCount) {
 
                 int lastItem = firstVisibleItem + visibleItemCount;
-                if (firstVisibleItem > 3 && lastItem == totalItemCount) {
+                if (lastItem == totalItemCount) {
                     if (!getActivity().getSupportLoaderManager().hasRunningLoaders()) {
                         showFooter();
                         loadNext();

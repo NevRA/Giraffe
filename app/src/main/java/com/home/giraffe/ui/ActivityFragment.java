@@ -13,6 +13,7 @@ import com.home.giraffe.objects.File;
 import com.home.giraffe.objects.Post;
 import com.home.giraffe.objects.activity.BaseObjectContainer;
 import com.home.giraffe.tasks.GetBaseObjectsListTask;
+import com.home.giraffe.utils.Utils;
 
 public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
 
@@ -50,7 +51,8 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String url = mSettingsManager.getCommunityUrl() + Constants.ACTIVITIES;
+        String url = getActivityUrl();
+        Utils.d("Activity fragment for url %s created", url);
 
         if (mBaseObjectContainer == null) {
             mBaseObjectContainer = new BaseObjectContainer();
@@ -58,6 +60,10 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
             mBaseObjectContainer.setCurrent(url);
             mBaseObjectContainer.setNext(url);
         }
+    }
+
+    public String getActivityUrl(){
+        return mSettingsManager.getCommunityUrl() + Constants.ACTIVITIES;
     }
 
     public void init() {

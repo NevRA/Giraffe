@@ -73,8 +73,16 @@ public class Utils {
         return  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
 
+    public static void v(String str, Object...args) {
+        Log.v(Constants.APP_TAG, getLocation() + String.format(str, args));
+    }
+
     public static void v(String message) {
         Log.v(Constants.APP_TAG, getLocation() + message);
+    }
+
+    public static void d(String str, Object...args) {
+        Log.d(Constants.APP_TAG, getLocation() + String.format(str, args));
     }
 
     public static void d(String message) {

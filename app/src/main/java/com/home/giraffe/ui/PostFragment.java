@@ -15,10 +15,15 @@ import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
-import com.home.giraffe.objects.*;
+import com.home.giraffe.objects.Actor;
+import com.home.giraffe.objects.Comment;
+import com.home.giraffe.objects.Discussion;
 import com.home.giraffe.objects.Jive.JiveTypes;
-import com.home.giraffe.storages.ObjectsStorage;
-import com.home.giraffe.tasks.*;
+import com.home.giraffe.objects.Post;
+import com.home.giraffe.tasks.BaseTaskLoader;
+import com.home.giraffe.tasks.GetPostTask;
+import com.home.giraffe.tasks.NewComment;
+import com.home.giraffe.tasks.PostCommentTask;
 import com.home.giraffe.utils.Utils;
 import roboguice.inject.InjectView;
 
@@ -33,9 +38,6 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
 
     @Inject
     IImageLoader mImageLoader;
-
-    @Inject
-    ObjectsStorage mObjectsStorage;
 
     @Inject
     IUiManager mUiManager;
@@ -81,6 +83,8 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
             }
         });
 
+        allowCookie();
+
         if (mPost == null)
             loadPost();
         else
@@ -101,15 +105,17 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
         return super.onOptionsItemSelected(item);
     }
 
-    private void showPost() {
-        mPostView.loadDataWithBaseURL("", mPost.getRawContent(), "text/html", "UTF-8", null);
-
-        addComments();
-
+    private void allowCookie() {
         // Add cookie for webviews
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         cookieManager.setCookie(mSettingsManager.getCommunityUrl(), Utils.getAuthorizationCookie());
+    }
+
+    private void showPost() {
+        mPostView.loadDataWithBaseURL("", mPost.getRawContent(), "text/html", "UTF-8", null);
+
+        addComments();
     }
 
     private void addComments() {
@@ -161,7 +167,7 @@ public class PostFragment extends RoboSherlockFragmentActivity implements Loader
             postComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(!newComment.getText().toString().isEmpty()){
+                    if (!newComment.getText().toString().isEmpty()) {
                         mCommentText = newComment.getText().toString();
                         mCommentParent = comment.getCommentsId();
                         newComment.setText("");

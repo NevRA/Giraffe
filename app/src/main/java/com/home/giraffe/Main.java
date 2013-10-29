@@ -13,28 +13,23 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import com.google.inject.Inject;
 import com.home.giraffe.base.BaseFragmentActivity;
 import com.home.giraffe.events.ActionsUnreadCountEvent;
 import com.home.giraffe.events.InboxUnreadCountEvent;
 import com.home.giraffe.events.OpenFileEvent;
-import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.tasks.GetBadgesCountTask;
 import com.home.giraffe.ui.ActionsFragment;
 import com.home.giraffe.ui.ActivityFragment;
 import com.home.giraffe.ui.InboxFragment;
+import com.home.giraffe.ui.StreamFragment;
 import com.home.giraffe.utils.Utils;
 import roboguice.inject.InjectView;
 
 public class Main extends BaseFragmentActivity{
     ActivityFragment mActivityFragment = new ActivityFragment();
+    StreamFragment mStreamFragment = new StreamFragment();
     InboxFragment mInboxFragment = new InboxFragment();
-
-    @Inject
-    IUiManager mUiManager;
-
-    @Inject
-    ActionsFragment mActionsFragment;
+    ActionsFragment mActionsFragment = new ActionsFragment();
 
     @InjectView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -50,6 +45,9 @@ public class Main extends BaseFragmentActivity{
 
     @InjectView(R.id.activityLayout)
     RelativeLayout mActivityLayout;
+
+    @InjectView(R.id.streamLayout)
+    RelativeLayout mStreamLayout;
 
     @InjectView(R.id.inboxLayout)
     RelativeLayout mInboxLayout;
@@ -107,6 +105,13 @@ public class Main extends BaseFragmentActivity{
             @Override
             public void onClick(View view) {
                 selectItem(mActivityFragment, mUiManager.getString(R.string.main_drawer_activity_label));
+            }
+        });
+
+        mStreamLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectItem(mStreamFragment, mUiManager.getString(R.string.main_drawer_stream_label));
             }
         });
 
