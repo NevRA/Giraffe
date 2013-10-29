@@ -26,10 +26,10 @@ import com.home.giraffe.utils.Utils;
 import roboguice.inject.InjectView;
 
 public class Main extends BaseFragmentActivity{
-    ActivityFragment mActivityFragment = new ActivityFragment();
-    StreamFragment mStreamFragment = new StreamFragment();
-    InboxFragment mInboxFragment = new InboxFragment();
-    ActionsFragment mActionsFragment = new ActionsFragment();
+    private ActivityFragment mActivityFragment;
+    private StreamFragment mStreamFragment;
+    private InboxFragment mInboxFragment;
+    private ActionsFragment mActionsFragment;
 
     @InjectView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -78,6 +78,8 @@ public class Main extends BaseFragmentActivity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.drawer_main);
+
+        createFragments();
 
         // Set a custom shadow that overlays the main content when the drawer
         // opens
@@ -132,8 +134,21 @@ public class Main extends BaseFragmentActivity{
         new GetBadgesCountTask(this).execute();
     }
 
-    private void selectItem(Fragment fragment, String title) {
+    private void createFragments() {
+        if(mActivityFragment == null)
+            mActivityFragment = new ActivityFragment();
 
+        if(mStreamFragment == null)
+            mStreamFragment = new StreamFragment();
+
+        if(mInboxFragment == null)
+            mInboxFragment = new InboxFragment();
+
+        if(mActionsFragment == null)
+            mActionsFragment = new ActionsFragment();
+    }
+
+    private void selectItem(Fragment fragment, String title) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();

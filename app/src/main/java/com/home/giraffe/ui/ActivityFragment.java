@@ -17,6 +17,10 @@ import com.home.giraffe.utils.Utils;
 
 public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
 
+    public ActivityFragment(){
+        Utils.v("ActivityFragment constructor");
+    }
+
     @Inject
     ISettingsManager mSettingsManager;
 
@@ -52,7 +56,7 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
         super.onCreate(savedInstanceState);
 
         String url = getActivityUrl();
-        Utils.d("Activity fragment for url %s created", url);
+        Utils.v("Activity fragment for url %s created", url);
 
         if (mBaseObjectContainer == null) {
             mBaseObjectContainer = new BaseObjectContainer();
