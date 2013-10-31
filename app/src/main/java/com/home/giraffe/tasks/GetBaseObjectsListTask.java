@@ -2,15 +2,17 @@ package com.home.giraffe.tasks;
 
 import android.support.v4.app.FragmentActivity;
 import com.home.giraffe.Constants;
-import com.home.giraffe.objects.*;
+import com.home.giraffe.objects.Actor;
+import com.home.giraffe.objects.BaseObject;
+import com.home.giraffe.objects.Comment;
 import com.home.giraffe.objects.Jive.*;
+import com.home.giraffe.objects.Post;
 import com.home.giraffe.objects.activity.BaseObjectContainer;
+import com.home.giraffe.objects.socialnews.CreatedSocialNewsItem;
 import com.home.giraffe.objects.socialnews.JoinedSocialNewsItem;
 import com.home.giraffe.objects.socialnews.LevelSocialNewsItem;
 import com.home.giraffe.objects.socialnews.SocialNews;
 import com.home.giraffe.utils.Utils;
-
-import java.text.ParseException;
 
 public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> {
     private BaseObjectContainer mBaseObjectContainer;
@@ -49,8 +51,9 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
         }
         finally {
             Utils.d("Finished GetBaseObjectsListTask");
-            return mBaseObjectContainer;
         }
+
+        return mBaseObjectContainer;
     }
 
     private void processJiveContainer(JiveContainer jiveContainer) throws Exception {
@@ -82,15 +85,23 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
                 break;
 
             case Unsupported:
+            case JiveIdea:
+            case JiveVideo:
+            case JiveUpdate:
             case JiveProject:
             case JiveSpace:
             case JiveInstance:
             case JivePerson:
             case JiveTask:
+            default:
                 return;
         }
 
         mObjectsStorage.add(new Actor(jiveActor));
+
+        Utils.v("Trying to process: %s", jiveObject.getId() != null ?
+                jiveObject.getId() :
+                jiveObject.getDisplayName());
 
         if (        jiveVerbTypes == JiveVerbTypes.JivePromoted) {
             processJivePromotion(jiveContainer);
@@ -100,6 +111,9 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
             processJiveLike(jiveContainer);
         } else if ( jiveVerbTypes == JiveVerbTypes.JiveCompleted) {
             processJiveTask(jiveContainer);
+        } else if ( jiveVerbTypes == JiveVerbTypes.JiveCreated &&
+                    jiveObject.getType() == JiveTypes.JiveGroup) {
+            processJiveCreated(jiveContainer);
         } else if ( jiveVerbTypes == JiveVerbTypes.JiveCreated) {
             processJivePost(jiveContainer);
         } else if ( jiveVerbTypes == JiveVerbTypes.JiveReplied ||
@@ -111,7 +125,12 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
     private void processJiveComment(JiveContainer jiveContainer) throws Exception {
         JiveObject jiveParent = jiveContainer.getJive().getParent();
         if(jiveParent == null){
-            Utils.w("Unsupported content type"); // bookmarks, etc...
+            Utils.w("Unsupported parent type"); // bookmarks, etc...
+            return;
+        }
+
+        if(!Utils.isValidPostType(jiveParent.getType())){    // comments available only for posts (document, file, ...)
+            Utils.w("Unsupported type \n\turl: %s \n\ttype: %s", jiveParent.getId(), jiveParent.getType());
             return;
         }
 
@@ -129,13 +148,15 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
         addObjectToActivities(post);
     }
 
-    private void processJivePost(JiveContainer jiveContainer) throws ParseException {
-        Post post = Utils.getPostFromObjectType(jiveContainer.getObject().getType());
-        if(post == null){
-            Utils.w("Unsupported post type: %s", jiveContainer.getObject().getType());
+    private void processJivePost(JiveContainer jiveContainer) throws Exception {
+        JiveObject jiveObject = jiveContainer.getObject();
+
+        if(!Utils.isValidPostType(jiveObject.getType())){
+            Utils.w("Unsupported post type: %s", jiveObject.getType());
             return;
         }
 
+        Post post = Utils.getPostFromObjectType(jiveObject.getType());
         post.fromJiveActivityContainer(jiveContainer);
         addObjectToActivities(post);
     }
@@ -154,11 +175,21 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
     }
 
     private void processJiveTask(JiveContainer jiveContainer) {
-        //To change body of created methods use File | Settings | File Templates.
     }
 
     private void processJiveLike(JiveContainer jiveContainer) {
-        //To change body of created methods use File | Settings | File Templates.
+    }
+
+    private void processJiveCreated(JiveContainer jiveContainer) {
+        CreatedSocialNewsItem joinedNews = new CreatedSocialNewsItem(jiveContainer);
+
+        SocialNews socialNews = (SocialNews) mBaseObjectContainer.getActivity(Constants.SocialNewsId);
+        if(socialNews == null){
+            socialNews = new SocialNews();
+            mBaseObjectContainer.addActivity(socialNews);
+        }
+
+        socialNews.addNews(joinedNews);
     }
 
     private void processJiveJoined(JiveContainer jiveContainer) {

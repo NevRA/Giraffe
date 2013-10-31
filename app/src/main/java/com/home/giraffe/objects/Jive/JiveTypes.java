@@ -3,6 +3,7 @@ package com.home.giraffe.objects.Jive;
 public enum JiveTypes {
     Unknown,
     Unsupported,
+    JiveUpdate,
     JiveMessage,
     JiveComment,
     JiveInstance,
@@ -17,4 +18,6 @@ public enum JiveTypes {
     JiveTask,
     JiveLevel,
     JivePost,
+    JiveIdea,
+    JiveVideo,
 }

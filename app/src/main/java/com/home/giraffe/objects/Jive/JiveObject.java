@@ -50,6 +50,18 @@ public class JiveObject {
             return JiveTypes.JiveInstance;
         }
 
+        if (objectType.equals("jive:update")){
+            return JiveTypes.JiveUpdate;
+        }
+
+        if (objectType.equals("jive:idea")){
+            return JiveTypes.JiveIdea;
+        }
+
+        if (objectType.equals("jive:video")){
+            return JiveTypes.JiveVideo;
+        }
+
         if (objectType.equals("jive:group")){
             return JiveTypes.JiveGroup;
         }

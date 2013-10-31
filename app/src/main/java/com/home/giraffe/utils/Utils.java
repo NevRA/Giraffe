@@ -9,6 +9,7 @@ import com.home.giraffe.MainApplication;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.objects.*;
 import com.home.giraffe.objects.Jive.JiveTypes;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -19,7 +20,7 @@ import java.text.DecimalFormat;
 public class Utils {
     static final String className = Utils.class.getName().toLowerCase();
 
-    public static Post getPostFromObjectType(JiveTypes jiveTypes) {
+    public static Post getPostFromObjectType(JiveTypes jiveTypes) throws Exception {
         Post post = null;
         switch (jiveTypes) {
             case JiveDiscussion:
@@ -38,10 +39,21 @@ public class Utils {
                 post = new Post("");
                 break;
             default:
-                break;
+                throw new Exception("Unsupported post type");
         }
 
         return post;
+    }
+
+    public static boolean isValidPostType(JiveTypes jiveType){
+        if(     jiveType == JiveTypes.JiveDiscussion ||
+                jiveType == JiveTypes.JiveDocument ||
+                jiveType == JiveTypes.JiveFile ||
+                jiveType == JiveTypes.JivePost){
+            return true;
+        }
+
+        return false;
     }
 
     public static String addHtmlTags(String text){

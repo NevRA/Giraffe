@@ -14,10 +14,7 @@ import com.home.giraffe.objects.Actor;
 import com.home.giraffe.objects.BaseObject;
 import com.home.giraffe.objects.Comment;
 import com.home.giraffe.objects.Post;
-import com.home.giraffe.objects.socialnews.BaseSocialNewsItem;
-import com.home.giraffe.objects.socialnews.JoinedSocialNewsItem;
-import com.home.giraffe.objects.socialnews.LevelSocialNewsItem;
-import com.home.giraffe.objects.socialnews.SocialNews;
+import com.home.giraffe.objects.socialnews.*;
 import com.home.giraffe.storages.ObjectsStorage;
 import roboguice.RoboGuice;
 
@@ -92,7 +89,14 @@ public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
             if (newsItem instanceof JoinedSocialNewsItem) {
                 JoinedSocialNewsItem joinedNews = (JoinedSocialNewsItem) newsItem;
                 content.setText(Html.fromHtml("<b>" + joinedNews.getActor().getDisplayName() + "</b>" + " " +
-                        mUiManager.getString(R.string.group_joined) + " " +
+                        mUiManager.getString(R.string.social_joined) + " " +
+                        joinedNews.getGroup()));
+            }
+
+            if (newsItem instanceof CreatedSocialNewsItem) {
+                CreatedSocialNewsItem joinedNews = (CreatedSocialNewsItem) newsItem;
+                content.setText(Html.fromHtml("<b>" + joinedNews.getActor().getDisplayName() + "</b>" + " " +
+                        mUiManager.getString(R.string.social_created) + " " +
                         joinedNews.getGroup()));
             }
 

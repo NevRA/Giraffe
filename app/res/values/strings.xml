@@ -22,7 +22,8 @@
     <string name="news_updates_label">NEWS UPDATES</string>
     <string name="social_news_label">SOCIAL NEWS</string>
     <string name="achieved_level">achieved a new status level:</string>
-    <string name="group_joined">joined:</string>
+    <string name="social_joined">joined:</string>
+    <string name="social_created">created:</string>
     <string name="author_label">by Roman Abdulmanov</string>
     <string name="post_new_comment_label">Post new comment</string>
     <string name="trying_to_open_file_message">Trying to open file. It may take some time..</string>

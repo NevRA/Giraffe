@@ -157,6 +157,10 @@ public class JivePost {
             return JiveTypes.JiveFile;
         }
 
+        if (type.equals("post")){
+            return JiveTypes.JivePost;
+        }
+
         if (type.equals("document")){
             return JiveTypes.JiveDocument;
         }
