@@ -6,13 +6,11 @@ import android.util.Log;
 import android.util.TypedValue;
 import com.home.giraffe.Constants;
 import com.home.giraffe.MainApplication;
-import com.home.giraffe.interfaces.IImageLoader;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.objects.*;
-import com.home.giraffe.objects.Document;
 import com.home.giraffe.objects.Jive.JiveTypes;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.*;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import roboguice.RoboGuice;
 
@@ -22,7 +20,7 @@ public class Utils {
     static final String className = Utils.class.getName().toLowerCase();
 
     public static Post getPostFromObjectType(JiveTypes jiveTypes) {
-        Post post;
+        Post post = null;
         switch (jiveTypes) {
             case JiveDiscussion:
                 post = new Discussion("");
@@ -36,8 +34,10 @@ public class Utils {
             case JivePoll:
                 post = new Poll("");
                 break;
-            default:
+            case JivePost:
                 post = new Post("");
+                break;
+            default:
                 break;
         }
 
@@ -87,6 +87,14 @@ public class Utils {
 
     public static void d(String message) {
         Log.d(Constants.APP_TAG, getLocation() + message);
+    }
+
+    public static void w(String str, Object...args) {
+        Log.w(Constants.APP_TAG, getLocation() + String.format(str, args));
+    }
+
+    public static void w(String message) {
+        Log.w(Constants.APP_TAG, getLocation() + message);
     }
 
     public static void e(Throwable t) {

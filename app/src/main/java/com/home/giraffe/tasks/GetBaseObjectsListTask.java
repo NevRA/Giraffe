@@ -92,24 +92,29 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
 
         mObjectsStorage.add(new Actor(jiveActor));
 
-        if (jiveVerbTypes == JiveVerbTypes.JivePromoted) {
+        if (        jiveVerbTypes == JiveVerbTypes.JivePromoted) {
             processJivePromotion(jiveContainer);
-        }else if (jiveVerbTypes == JiveVerbTypes.JiveJoined) {
+        }else if (  jiveVerbTypes == JiveVerbTypes.JiveJoined) {
             processJiveJoined(jiveContainer);
-        }else if (jiveVerbTypes == JiveVerbTypes.JiveLiked) {
+        }else if (  jiveVerbTypes == JiveVerbTypes.JiveLiked) {
             processJiveLike(jiveContainer);
-        } else if (jiveVerbTypes == JiveVerbTypes.JiveCompleted) {
+        } else if ( jiveVerbTypes == JiveVerbTypes.JiveCompleted) {
             processJiveTask(jiveContainer);
-        } else if (jiveVerbTypes == JiveVerbTypes.JiveCreated) {
+        } else if ( jiveVerbTypes == JiveVerbTypes.JiveCreated) {
             processJivePost(jiveContainer);
-        } else if (jiveVerbTypes == JiveVerbTypes.JiveReplied ||
-                jiveVerbTypes == JiveVerbTypes.JiveCommented) {
+        } else if ( jiveVerbTypes == JiveVerbTypes.JiveReplied ||
+                    jiveVerbTypes == JiveVerbTypes.JiveCommented) {
             processJiveComment(jiveContainer);
         }
     }
 
     private void processJiveComment(JiveContainer jiveContainer) throws Exception {
         JiveObject jiveParent = jiveContainer.getJive().getParent();
+        if(jiveParent == null){
+            Utils.w("Unsupported content type"); // bookmarks, etc...
+            return;
+        }
+
         Post post = (Post) mObjectsStorage.get(jiveParent.getId());
 
         if (post == null) {
@@ -126,6 +131,11 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
 
     private void processJivePost(JiveContainer jiveContainer) throws ParseException {
         Post post = Utils.getPostFromObjectType(jiveContainer.getObject().getType());
+        if(post == null){
+            Utils.w("Unsupported post type: %s", jiveContainer.getObject().getType());
+            return;
+        }
+
         post.fromJiveActivityContainer(jiveContainer);
         addObjectToActivities(post);
     }
