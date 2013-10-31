@@ -1,9 +1,7 @@
 package com.home.giraffe.network;
 
 import android.text.TextUtils;
-import com.google.inject.Inject;
 import com.home.giraffe.Constants;
-import com.home.giraffe.interfaces.ISettingsManager;
 import org.apache.http.HttpEntity;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.HttpEntityWrapper;
@@ -14,11 +12,7 @@ import java.util.zip.GZIPInputStream;
 
 public class NetworkUtils {
     private NetworkUtils(){
-
     }
-
-    @Inject
-    ISettingsManager mSettingsManager;
 
     public static String getTokenFromCookies(Cookie[] cookies){
         for (Cookie cookie : cookies){

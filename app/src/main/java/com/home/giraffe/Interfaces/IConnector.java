@@ -1,10 +1,6 @@
 package com.home.giraffe.interfaces;
 
 import com.home.giraffe.network.HttpResponse;
-import org.apache.http.Header;
-import org.apache.http.cookie.Cookie;
-
-import java.io.IOException;
 
 public interface IConnector {
     HttpResponse getRequest(String url) throws Exception;

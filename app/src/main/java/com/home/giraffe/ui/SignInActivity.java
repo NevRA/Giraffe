@@ -31,7 +31,7 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
     @Inject
     IUiManager mUiManager;
 
-    ProgressDialogFragment mWaiter;
+    private ProgressDialogFragment mWaiter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

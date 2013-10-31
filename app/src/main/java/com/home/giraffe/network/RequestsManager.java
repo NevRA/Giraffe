@@ -13,17 +13,18 @@ import com.home.giraffe.objects.Jive.*;
 import com.home.giraffe.utils.Utils;
 
 public class RequestsManager implements IRequestsManager {
-    @Inject
-    Gson mGson;
+    private Gson mGson;
+    private IUiManager mUiManager;
+    private IConnector mConnector;
+    private ISettingsManager mSettingsManager;
 
     @Inject
-    IUiManager mUiManager;
-
-    @Inject
-    IConnector mConnector;
-
-    @Inject
-    ISettingsManager mSettingsManager;
+    public RequestsManager(IUiManager uiManager, IConnector connector, ISettingsManager settingsManager){
+        mUiManager = uiManager;
+        mConnector = connector;
+        mSettingsManager = settingsManager;
+        mGson = new Gson();
+    }
 
     @Override
     public String signIn(String url, String userName, String userPassword) throws Exception {

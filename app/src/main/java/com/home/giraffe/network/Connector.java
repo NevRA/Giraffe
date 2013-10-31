@@ -1,10 +1,11 @@
 package com.home.giraffe.network;
 
 import com.google.inject.Inject;
-import com.home.giraffe.Constants;
+import com.home.giraffe.events.SettingsClearedEvent;
 import com.home.giraffe.interfaces.IConnector;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.utils.Utils;
+import de.greenrobot.event.EventBus;
 import org.apache.http.*;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
@@ -32,16 +33,30 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
 public class Connector implements IConnector {
+    private ISettingsManager mSettingsManager;
+    private EventBus mEventBus;
+    private DefaultHttpClient mHttpClient;
 
     @Inject
-    ISettingsManager mSettingsManager;
-
-    DefaultHttpClient mHttpClient;
-
-    public Connector() {
+    public Connector(ISettingsManager settingsManager, EventBus eventBus) {
         Utils.d("Connector created");
 
+        mSettingsManager = settingsManager;
+        mEventBus = eventBus;
+
+        mEventBus.register(this);
+
+        recreate();
+    }
+
+    public void recreate(){
         mHttpClient = getHttpClient();
+    }
+
+    public void onEvent(SettingsClearedEvent event) {
+        Utils.d("Recreate HttpClient on SettingsClearedEvent");
+
+        recreate();
     }
 
     private DefaultHttpClient getHttpClient() {
