@@ -67,7 +67,7 @@ public abstract class BaseListFragment<T> extends RoboSherlockListFragment imple
                                  int visibleItemCount, int totalItemCount) {
 
                 int lastItem = firstVisibleItem + visibleItemCount;
-                if (lastItem == totalItemCount) {
+                if (lastItem == totalItemCount && totalItemCount > 0) {
                     if (!getActivity().getSupportLoaderManager().hasRunningLoaders()) {
                         showFooter();
                         loadNext();

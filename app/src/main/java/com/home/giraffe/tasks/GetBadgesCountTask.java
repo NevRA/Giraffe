@@ -27,7 +27,7 @@ public class GetBadgesCountTask extends BaseTask {
             mBus.post(new ActionsUnreadCountEvent(badgeCount));
 
         } catch (Exception e) {
-            mUiManager.showError(getActivity(), e);
+            Utils.e(e);
         }
         finally {
             Utils.d("Finished GetBadgesCountTask");
