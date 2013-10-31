@@ -19,6 +19,7 @@ import com.home.giraffe.storages.ObjectsStorage;
 import roboguice.RoboGuice;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
@@ -132,11 +133,11 @@ public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
         Post post = (Post) activityItem;
         Actor actor = post.getActor();
 
-        TextView postType = (TextView) view.findViewById(R.id.postType);
-        postType.setText(post.getFriendlyName().toUpperCase());
+        TextView type = (TextView) view.findViewById(R.id.postType);
+        type.setText(post.getFriendlyName().toUpperCase());
 
-        TextView postPublishedTime = (TextView) view.findViewById(R.id.time);
-        postPublishedTime.setText(DateUtils.getRelativeTimeSpanString(post.getPublishedTime()).toString());
+        TextView publishedTime = (TextView) view.findViewById(R.id.time);
+        publishedTime.setText(DateUtils.getRelativeTimeSpanString(post.getPublishedTime()).toString());
 
         TextView userDisplayName = (TextView) view.findViewById(R.id.userDisplayName);
         userDisplayName.setText(actor.getDisplayName());
@@ -168,7 +169,10 @@ public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
         final LinearLayout comments = (LinearLayout) postView.findViewById(R.id.comments);
         final ImageView arrow = (ImageView) postView.findViewById(R.id.imageArrow);
 
-        for (Comment comment : post.getComments()) {
+        List<Comment> list = new ArrayList<Comment>(post.getComments());
+        Collections.reverse(list); // new comments first
+
+        for (Comment comment : list) {
             Actor actor = comment.getActor();
             LinearLayout commentView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.comment_preview, comments, false);
 
