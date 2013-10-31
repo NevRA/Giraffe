@@ -147,10 +147,10 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/new_comments_label"
+                    android:id="@+id/last_comments_label"
                     android:layout_centerVertical="true"
                     android:textSize="14sp"
-                    android:text="@string/new_comments_label"/>
+                    android:text="@string/last_comments_label"/>
             <ImageView
                     android:layout_width="13dp"
                     android:layout_height="13dp"

@@ -11,20 +11,37 @@
             android:layout_height="24dp"
             android:layout_gravity="top"
             android:id="@+id/avatar"/>
-    <LinearLayout
+    <RelativeLayout
             android:orientation="vertical"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="-3dp"
             android:layout_marginLeft="10dp">
         <TextView
-                android:layout_gravity="top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextView.Comment.Content"
+                android:id="@+id/userDisplayName"
+                android:textStyle="bold"
+                android:longClickable="false"
+                android:text="Roman Abdulmanov"/>
+        <TextView
+                android:gravity="right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextView.Comment.Content"
+                android:textSize="11sp"
+                android:id="@+id/time"
+                android:longClickable="false"
+                android:text="today"/>
+        <TextView
+                android:layout_below="@+id/userDisplayName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextView.Comment.Content"
                 android:id="@+id/content" android:ellipsize="end"
                 android:maxLines="5" android:longClickable="false"
                 android:text="Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit"/>
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

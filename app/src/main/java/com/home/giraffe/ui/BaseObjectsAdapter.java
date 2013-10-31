@@ -135,8 +135,8 @@ public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
         TextView postType = (TextView) view.findViewById(R.id.postType);
         postType.setText(post.getFriendlyName().toUpperCase());
 
-        TextView postUpdatedTime = (TextView) view.findViewById(R.id.time);
-        postUpdatedTime.setText(DateUtils.getRelativeTimeSpanString(post.getUpdatedTime()).toString());
+        TextView postPublishedTime = (TextView) view.findViewById(R.id.time);
+        postPublishedTime.setText(DateUtils.getRelativeTimeSpanString(post.getPublishedTime()).toString());
 
         TextView userDisplayName = (TextView) view.findViewById(R.id.userDisplayName);
         userDisplayName.setText(actor.getDisplayName());
@@ -164,7 +164,7 @@ public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
 
     private void addComments(Post post, View postView) {
         RelativeLayout comments_layout = (RelativeLayout) postView.findViewById(R.id.comments_layout);
-        TextView newCommentsLabel = (TextView) postView.findViewById(R.id.new_comments_label);
+        TextView lastCommentsLabel = (TextView) postView.findViewById(R.id.last_comments_label);
         final LinearLayout comments = (LinearLayout) postView.findViewById(R.id.comments);
         final ImageView arrow = (ImageView) postView.findViewById(R.id.imageArrow);
 
@@ -172,8 +172,14 @@ public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
             Actor actor = comment.getActor();
             LinearLayout commentView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.comment_preview, comments, false);
 
+            TextView userDisplayName = (TextView) commentView.findViewById(R.id.userDisplayName);
+            userDisplayName.setText(actor.getDisplayName());
+
+            TextView publishedTime = (TextView) commentView.findViewById(R.id.time);
+            publishedTime.setText(DateUtils.getRelativeTimeSpanString(comment.getPublishedTime()).toString());
+
             TextView content = (TextView) commentView.findViewById(R.id.content);
-            content.setText(Html.fromHtml("<b>" + actor.getDisplayName() + "</b>" + " " + comment.getContent()));
+            content.setText(Html.fromHtml(comment.getContent()));
 
             ImageView avatar = (ImageView) commentView.findViewById(R.id.avatar);
             mImageLoader.DisplayImage(actor.getAvatarUrl(), avatar);
@@ -182,12 +188,12 @@ public class BaseObjectsAdapter extends ArrayAdapter<BaseObject> {
         }
 
         int commentsCount = post.getComments().size();
-        newCommentsLabel.setText(
+        lastCommentsLabel.setText(
                 Integer.toString(commentsCount) +
                         " " +
                         mUiManager.getString(commentsCount == 1 ?
-                                R.string.new_comment_label :
-                                R.string.new_comments_label));
+                                R.string.last_comment_label :
+                                R.string.last_comments_label));
 
         comments_layout.setVisibility(View.VISIBLE);
         comments_layout.setOnClickListener(new View.OnClickListener() {

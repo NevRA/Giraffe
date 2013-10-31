@@ -16,8 +16,8 @@
     <string name="main_drawer_actions_label">Actions</string>
     <string name="main_drawer_activity_label">Activity</string>
     <string name="comments_label">COMMENTS</string>
-    <string name="new_comments_label">NEW COMMENTS</string>
-    <string name="new_comment_label">NEW COMMENT</string>
+    <string name="last_comments_label">LAST COMMENTS</string>
+    <string name="last_comment_label">LAST COMMENT</string>
     <string name="comment_actions_label">ACTIONS</string>
     <string name="news_updates_label">NEWS UPDATES</string>
     <string name="social_news_label">SOCIAL NEWS</string>
