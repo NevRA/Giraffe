@@ -1,5 +1,7 @@
 package com.home.giraffe;
 
+import java.util.regex.Pattern;
+
 public class Constants {
 
     public static final String APP_TAG = "giraffe";
@@ -23,6 +25,8 @@ public class Constants {
     public static final String UserNamePref = "UserNamePref";
     public static final String UserJobTitlePref = "UserJobTitlePref";
     public static final String UserTokenPref = "UserTokenPref";
+
+    public static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$", Pattern.CASE_INSENSITIVE);
 
     // Extras
 

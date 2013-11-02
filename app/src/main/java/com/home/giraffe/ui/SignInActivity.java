@@ -1,5 +1,7 @@
 package com.home.giraffe.ui;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.*;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.google.inject.Inject;
+import com.home.giraffe.Constants;
 import com.home.giraffe.Main;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.ISettingsManager;
@@ -18,10 +21,14 @@ import com.home.giraffe.interfaces.IUiManager;
 import com.home.giraffe.tasks.SignInTask;
 import roboguice.inject.InjectView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 public class SignInActivity extends RoboSherlockFragmentActivity implements LoaderManager.LoaderCallbacks {
     @InjectView(R.id.signin) Button mSignIn;
     @InjectView(R.id.communityUrl) AutoCompleteTextView mCommunityUrl;
-    @InjectView(R.id.userName) EditText mUserName;
+    @InjectView(R.id.userName) AutoCompleteTextView mUserName;
     @InjectView(R.id.userPassword) EditText mUserPassword;
     @InjectView(R.id.appVersion) TextView mAppVersion;
 
@@ -45,11 +52,8 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
         showAppVersion();
         resetSettings();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.select_dialog_item, mUiManager.getStringArray(R.array.builtin_communities));
-
-        mCommunityUrl.setThreshold(1);
-        mCommunityUrl.setAdapter(adapter);
+        addCommunityAutoComplete();
+        addUserNameAutoComplete();
 
         mSignIn.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -58,6 +62,28 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
                 getSupportLoaderManager().restartLoader(1, null, SignInActivity.this);
             }
         });
+    }
+
+    private void addUserNameAutoComplete() {
+        Account[] accounts = AccountManager.get(this).getAccounts();
+        Set<String> emailSet = new HashSet<String>();
+        for (Account account : accounts) {
+            if (Constants.EMAIL_PATTERN.matcher(account.name).matches()) {
+                emailSet.add(account.name);
+            }
+        }
+
+        mUserName.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, new ArrayList<String>(emailSet)));
+
+        mUserName.setThreshold(2);
+    }
+
+    private void addCommunityAutoComplete() {
+        mCommunityUrl.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.select_dialog_item, mUiManager.getStringArray(R.array.builtin_communities)));
+
+        mCommunityUrl.setThreshold(0);
     }
 
     private void showAppVersion() {
@@ -73,7 +99,6 @@ public class SignInActivity extends RoboSherlockFragmentActivity implements Load
     private void resetSettings() {
         mSettingsManager.clear();
     }
-
 
     @Override
     public Loader onCreateLoader(int i, Bundle bundle) {
