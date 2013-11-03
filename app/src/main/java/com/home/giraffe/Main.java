@@ -18,14 +18,12 @@ import com.home.giraffe.events.ActionsUnreadCountEvent;
 import com.home.giraffe.events.InboxUnreadCountEvent;
 import com.home.giraffe.events.OpenFileEvent;
 import com.home.giraffe.tasks.GetBadgesCountTask;
-import com.home.giraffe.ui.ActionsFragment;
-import com.home.giraffe.ui.ActivityFragment;
-import com.home.giraffe.ui.InboxFragment;
-import com.home.giraffe.ui.StreamFragment;
+import com.home.giraffe.ui.*;
 import com.home.giraffe.utils.Utils;
 import roboguice.inject.InjectView;
 
 public class Main extends BaseFragmentActivity{
+    private HomeFragment mHomeFragment;
     private ActivityFragment mActivityFragment;
     private StreamFragment mStreamFragment;
     private InboxFragment mInboxFragment;
@@ -43,10 +41,13 @@ public class Main extends BaseFragmentActivity{
     @InjectView(R.id.actionsBadge)
     TextView mActionsBadge;
 
+    @InjectView(R.id.homeLayout)
+    RelativeLayout mHomeLayout;
+
     @InjectView(R.id.activityLayout)
     RelativeLayout mActivityLayout;
 
-    @InjectView(R.id.streamLayout)
+    @InjectView(R.id.connectionsStreamLayout)
     RelativeLayout mStreamLayout;
 
     @InjectView(R.id.inboxLayout)
@@ -100,8 +101,15 @@ public class Main extends BaseFragmentActivity{
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(mActivityFragment, mUiManager.getString(R.string.main_drawer_activity_label));
+            selectItem(mHomeFragment, mUiManager.getString(R.string.main_drawer_home_label));
         }
+
+        mHomeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectItem(mHomeFragment, mUiManager.getString(R.string.main_drawer_home_label));
+            }
+        });
 
         mActivityLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +121,7 @@ public class Main extends BaseFragmentActivity{
         mStreamLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectItem(mStreamFragment, mUiManager.getString(R.string.main_drawer_stream_label));
+                selectItem(mStreamFragment, mUiManager.getString(R.string.main_drawer_connections_stream_label));
             }
         });
 
@@ -135,6 +143,9 @@ public class Main extends BaseFragmentActivity{
     }
 
     private void createFragments() {
+        if(mHomeFragment == null)
+            mHomeFragment = new HomeFragment();
+
         if(mActivityFragment == null)
             mActivityFragment = new ActivityFragment();
 

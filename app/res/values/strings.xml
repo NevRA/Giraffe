@@ -11,10 +11,11 @@
     <string name="signin_access_denied_error_message">Invalid user name or password. Please try again.</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="main_drawer_stream_label">My Stream</string>
+    <string name="main_drawer_connections_stream_label">Connections Stream</string>
     <string name="main_drawer_inbox_label">Inbox</string>
     <string name="main_drawer_actions_label">Actions</string>
-    <string name="main_drawer_activity_label">Activity</string>
+    <string name="main_drawer_activity_label">All Activities</string>
+    <string name="main_drawer_home_label">Home</string>
     <string name="comments_label">COMMENTS</string>
     <string name="last_comments_label">LAST COMMENTS</string>
     <string name="last_comment_label">LAST COMMENT</string>

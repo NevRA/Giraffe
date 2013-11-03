@@ -2,6 +2,7 @@ package com.home.giraffe.network;
 
 import android.text.TextUtils;
 import com.home.giraffe.Constants;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.HttpEntityWrapper;
@@ -12,6 +13,16 @@ import java.util.zip.GZIPInputStream;
 
 public class NetworkUtils {
     private NetworkUtils(){
+    }
+
+    public static String getLocationFromHeaders(Header[] headers){
+        for (Header header : headers){
+            if(header.getName().equalsIgnoreCase("Location")){
+                return header.getValue();
+            }
+        }
+
+        return null;
     }
 
     public static String getTokenFromCookies(Cookie[] cookies){

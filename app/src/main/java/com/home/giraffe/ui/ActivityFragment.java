@@ -8,7 +8,6 @@ import com.home.giraffe.Constants;
 import com.home.giraffe.base.BaseListFragment;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
-import com.home.giraffe.objects.BaseObject;
 import com.home.giraffe.objects.File;
 import com.home.giraffe.objects.Post;
 import com.home.giraffe.objects.activity.BaseObjectContainer;
@@ -27,8 +26,8 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
     @Inject
     IUiManager mUiManager;
 
-    private BaseObjectContainer mBaseObjectContainer;
-    private BaseObjectsAdapter mAdapter;
+    protected BaseObjectContainer mBaseObjectContainer;
+    protected BaseObjectsAdapter mAdapter;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
         super.onCreate(savedInstanceState);
 
         String url = getActivityUrl();
-        Utils.v("Activity fragment for url %s created", url);
+        Utils.v("Activity fragment for url %s created", url != null ? url : "<empty>");
 
         if (mBaseObjectContainer == null) {
             mBaseObjectContainer = new BaseObjectContainer();
@@ -67,7 +66,7 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
     }
 
     public String getActivityUrl(){
-        return mSettingsManager.getCommunityUrl() + Constants.ACTIVITIES;
+        return mSettingsManager.getCommunityUrl() + Constants.ALL_ACTIVITIES;
     }
 
     public void init() {
@@ -110,7 +109,7 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
         return new GetBaseObjectsListTask(getActivity(), mBaseObjectContainer.getCurrent());
     }
 
-    private void updateView(BaseObjectContainer baseObjectContainer) {
+    protected void updateView(BaseObjectContainer baseObjectContainer) {
         if (baseObjectContainer.getCurrent().equals(mBaseObjectContainer.getNext()) &&
                 baseObjectContainer.getCurrent().equals(mBaseObjectContainer.getPrevious())) {
             mBaseObjectContainer.setPrevious(baseObjectContainer.getPrevious());
@@ -122,6 +121,12 @@ public class ActivityFragment extends BaseListFragment<BaseObjectContainer> {
         } else if (baseObjectContainer.getCurrent().equals(mBaseObjectContainer.getNext())) {
             mBaseObjectContainer.addActivities(baseObjectContainer.getActivities());
             mBaseObjectContainer.setNext(baseObjectContainer.getNext());
+        }
+        else{
+            mBaseObjectContainer.setCurrent(baseObjectContainer.getCurrent());
+            mBaseObjectContainer.setPrevious(baseObjectContainer.getPrevious());
+            mBaseObjectContainer.setNext(baseObjectContainer.getNext());
+            mBaseObjectContainer.addActivities(baseObjectContainer.getActivities());
         }
 
         mAdapter.notifyDataSetChanged();

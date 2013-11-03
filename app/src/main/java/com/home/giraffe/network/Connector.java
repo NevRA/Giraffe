@@ -34,7 +34,6 @@ import org.apache.http.util.EntityUtils;
 
 public class Connector implements IConnector {
     private ISettingsManager mSettingsManager;
-    private EventBus mEventBus;
     private DefaultHttpClient mHttpClient;
 
     @Inject
@@ -42,15 +41,19 @@ public class Connector implements IConnector {
         Utils.d("Connector created");
 
         mSettingsManager = settingsManager;
-        mEventBus = eventBus;
-
-        mEventBus.register(this);
+        eventBus.register(this);
 
         recreate();
     }
 
     public void recreate(){
         mHttpClient = getHttpClient();
+        mHttpClient.setRedirectHandler(new DefaultRedirectHandler() {
+            @Override
+            public boolean isRedirectRequested(HttpResponse response, HttpContext context) {
+                return false;
+            }
+        });
     }
 
     public void onEvent(SettingsClearedEvent event) {
@@ -105,7 +108,7 @@ public class Connector implements IConnector {
         CookieStore cookieStore = mHttpClient.getCookieStore();
         Cookie[] cookies = cookieStore.getCookies().toArray(new Cookie[cookieStore.getCookies().size()]);
         String body = cutSecurityString(EntityUtils.toString(entity, HTTP.UTF_8));
-        return new com.home.giraffe.network.HttpResponse(cookies, body);
+        return new com.home.giraffe.network.HttpResponse(response.getAllHeaders(), cookies, body);
     }
 
     private HttpEntity getEntityFromResponse(HttpResponse response) {
@@ -133,21 +136,7 @@ public class Connector implements IConnector {
 
     @Override
     public com.home.giraffe.network.HttpResponse postRequest(String url, String body) throws Exception {
-        return postRequest(url, body, true);
-    }
-
-    @Override
-    public com.home.giraffe.network.HttpResponse postRequest(String url, String body, boolean allowRedirect) throws Exception {
         Utils.d("Trying to make post request to url: " + url);
-
-        if (!allowRedirect) {
-            mHttpClient.setRedirectHandler(new DefaultRedirectHandler() {
-                @Override
-                public boolean isRedirectRequested(HttpResponse response, HttpContext context) {
-                    return false;
-                }
-            });
-        }
 
         StringEntity entity = new StringEntity(body, HTTP.UTF_8);
         HttpPost httpPost = new HttpPost(url);

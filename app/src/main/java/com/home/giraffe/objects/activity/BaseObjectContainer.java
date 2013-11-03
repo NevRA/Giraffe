@@ -13,6 +13,9 @@ public class BaseObjectContainer {
     private String mPrevious;
 
     public BaseObjectContainer() {
+        mCurrent = "";
+        mNext = "";
+        mPrevious = "";
         mActivityItems = Collections.synchronizedList(new ArrayList<BaseObject>());
     }
 

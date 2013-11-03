@@ -33,7 +33,7 @@ public class RequestsManager implements IRequestsManager {
         String loginUrl = url + Constants.LOGIN;
         String credentialsBody = String.format("username=%s&password=%s&autoLogin=true", Uri.encode(userName), Uri.encode(userPassword));
 
-        HttpResponse loginResponse = mConnector.postRequest(loginUrl, credentialsBody, false);
+        HttpResponse loginResponse = mConnector.postRequest(loginUrl, credentialsBody);
 
         String token = NetworkUtils.getTokenFromCookies(loginResponse.getCookies());
         if (token == null) {

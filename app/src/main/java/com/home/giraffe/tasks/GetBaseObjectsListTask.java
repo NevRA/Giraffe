@@ -1,7 +1,10 @@
 package com.home.giraffe.tasks;
 
+import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import com.home.giraffe.Constants;
+import com.home.giraffe.network.HttpResponse;
+import com.home.giraffe.network.NetworkUtils;
 import com.home.giraffe.objects.Actor;
 import com.home.giraffe.objects.BaseObject;
 import com.home.giraffe.objects.Comment;
@@ -23,14 +26,18 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
         super(activity);
         mUrl = url;
         mBaseObjectContainer = new BaseObjectContainer();
-        mBaseObjectContainer.setCurrent(url);
     }
 
     @Override
     public BaseObjectContainer loadInBackground() {
-        Utils.d("Started GetBaseObjectsListTask for: " + mUrl);
+        Utils.d("Started GetBaseObjectsListTask");
 
         try {
+            if(mUrl == null)
+                setUrlToHome();
+
+            mBaseObjectContainer.setCurrent(mUrl);
+
             JiveContainers jiveContainers = mRequestsManager.getJiveContainers(mUrl);
             Utils.d("Received " + jiveContainers.getList().size() + " jive records");
 
@@ -54,6 +61,17 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
         }
 
         return mBaseObjectContainer;
+    }
+
+    private void setUrlToHome() throws Exception {
+        HttpResponse response = mConnector.getRequest(mSettingsManager.getCommunityUrl() + Constants.HOME);
+        String location = NetworkUtils.getLocationFromHeaders(response.getHeaders());
+        Uri uri = Uri.parse(location);
+        String streamId = uri.getQueryParameter("streamID");
+        if(streamId != null)
+            mUrl = mSettingsManager.getCommunityUrl() + String.format(Constants.CUSTOM_STREAM, streamId);
+        else
+            mUrl = mSettingsManager.getCommunityUrl() + Constants.ALL_ACTIVITIES;
     }
 
     private void processJiveContainer(JiveContainer jiveContainer) throws Exception {
