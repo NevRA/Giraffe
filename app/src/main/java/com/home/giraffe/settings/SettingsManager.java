@@ -25,14 +25,25 @@ public class SettingsManager implements ISettingsManager {
     }
 
     @Override
+    public void setAppVersion(String appVersion) {
+        mSharedPreferences.edit().putString(Constants.AppVersionPref, appVersion).commit();
+        settingsChanged();
+    }
+
+    @Override
+    public String getAppVersion() {
+        return mSharedPreferences.getString(Constants.AppVersionPref, null);
+    }
+
+    @Override
     public void setCommunityUrl(String communityUrl) {
-        mSharedPreferences.edit().putString(Constants.CommunityUrl, communityUrl).commit();
+        mSharedPreferences.edit().putString(Constants.CommunityUrlPref, communityUrl).commit();
         settingsChanged();
     }
 
     @Override
     public String getCommunityUrl() {
-        return mSharedPreferences.getString(Constants.CommunityUrl, null);
+        return mSharedPreferences.getString(Constants.CommunityUrlPref, null);
     }
 
     @Override

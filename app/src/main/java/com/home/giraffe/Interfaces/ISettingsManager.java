@@ -3,6 +3,9 @@ package com.home.giraffe.interfaces;
 public interface ISettingsManager {
     boolean isLoggedOn();
 
+    void setAppVersion(String appVersion);
+    String getAppVersion();
+
     void setCommunityUrl(String communityUrl);
     String getCommunityUrl();
 

@@ -23,15 +23,17 @@ public class Constants {
     public static final String SocialNewsId = "SocialNews";
     public static final String LikesId = "Likes";
 
-    public static final String CommunityUrl = "CommunityUrlPref";
+    public static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$", Pattern.CASE_INSENSITIVE);
+
+    // Preferences
+    public static final String AppVersionPref = "AppVersionPref";
+    public static final String CommunityUrlPref = "CommunityUrlPref";
     public static final String UserIdPref = "UserIdPref";
     public static final String UserNamePref = "UserNamePref";
     public static final String UserJobTitlePref = "UserJobTitlePref";
     public static final String UserTokenPref = "UserTokenPref";
 
-    public static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$", Pattern.CASE_INSENSITIVE);
 
     // Extras
-
     public static final String ID_EXTRA = "id_extra";
 }
