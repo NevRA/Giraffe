@@ -65,6 +65,7 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
         return mBaseObjectContainer;
     }
 
+    // Hack to get Hone page from redirection on index.jspa request
     private void setUrlToHome(){
         try {
             HttpResponse response =
