@@ -2,6 +2,7 @@ package com.home.giraffe.tasks;
 
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import com.home.giraffe.Constants;
 import com.home.giraffe.network.HttpResponse;
 import com.home.giraffe.network.NetworkUtils;
@@ -37,6 +38,7 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
                 setUrlToHome();
 
             mBaseObjectContainer.setCurrent(mUrl);
+            Utils.d("Activities url: " + mUrl);
 
             JiveContainers jiveContainers = mRequestsManager.getJiveContainers(mUrl);
             Utils.d("Received " + jiveContainers.getList().size() + " jive records");
@@ -63,15 +65,47 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
         return mBaseObjectContainer;
     }
 
-    private void setUrlToHome() throws Exception {
-        HttpResponse response = mConnector.getRequest(mSettingsManager.getCommunityUrl() + Constants.HOME);
-        String location = NetworkUtils.getLocationFromHeaders(response.getHeaders());
-        Uri uri = Uri.parse(location);
-        String streamId = uri.getQueryParameter("streamID");
-        if(streamId != null)
-            mUrl = mSettingsManager.getCommunityUrl() + String.format(Constants.CUSTOM_STREAM, streamId);
-        else
-            mUrl = mSettingsManager.getCommunityUrl() + Constants.ALL_ACTIVITIES;
+    private void setUrlToHome(){
+        try {
+            HttpResponse response =
+                    mConnector.getRequest(mSettingsManager.getCommunityUrl() +
+                            Constants.HOME);
+
+            String location = NetworkUtils.getLocationFromHeaders(response.getHeaders());
+            Utils.d("Location page: " + location);
+
+            if(!TextUtils.isEmpty(location)){
+                Uri uri = Uri.parse(location);
+                String streamSource = uri.getQueryParameter("streamSource");
+                if(streamSource != null){
+                    if(streamSource.equalsIgnoreCase(JiveStreamSource.custom.name())){
+                        String streamId = uri.getQueryParameter("streamID");
+                        if(streamId != null) {
+                            mUrl = mSettingsManager.getCommunityUrl() +
+                                    String.format(Constants.CUSTOM_STREAM, streamId);
+                            return;
+                        }
+                    }
+
+                    Utils.w("Doesn't support %s stream source type", streamSource);
+                    // doesn't support Email Watches https://github.com/NevRA/Giraffe/issues/25
+                }
+
+                if (location.endsWith("actions")){
+                    Utils.w("Doesn't support actions page");
+                    // doesn't support Action https://github.com/NevRA/Giraffe/issues/26
+                }
+
+                if (location.endsWith("inbox")){
+                    mUrl = mSettingsManager.getCommunityUrl() + Constants.INBOX;
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            Utils.e(e);
+        }
+
+        mUrl = mSettingsManager.getCommunityUrl() + Constants.ALL_ACTIVITIES;
     }
 
     private void processJiveContainer(JiveContainer jiveContainer) throws Exception {
