@@ -9,12 +9,13 @@ import com.home.giraffe.MainApplication;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.objects.*;
 import com.home.giraffe.objects.Jive.JiveTypes;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import roboguice.RoboGuice;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 
 public class Utils {
@@ -72,6 +73,18 @@ public class Utils {
         }
 
         return doc.html();
+    }
+
+    public static String getStringFromAssets(String assetName) throws IOException {
+        InputStream is = MainApplication.getInstance().getAssets().open(assetName);
+
+        int size = is.available();
+
+        byte[] buffer = new byte[size];
+        is.read(buffer);
+        is.close();
+
+        return new String(buffer);
     }
 
     public static String getAuthorizationCookie(){
