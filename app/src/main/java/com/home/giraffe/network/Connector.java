@@ -54,6 +54,10 @@ public class Connector implements IConnector {
                 return false;
             }
         });
+
+        // Proxy settings
+        // HttpHost proxy = new HttpHost("192.168.1.103", 8888);
+        // mHttpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY,proxy);
     }
 
     public void onEvent(SettingsClearedEvent event) {
@@ -104,9 +108,9 @@ public class Connector implements IConnector {
         }
 
         HttpEntity entity = getEntityFromResponse(response);
-
         CookieStore cookieStore = mHttpClient.getCookieStore();
         Cookie[] cookies = cookieStore.getCookies().toArray(new Cookie[cookieStore.getCookies().size()]);
+        cookieStore.clear();
         String body = cutSecurityString(EntityUtils.toString(entity, HTTP.UTF_8));
         return new com.home.giraffe.network.HttpResponse(response.getAllHeaders(), cookies, body);
     }
@@ -167,6 +171,7 @@ public class Connector implements IConnector {
 
     private void addCommonHeaders(HttpRequestBase requestBase) {
         requestBase.addHeader("Accept-Encoding", "gzip");
+        requestBase.addHeader("User-Agent", "Giraffe/1.0");
         requestBase.addHeader("Accept", "*/*");
         requestBase.addHeader("Cookie", Utils.getAuthorizationCookie());
     }

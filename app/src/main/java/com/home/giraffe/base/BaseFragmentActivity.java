@@ -27,6 +27,12 @@ public class BaseFragmentActivity extends RoboSherlockFragmentActivity {
         mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        mBus.unregister(this);
+        super.onDestroy();
+    }
+
     public PullToRefreshAttacher getPullToRefreshAttacher() {
         return mPullToRefreshAttacher;
     }
