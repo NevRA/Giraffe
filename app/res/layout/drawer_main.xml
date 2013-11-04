@@ -30,7 +30,7 @@
                       android:layout_height="wrap_content"/>
             <FrameLayout
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="7dp"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/drawer_separator_color"/>
@@ -63,7 +63,7 @@
             </RelativeLayout>
             <FrameLayout
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="7dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/drawer_separator_color"/>
@@ -95,7 +95,7 @@
                         android:layout_centerVertical="true"/>
             </RelativeLayout>
             <FrameLayout
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="9dp"
                     android:layout_marginBottom="7dp"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

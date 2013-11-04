@@ -110,6 +110,10 @@ public class Connector implements IConnector {
         HttpEntity entity = getEntityFromResponse(response);
         CookieStore cookieStore = mHttpClient.getCookieStore();
         Cookie[] cookies = cookieStore.getCookies().toArray(new Cookie[cookieStore.getCookies().size()]);
+
+        // HACK
+        // CookieStore save some cookie (cookie2, etc...)
+        // Jive sometimes returns Internal Server Error with such cookies
         cookieStore.clear();
         String body = cutSecurityString(EntityUtils.toString(entity, HTTP.UTF_8));
         return new com.home.giraffe.network.HttpResponse(response.getAllHeaders(), cookies, body);

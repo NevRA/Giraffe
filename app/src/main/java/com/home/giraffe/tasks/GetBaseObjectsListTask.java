@@ -87,6 +87,16 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
                         }
                     }
 
+                    if(streamSource.equalsIgnoreCase(JiveStreamSource.all.name())){
+                        mUrl = mSettingsManager.getCommunityUrl() + Constants.ALL_ACTIVITIES;
+                        return;
+                    }
+
+                    if(streamSource.equalsIgnoreCase(JiveStreamSource.connections.name())){
+                        mUrl = mSettingsManager.getCommunityUrl() + Constants.CONNECTIONS_STREAM;
+                        return;
+                    }
+
                     Utils.w("Doesn't support %s stream source type", streamSource);
                     // doesn't support Email Watches https://github.com/NevRA/Giraffe/issues/25
                 }
