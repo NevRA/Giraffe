@@ -91,12 +91,12 @@ public class GetBaseObjectsListTask extends BaseTaskLoader<BaseObjectContainer> 
                     // doesn't support Email Watches https://github.com/NevRA/Giraffe/issues/25
                 }
 
-                if (location.endsWith("actions")){
+                if (uri.getLastPathSegment().equalsIgnoreCase("actions")){
                     Utils.w("Doesn't support actions page");
                     // doesn't support Action https://github.com/NevRA/Giraffe/issues/26
                 }
 
-                if (location.endsWith("inbox")){
+                if (uri.getLastPathSegment().equalsIgnoreCase("inbox")){
                     mUrl = mSettingsManager.getCommunityUrl() + Constants.INBOX;
                     return;
                 }
