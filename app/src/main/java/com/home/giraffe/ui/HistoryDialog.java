@@ -1,11 +1,14 @@
 package com.home.giraffe.ui;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 import com.home.giraffe.R;
 import com.home.giraffe.interfaces.IUiManager;
@@ -24,6 +27,9 @@ public class HistoryDialog extends RoboDialogFragment {
     @InjectView(R.id.history)
     TextView mHistoryView;
 
+    @InjectView(R.id.ok)
+    Button mOkButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().setTitle(getString(R.string.version_history_dialog_title));
@@ -31,8 +37,24 @@ public class HistoryDialog extends RoboDialogFragment {
     }
 
     @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+
+        // request a window without the title
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mOkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
 
         addHistory();
     }

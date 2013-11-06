@@ -3,10 +3,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <RelativeLayout
+            android:id="@+id/titleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/main_theme">
+
+        <TextView
+                android:id="@+id/title"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/version_history_dialog_title"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true" />
+    </RelativeLayout>
+
     <TextView
                 android:id="@+id/history"
                 android:padding="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_below="@+id/titleLayout"
+                android:layout_above="@+id/buttonLayout"/>
+
+    <RelativeLayout
+            android:id="@+id/buttonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/main_theme">
+
+        <Button
+                android:id="@+id/ok"
+                android:padding="10dp"
+                style="@style/Button.Light"
+                android:text="@android:string/ok"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:layout_width="120dp"
+                android:layout_height="40dp"/>
+    </RelativeLayout>
 
 </RelativeLayout>

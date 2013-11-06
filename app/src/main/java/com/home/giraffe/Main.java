@@ -140,6 +140,7 @@ public class Main extends BaseFragmentActivity{
         });
 
         new GetBadgesCountTask(this).execute();
+        new HistoryManager(this, mSettingsManager).proceed();
     }
 
     private void createFragments() {

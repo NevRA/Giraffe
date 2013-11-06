@@ -31,7 +31,7 @@ public class HistoryManager {
 
         if(     oldAppVersion == null ||
                 !oldAppVersion.equals(newAppVersion)){
-            //mSettingsManager.setAppVersion(newAppVersion);
+            mSettingsManager.setAppVersion(newAppVersion);
             showAppHistory();
         }
     }
