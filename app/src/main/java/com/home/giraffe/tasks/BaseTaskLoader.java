@@ -2,7 +2,7 @@ package com.home.giraffe.tasks;
 
 import android.support.v4.app.FragmentActivity;
 import com.google.inject.Inject;
-import com.home.giraffe.interfaces.IConnector;
+import com.home.giraffe.interfaces.INetworkConnector;
 import com.home.giraffe.interfaces.IRequestsManager;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
@@ -17,7 +17,7 @@ public abstract class BaseTaskLoader<T> extends RoboAsyncTaskLoader<T> {
     ObjectsStorage mObjectsStorage;
 
     @Inject
-    IConnector mConnector;
+    INetworkConnector mConnector;
 
     @Inject
     IRequestsManager mRequestsManager;

@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.home.giraffe.Constants;
 import com.home.giraffe.R;
-import com.home.giraffe.interfaces.IConnector;
+import com.home.giraffe.interfaces.INetworkConnector;
 import com.home.giraffe.interfaces.IRequestsManager;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.interfaces.IUiManager;
@@ -15,11 +15,11 @@ import com.home.giraffe.utils.Utils;
 public class RequestsManager implements IRequestsManager {
     private Gson mGson;
     private IUiManager mUiManager;
-    private IConnector mConnector;
+    private INetworkConnector mConnector;
     private ISettingsManager mSettingsManager;
 
     @Inject
-    public RequestsManager(IUiManager uiManager, IConnector connector, ISettingsManager settingsManager){
+    public RequestsManager(IUiManager uiManager, INetworkConnector connector, ISettingsManager settingsManager){
         mUiManager = uiManager;
         mConnector = connector;
         mSettingsManager = settingsManager;

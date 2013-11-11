@@ -2,7 +2,7 @@ package com.home.giraffe.network;
 
 import com.google.inject.Inject;
 import com.home.giraffe.events.SettingsClearedEvent;
-import com.home.giraffe.interfaces.IConnector;
+import com.home.giraffe.interfaces.INetworkConnector;
 import com.home.giraffe.interfaces.ISettingsManager;
 import com.home.giraffe.utils.Utils;
 import de.greenrobot.event.EventBus;
@@ -32,13 +32,13 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
-public class Connector implements IConnector {
+public class NetworkConnector implements INetworkConnector {
     private ISettingsManager mSettingsManager;
     private DefaultHttpClient mHttpClient;
 
     @Inject
-    public Connector(ISettingsManager settingsManager, EventBus eventBus) {
-        Utils.d("Connector created");
+    public NetworkConnector(ISettingsManager settingsManager, EventBus eventBus) {
+        Utils.d("NetworkConnector created");
 
         mSettingsManager = settingsManager;
         eventBus.register(this);
